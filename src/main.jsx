@@ -17,6 +17,8 @@ import StudentInfo from './pages/StudentInfo.jsx'
 import AttendanceReports from './pages/AttendanceReports.jsx'
 import PlainLayout from './PlainLayout.jsx'
 import { TooltipProvider } from './context/contextToolTip.jsx'
+import LoginPage from './pages/LoginPage.jsx'
+import RegisterUI from './pages/RegisterPage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -78,6 +80,14 @@ const router = createBrowserRouter([
       {        
         path: '/attendance-reports',
         element: <AttendanceReports />
+      },
+      {        
+        path: '/login',
+        element: <LoginPage />
+      },
+      {        
+        path: '/register',
+        element: <RegisterUI />
       },
     ]
   }
