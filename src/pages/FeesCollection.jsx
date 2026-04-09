@@ -8,7 +8,7 @@ import RecentPaymentComponent from '../components/feeCollectionComponents/Recent
 const FeesCollection = () => {
     const [active, setActive] = useState('Recent');
   return (
-    <section className='max-w-300 mx-auto p-8 bg-[#f5f7fa] h-screen overflow-y-auto custom-scrollbar'>
+    <section className='max-w-400 mx-auto p-8 bg-[#f5f7fa] h-screen overflow-y-auto custom-scrollbar'>
         <Link to='/' className="flex justify-center w-fit items-center cursor-default p-3 rounded-md bg-[#006b3f] mb-8 transition-all duration-300 hover:-translate-y-1">
             <MdArrowBackIos  className='text-white' size={24}/>
             <span className='text-white font-medium'>Back to Dashboard</span>
