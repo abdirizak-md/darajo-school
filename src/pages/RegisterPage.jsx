@@ -1,4 +1,7 @@
-import React from "react";
+import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
+import { RiLockPasswordLine } from "react-icons/ri";
+import { HiOutlinePencilAlt } from "react-icons/hi";
+import { Link } from "react-router-dom";
 
 export default function RegisterUI() {
   return (
@@ -12,14 +15,14 @@ export default function RegisterUI() {
         }}
       />
 
-      <div className="absolute inset-0 bg-black/40" />
+      <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1588072432836-e10032774350')] bg-cover bg-center blur-sm" />
 
       {/* Card */}
-      <div className="relative bg-white rounded-2xl shadow-2xl w-[360px] overflow-hidden">
+      <div className="relative bg-white rounded-2xl shadow-2xl w-90 overflow-hidden">
         {/* Header */}
-        <div className="bg-red-700 text-white text-center py-6 px-4">
-          <div className="text-xs bg-white text-red-700 inline-block px-3 py-1 rounded-full mb-2 font-semibold">
-            Zillion
+        <div className="bg-green-700 text-white text-center py-6 px-4">
+          <div className="text-xs bg-white text-green-700 inline-block px-3 py-1 rounded-full mb-2 font-semibold">
+            Darajo
           </div>
           <h2 className="text-lg font-semibold leading-tight">
             Create Account
@@ -35,7 +38,7 @@ export default function RegisterUI() {
           <div>
             <label className="text-xs text-gray-600 block mb-1">Full Name</label>
             <div className="flex items-center border rounded-lg px-3 py-2">
-              <span className="text-gray-400 mr-2">👤</span>
+              <FaUser className="text-gray-400 mr-2" />
               <input
                 type="text"
                 placeholder="John Doe"
@@ -50,7 +53,7 @@ export default function RegisterUI() {
               Email Address
             </label>
             <div className="flex items-center border rounded-lg px-3 py-2">
-              <span className="text-gray-400 mr-2">📧</span>
+              <FaEnvelope className="text-gray-400 mr-2" />
               <input
                 type="email"
                 placeholder="example@gmail.com"
@@ -65,7 +68,7 @@ export default function RegisterUI() {
               Password
             </label>
             <div className="flex items-center border rounded-lg px-3 py-2">
-              <span className="text-gray-400 mr-2">🔒</span>
+              <FaLock className="text-gray-400 mr-2" />
               <input
                 type="password"
                 placeholder="********"
@@ -80,7 +83,7 @@ export default function RegisterUI() {
               Confirm Password
             </label>
             <div className="flex items-center border rounded-lg px-3 py-2">
-              <span className="text-gray-400 mr-2">🔐</span>
+              <RiLockPasswordLine className="text-gray-400 mr-2" />
               <input
                 type="password"
                 placeholder="********"
@@ -95,13 +98,15 @@ export default function RegisterUI() {
           </div>
 
           {/* Button */}
-          <button className="w-full bg-red-700 text-white py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-red-800 transition">
-            📝 Register
+          <button className="w-full bg-green-700 text-white py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-green-800 transition">
+            <HiOutlinePencilAlt /> Register
           </button>
 
           <p className="text-center text-xs text-gray-500">
             Already have an account?{' '}
-            <span className="text-blue-500 cursor-pointer">Login</span>
+            <Link to="/login" className="text-blue-500 cursor-pointer">
+              Login
+            </Link>
           </p>
         </div>
       </div>
