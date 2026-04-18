@@ -4,9 +4,12 @@ import { Link } from 'react-router-dom'
 import AssignmentComponent from '../components/subjectAssignmentComponents/AssignmentComponent'
 import GradeComponent from '../components/subjectAssignmentComponents/GradeComponent'
 import SubjectComponent from '../components/subjectAssignmentComponents/SubjectComponent'
+import AddSectionModal from '../boxModels/AddSectionModal'
+import AddSubjectModal from '../boxModels/AddSubjectModal'
 
-const Subjects = () => {
+const SubjectsAssignment = () => {
     const [active, setActive] = useState('subjects');
+    const [addSubject, setAddSubject] = useState(false);
 
     const statusStyles = {
         active: "bg-[#d1fae5] text-[#10b981]",
@@ -53,15 +56,19 @@ const Subjects = () => {
         </div>
     
         {/* Subjects */}
-        { active == 'subjects' && <SubjectComponent />}
+        { active == 'subjects' && <SubjectComponent  setAddSubject={setAddSubject}/>}
 
         {/* Assignments */}
         { active === 'assignments' && <AssignmentComponent /> }
 
         {/* grades */}
         { active === 'grades' && <GradeComponent /> }
+
+
+        {/* box modal for sections*/}
+        {   addSubject && <AddSubjectModal setAddSubject={setAddSubject}/> }
     </section>
   )
 }
 
-export default Subjects
+export default SubjectsAssignment

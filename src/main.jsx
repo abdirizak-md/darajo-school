@@ -5,7 +5,6 @@ import App from './App.jsx'
 import './index.css'
 import ClassesSections from './pages/ClassesSections.jsx'
 import Dashboard from './pages/dashboard/Dashboard.jsx'
-import Subjects from './pages/Subjects.jsx'
 import LessonPlans from './pages/LessonPlans.jsx'
 import StudyMaterials from './pages/StudyMaterials.jsx'
 import ExamsMarks from './pages/ExamsMarks.jsx'
@@ -19,6 +18,7 @@ import PlainLayout from './PlainLayout.jsx'
 import { TooltipProvider } from './context/contextToolTip.jsx'
 import LoginPage from './pages/LoginPage.jsx'
 import RegisterUI from './pages/RegisterPage.jsx'
+import SubjectsAssignment from './pages/SubjectsAssignment.jsx'
 
 const router = createBrowserRouter([
   {
@@ -42,8 +42,8 @@ const router = createBrowserRouter([
         element: <ClassesSections />
       },
       {        
-        path: '/subjects',
-        element: <Subjects />
+        path: '/subjectsAssignment',
+        element: <SubjectsAssignment />
       },
       {        
         path: '/lesson-plans',

@@ -2,7 +2,7 @@ import { FaPlus } from 'react-icons/fa6'
 import { IoSearchOutline } from 'react-icons/io5'
 import subjects from '../../Data/subjects'
 
-const SubjectComponent = () => {
+const SubjectComponent = ({setAddSubject}) => {
      const statusStyles = {
         active: "bg-[#d1fae5] text-[#10b981]",
         pending: "bg-[#fef3c7] text-[#92400e]",
@@ -12,7 +12,7 @@ const SubjectComponent = () => {
     <div className="bg-white p-6 mb-6 shadow rounded-md">
         <div className="flex justify-between items-center mb-4">
             <span className='text-[#333] lg:text-2xl font-bold '>Manage Subjects</span>
-            <button className='lg:px-5 px-3 py-2 cursor-pointer text-white bg-[#006b3f] rounded-md inline-flex items-center gap-2'><FaPlus />Add Subjects</button>
+            <button className='lg:px-5 px-3 py-2 cursor-pointer text-white bg-[#006b3f] rounded-md inline-flex items-center gap-2' onClick={() => setAddSubject(true)}><FaPlus />Add Subjects</button>
         </div>
             
         <form className="grid grid-cols-1 lg:grid-cols-[3fr_150px] md:grid-cols-[3fr_2fr_150px] gap-3">
