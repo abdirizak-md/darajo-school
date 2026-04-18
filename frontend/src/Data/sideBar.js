@@ -17,7 +17,7 @@ export const academics = [
       {
         label: 'Subjects & Assignments',
         icon: FaBook ,
-        path: '/subjects',
+        path: '/subjectsAssignment',
       },
       {
         label: 'Lesson Plans',
