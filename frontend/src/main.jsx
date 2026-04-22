@@ -19,6 +19,8 @@ import { TooltipProvider } from './context/contextToolTip.jsx'
 import LoginPage from './pages/LoginPage.jsx'
 import RegisterUI from './pages/RegisterPage.jsx'
 import SubjectsAssignment from './pages/SubjectsAssignment.jsx'
+import { Provider } from 'react-redux'
+import { store } from './redux/store.js'
 
 const router = createBrowserRouter([
   {
@@ -95,8 +97,10 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <TooltipProvider>
-      <RouterProvider router={router} />
-    </TooltipProvider>
+    <Provider store={store}>
+      <TooltipProvider>
+        <RouterProvider router={router} />
+      </TooltipProvider>
+    </Provider>
   </StrictMode>,
 )
