@@ -25,17 +25,17 @@ const ASide = ({close, setClose}) => {
         {open && (
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-2xl bg-black/10 backdrop-blur-md shadow-inner">
-              <FaUserGraduate className="text-white text-lg" />
+              <FaUserGraduate className="text-orange-500 text-lg" />
             </div>
             <span className="text-black font-semibold tracking-wide text-base"> Darajo </span>
           </div>
         )}
 
-        <button onClick={() => setOpen(!open)} aria-expanded={open} className={`${close ? 'hidden' : ''} p-2 rounded-xl hover:bg-white/10 transition duration-200`} >
-          <MdArrowBackIos className={`text-white transition-transform duration-300 ${ open ? 'rotate-0' : 'rotate-180' }`} />
+        <button onClick={() => setOpen(!open)} aria-expanded={open} className={`${close ? 'hidden' : ''} p-2 rounded-xl hover:bg-black/10 transition duration-200`} >
+          <MdArrowBackIos className={`text-black transition-transform duration-300 ${ open ? 'rotate-0' : 'rotate-180' }`} />
         </button>
         { close && <button onClick={() => setClose(false)} aria-expanded={open} className="p-2 rounded-xl hover:bg-red-500/70 transition duration-200" >
-          <MdClose className={`text-white transition-transform duration-300 ${ open ? 'rotate-0' : 'rotate-180' }`} />
+          <MdClose className={`text-black transition-transform duration-300 ${ open ? 'rotate-0' : 'rotate-180' }`} />
         </button> }
       </div>
 
