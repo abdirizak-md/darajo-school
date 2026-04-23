@@ -3,10 +3,7 @@ import { CLASS_MESSAGES } from "../../common/constant/constant.js";
 
 // ➕ CREATE
 export const createClassService = async (data) => {
-  const exists = await Class.findOne({
-    name: data.name,
-    section: data.section,
-  });
+  const exists = await Class.findOne({ name: data.name });
 
   if (exists) {
     throw new Error(CLASS_MESSAGES.EXISTS);
@@ -15,12 +12,11 @@ export const createClassService = async (data) => {
   return await Class.create(data);
 };
 
-// 📄 GET ALL
+// 📄 GET ALL (FIXED ❗ NO POPULATE)
 export const getClassesService = async (query = {}) => {
   const { page = 1, limit = 10 } = query;
 
   const data = await Class.find()
-    .populate("teacherId", "sectionId")
     .skip((page - 1) * limit)
     .limit(Number(limit))
     .lean();
@@ -37,9 +33,7 @@ export const getClassesService = async (query = {}) => {
 
 // 🔍 GET ONE
 export const getClassByIdService = async (id) => {
-  const data = await Class.findById(id)
-    .populate("teacherId", "name subject")
-    .lean();
+  const data = await Class.findById(id).lean();
 
   if (!data) throw new Error(CLASS_MESSAGES.NOT_FOUND);
 

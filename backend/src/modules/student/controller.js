@@ -24,9 +24,19 @@ export const getStudents = asyncHandler(async (req, res) => {
   });
 });
 
-// 🔍 GET ONE
+// 🔍 GET ONE (FIXED)
 export const getStudent = asyncHandler(async (req, res) => {
-  const data = await service.getStudentByIdService(req.params.id);
+  const { id } = req.params;
+
+  // ✅ SAFETY CHECK
+  if (!id) {
+    return res.status(400).json({
+      success: false,
+      message: "Student ID is required",
+    });
+  }
+
+  const data = await service.getStudentByIdService(id);
 
   res.status(200).json({
     success: true,
@@ -37,10 +47,16 @@ export const getStudent = asyncHandler(async (req, res) => {
 
 // ✏️ UPDATE
 export const updateStudent = asyncHandler(async (req, res) => {
-  const data = await service.updateStudentService(
-    req.params.id,
-    req.body
-  );
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).json({
+      success: false,
+      message: "Student ID is required",
+    });
+  }
+
+  const data = await service.updateStudentService(id, req.body);
 
   res.status(200).json({
     success: true,
@@ -51,7 +67,16 @@ export const updateStudent = asyncHandler(async (req, res) => {
 
 // ❌ DELETE
 export const deleteStudent = asyncHandler(async (req, res) => {
-  await service.deleteStudentService(req.params.id);
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).json({
+      success: false,
+      message: "Student ID is required",
+    });
+  }
+
+  await service.deleteStudentService(id);
 
   res.status(200).json({
     success: true,

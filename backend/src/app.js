@@ -4,6 +4,8 @@ import StudentRouter from "./routes/studentRoute.js";
 import SectionRouter from "./routes/section.js";
 import TeacherRouter from "./routes/teacher.js";
 import ParentRouter from "./routes/parent.js";
+import SubjectRouter from "./routes/subject.js";
+
 import cors from "cors";
 
 const app = express();
@@ -25,7 +27,7 @@ app.use("/api", StudentRouter);
 app.use("/api", SectionRouter);
 app.use("/api", TeacherRouter);
 app.use("/api", ParentRouter);
-
+app.use("/api", SubjectRouter);
 
 app.get("/", (req, res) => {
   res.send("School Management API 🚀");

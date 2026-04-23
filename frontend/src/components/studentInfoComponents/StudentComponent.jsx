@@ -1,10 +1,16 @@
 import React, { useState } from 'react'
 import { FaPlus } from 'react-icons/fa6'
 import { IoSearchOutline } from 'react-icons/io5'
-import student from '../../Data/students'
+// import student from '../../Data/students'
+import { useGetStudentsQuery } from '../../redux/features/studentApi';
 
 const StudentComponent = ({setmodelStudent}) => {
+const { data, error, isLoading } = useGetStudentsQuery({});
+  
     
+ // Handle API response safely
+const student = data?.data?.data || [];
+
 
     
 
@@ -93,8 +99,8 @@ const StudentComponent = ({setmodelStudent}) => {
                         <td className='p-4 border-b border-[#e1e5e9] text-left capitalize'><span className={`py-1 px-2.5 rounded-2xl text-sm font-medium  ${student.status === 'Active' ? 'bg-[#d1fae5] text-[#10b981]' : ''} ${student.status === 'Pending' ? ' bg-[#fef3c7] text-[#92400e]' : ''} ${student.status === 'Completed' ? ' bg-[#dbeafe] text-[#1e40af]' : ''}`}>{student.status}</span></td>
                         <td className='p-5 border-b border-[#e1e5e9] text-left flex gap-2'>
                             <button type='button' className='bg-[#f8f9fa] hover:bg-[#ffffff] text-[#333] border border-[#e1e5e9] px-4 py-2 rounded-md'>View</button>
-                            <button type='button' className='bg-[#fcd116] hover:bg-[#ffda33] text-[#333] border border-[#e1e5e9] px-4 py-2 rounded-md' onClick={() => handleEdit(index)}>Edit</button>
-                            <button type='button' className='bg-[#ce1126] hover:bg-[#dc001a] text-white border border-[#e1e5e9] px-4 py-2 rounded-md' onClick={() => deleteStudent(index)}>Delete</button>
+                            <button type='button' className='bg-[#fcd116] hover:bg-[#ffda33] text-[#333] border border-[#e1e5e9] px-4 py-2 rounded-md'onClick={() => handleEdit(student._id)}>Edit</button>
+                            <button type='button' className='bg-[#ce1126] hover:bg-[#dc001a] text-white border border-[#e1e5e9] px-4 py-2 rounded-md' onClick={() => deleteStudent(student._id)}>Delete</button>
                         </td>
                     </tr> ))}
                 </tbody>

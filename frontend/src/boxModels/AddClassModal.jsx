@@ -13,7 +13,7 @@ const AddClassModal = ({setAllClasse}) => {
 
     const [formData, setFormData] = useState({
         className: "",
-        section: "",
+      
         teacher: "",
       
         });
@@ -28,6 +28,11 @@ const AddClassModal = ({setAllClasse}) => {
 const handleSubmit = async (e) => {
   e.preventDefault();
 
+  if (!formData.className.trim()) {
+    alert("Class name is required");
+    return;
+  }
+
   try {
     const payload = {
       name: formData.className,
@@ -36,11 +41,12 @@ const handleSubmit = async (e) => {
     await createClass(payload).unwrap();
 
     alert("Class created successfully");
-
     setAllClasse(false);
   } catch (error) {
-    console.log(error);
-    alert("Failed to create class");
+    console.log("ERROR:", error);
+    console.log("ERROR DATA:", error?.data);
+
+    alert(error?.data?.message || "Failed to create class");
   }
 };
   return (
@@ -58,41 +64,10 @@ const handleSubmit = async (e) => {
             <div className="grid grid-cols-2 gap-5">
 
 
-                <div className="mb-4">
-                    <label htmlFor="lessonTitle" className="font-medium block mb-2 text-[#333]">Section *</label>
-                   <select
-                        name="section"
-                        value={formData.section}
-                        onChange={handleChange}
-                        >
-                        <option value="">Select section</option>
-
-                        {sections?.data?.map((sec) => (
-                            <option key={sec._id} value={sec._id}>
-                            {sec.name}
-                            </option>
-                        ))}
-                     </select>
-                </div>
+              
 
 
-                <div className="mb-4">
-                    <label htmlFor="lessonTitle" className="font-medium block mb-2 text-[#333]">Teacher *</label>
-                   <select
-                            name="teacher"
-                            value={formData.teacher}
-                            onChange={handleChange}
-                            required
-                            >
-                            <option value="">Select Teacher</option>
-
-                            {teachers?.data?.map((teacher) => (
-                                <option key={teacher._id} value={teacher._id}>
-                                {teacher.fullName} ({teacher.subject})
-                                </option>
-                            ))}
-                    </select>
-                </div>
+               
             </div>
 
             <div className="flex gap-4 justify-end mt-8 pt-4 border-t border-[#e1e5e9]">

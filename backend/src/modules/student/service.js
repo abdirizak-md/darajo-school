@@ -3,8 +3,6 @@ import Parent from "../parents/modal.js";
 
 /**
  * ➕ CREATE STUDENT
- * - find or create parent
- * - assign parentId
  */
 export const createStudentService = async (data) => {
   const {
@@ -15,23 +13,31 @@ export const createStudentService = async (data) => {
     ...studentData
   } = data;
 
-  // 🔍 1. Check if parent exists
-  let parent = await Parent.findOne({ phone: parentPhone });
-
-  // ➕ 2. Create parent if not exists
-  if (!parent) {
-    parent = await Parent.create({
-      fullName: parentName,
-      phone: parentPhone,
-      email,
-      address,
-    });
+  // ✅ validation
+  if (!studentData.classId || !studentData.sectionId) {
+    throw new Error("classId and sectionId are required");
   }
 
-  // 🎓 3. Create student
+  // 🔍 find parent safely
+  let parent = null;
+
+  if (parentPhone) {
+    parent = await Parent.findOne({ phone: parentPhone });
+
+    if (!parent) {
+      parent = await Parent.create({
+        fullName: parentName,
+        phone: parentPhone,
+        email,
+        address,
+      });
+    }
+  }
+
+  // 🎓 create student
   const student = await Student.create({
     ...studentData,
-    parentId: parent._id,
+    parentId: parent ? parent._id : null,
   });
 
   return student;
@@ -62,7 +68,7 @@ export const getStudentsService = async (query = {}) => {
 };
 
 /**
- * 🔍 GET ONE STUDENT
+ * 🔍 GET ONE
  */
 export const getStudentByIdService = async (id) => {
   const student = await Student.findById(id)
@@ -71,15 +77,13 @@ export const getStudentByIdService = async (id) => {
     .populate("classId", "name")
     .lean();
 
-  if (!student) {
-    throw new Error("Student not found");
-  }
+  if (!student) throw new Error("Student not found");
 
   return student;
 };
 
 /**
- * ✏️ UPDATE STUDENT
+ * ✏️ UPDATE
  */
 export const updateStudentService = async (id, payload) => {
   const updated = await Student.findByIdAndUpdate(id, payload, {
@@ -87,22 +91,18 @@ export const updateStudentService = async (id, payload) => {
     runValidators: true,
   });
 
-  if (!updated) {
-    throw new Error("Student not found");
-  }
+  if (!updated) throw new Error("Student not found");
 
   return updated;
 };
 
 /**
- * ❌ DELETE STUDENT
+ * ❌ DELETE
  */
 export const deleteStudentService = async (id) => {
   const deleted = await Student.findByIdAndDelete(id);
 
-  if (!deleted) {
-    throw new Error("Student not found");
-  }
+  if (!deleted) throw new Error("Student not found");
 
   return deleted;
 };

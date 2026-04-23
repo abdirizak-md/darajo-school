@@ -6,17 +6,9 @@ const classSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-    },
-    section: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Section",
-      required: true,
-    },
-    teacherId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Teacher",
-      required: true,
-    },
+    }
+ 
+ 
   },
   { timestamps: true }
 );

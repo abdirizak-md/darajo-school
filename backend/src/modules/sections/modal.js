@@ -15,7 +15,7 @@ const sectionSchema = new mongoose.Schema(
 
     capacity: {
       type: Number,
-      default: 40, // max students
+      default: 60, // max students
     },
 
     classId: {
@@ -29,16 +29,8 @@ const sectionSchema = new mongoose.Schema(
       ref: "Teacher",
     },
 
-    shift: {
-      type: String,
-      enum: ["Morning", "Afternoon", "Evening"],
-      default: "Morning",
-    },
 
-    academicYear: {
-      type: String,
-      default: "2025-2026",
-    },
+  
 
     status: {
       type: String,
