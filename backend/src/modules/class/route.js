@@ -1,6 +1,6 @@
 import express from "express";
-import * as controller from "./class.controller.js";
-import { validateCreateClass } from "./class.validation.js";
+import * as controller from "./controller.js";
+import { validateCreateClass } from "./validation.js";
 
 const router = express.Router();
 

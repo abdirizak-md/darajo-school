@@ -8,16 +8,14 @@ const classSchema = new mongoose.Schema(
       trim: true,
     },
     section: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Section",
       required: true,
-    },
-    capacity: {
-      type: Number,
-      default: 50,
     },
     teacherId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Teacher",
+      required: true,
     },
   },
   { timestamps: true }
