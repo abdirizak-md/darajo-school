@@ -2,6 +2,13 @@ import mongoose from "mongoose";
 
 const studentSchema = new mongoose.Schema(
   {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: false,
+      unique: true,
+    },
+
     fullName: {
       type: String,
       required: true,
@@ -12,13 +19,13 @@ const studentSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
+      trim: true,
     },
-
-    dateOfBirth: Date,
 
     gender: {
       type: String,
       enum: ["male", "female"],
+      lowercase: true,
     },
 
     classId: {
@@ -33,28 +40,27 @@ const studentSchema = new mongoose.Schema(
       required: true,
     },
 
-    admissionDate: Date,
-parentId: {
-  type: mongoose.Schema.Types.ObjectId,
-  ref: "Parent",
-  required: true,
-},
+    rollNumber: String,
 
-    address: String,
+    parentId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Parent",
+      required: true,
+    },
+
     emergencyContact: String,
+    medicalInfo: String,
 
     status: {
       type: String,
-      enum: ["Active", "Inactive"],
+      enum: ["Active", "Inactive", "Graduated"],
       default: "Active",
     },
-
-    medicalInfo: String,
   },
   { timestamps: true }
 );
 
-// 🚀 performance index
+studentSchema.index({ admissionNumber: 1 });
 studentSchema.index({ classId: 1, sectionId: 1 });
 
 export default mongoose.model("Student", studentSchema);

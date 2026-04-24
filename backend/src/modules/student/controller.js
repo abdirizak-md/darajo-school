@@ -1,6 +1,6 @@
 import * as service from "./service.js";
 import { asyncHandler } from "../../common/utils/asyncHandler.js";
-import { STUDENT_MESSAGES } from "../../common/constant/student.js";
+import STUDENT_MESSAGES  from "../../common/constant/student.js";
 
 // ➕ CREATE
 export const createStudent = asyncHandler(async (req, res) => {

@@ -1,8 +1,9 @@
-export const STUDENT_MESSAGES = {
+const studentMessages = {
   CREATED: "Student created successfully",
+  FETCHED: "Students fetched successfully",
   UPDATED: "Student updated successfully",
   DELETED: "Student deleted successfully",
-  FETCHED_ALL: "Students fetched successfully",
-  FETCHED_ONE: "Student fetched successfully",
   NOT_FOUND: "Student not found",
 };
+
+export default studentMessages;

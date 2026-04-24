@@ -13,6 +13,11 @@ const sectionSchema = new mongoose.Schema(
       required: true, // e.g. "R-101"
     },
 
+    description: {
+      type: String,
+      default: "",
+    },
+
     capacity: {
       type: Number,
       default: 60, // max students

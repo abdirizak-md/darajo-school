@@ -5,6 +5,8 @@ import SectionRouter from "./routes/section.js";
 import TeacherRouter from "./routes/teacher.js";
 import ParentRouter from "./routes/parent.js";
 import SubjectRouter from "./routes/subject.js";
+import routeAtten from "./routes/attendance.js";
+import routerUsers from "./routes/users.js";
 
 import cors from "cors";
 
@@ -28,6 +30,10 @@ app.use("/api", SectionRouter);
 app.use("/api", TeacherRouter);
 app.use("/api", ParentRouter);
 app.use("/api", SubjectRouter);
+app.use("/api", routeAtten);
+app.use("/api", routerUsers);
+
+
 
 app.get("/", (req, res) => {
   res.send("School Management API 🚀");

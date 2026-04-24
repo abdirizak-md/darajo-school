@@ -12,6 +12,11 @@ const subjectAssignSchema = new mongoose.Schema(
       ref: "Class",
       required: true,
     },
+    sectionId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Section",
+      required: true,
+    },
     teacherId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Teacher",
@@ -21,10 +26,6 @@ const subjectAssignSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// prevent duplicate assignment
-subjectAssignSchema.index(
-  { subjectId: 1, classId: 1 },
-  { unique: true }
-);
+
 
 export default mongoose.model("SubjectAssign", subjectAssignSchema);

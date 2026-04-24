@@ -1,12 +1,9 @@
-export const successResponse = (
-  res,
-  data,
-  message = "Success",
-  status = 200
-) => {
-  res.status(status).json({
-    success: true,
+const apiResponse = (res, { success, message, data, statusCode = 200 }) => {
+  return res.status(statusCode).json({
+    success,
     message,
     data,
   });
 };
+
+export default apiResponse;

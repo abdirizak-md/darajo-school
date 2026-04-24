@@ -14,6 +14,11 @@ const subjectSchema = new mongoose.Schema(
       unique: true,
       trim: true,
     },
+
+    description: {
+      type: String,
+      default: "",
+    },
   },
   { timestamps: true }
 );

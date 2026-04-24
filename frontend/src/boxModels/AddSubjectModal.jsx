@@ -7,6 +7,7 @@ const AddSubjectModal = ({ setAddSubject }) => {
 
   const [name, setName] = useState("");
   const [code, setCode] = useState("");
+  const [description, setDescription ] = useState("");
   const [status, setStatus] = useState("ACTIVE");
 
   // ✅ ALERT STATE
@@ -35,12 +36,14 @@ const AddSubjectModal = ({ setAddSubject }) => {
       await createSubject({
         name,
         code,
+        description,
         status,
       }).unwrap();
 
       // reset form
       setName("");
       setCode("");
+      setDescription("");
       setStatus("ACTIVE");
 
       // ✅ show success first
@@ -108,18 +111,31 @@ const AddSubjectModal = ({ setAddSubject }) => {
 
           {/* CODE */}
           <div className="mb-4">
-            <label className="block mb-2 font-medium">
-              Subject Code *
-            </label>
-            <input
-              type="text"
-              placeholder="Enter subject code"
-              className="w-full p-2 border rounded"
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-            />
-          </div>
 
+              <label className="block mb-2 font-medium">
+                Subject Code *
+              </label>
+              <input
+                type="text"
+                placeholder="Enter subject code"
+                className="w-full p-2 border rounded"
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
+              />
+            </div>
+          <div className="mb-4">
+
+              <label className="block mb-2 font-medium">
+                Subject Description *
+              </label>
+              <input
+                type="text"
+                placeholder="Enter subject description"
+                className="w-full p-2 border rounded"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </div>
           {/* STATUS */}
           <div className="mb-4">
             <label className="block mb-2 font-medium">
