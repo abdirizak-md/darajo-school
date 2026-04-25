@@ -1,30 +1,40 @@
 import rolePermissions from "../constant/rolePermissions.js";
+import statusCodes from "../constant/statusCode.js";
 
-const permissionMiddleware = (...requiredPermissions) => {
+const permissionMiddleware = (requiredPermission) => {
   return (req, res, next) => {
-    const userRole = req.user?.role;
+    try {
+      const user = req.user;
 
-    if (!userRole) {
-      return res.status(401).json({
-        success: false,
-        message: "Unauthorized",
-      });
+      if (!user) {
+        return res
+          .status(statusCodes.UNAUTHORIZED)
+          .json({ message: "Unauthorized access waryaa " });
+      }
+
+      const userPermissions = rolePermissions[user.role] || [];
+
+
+        // ✅ DEBUG HERE (CORRECT PLACE)
+      console.log("ROLE:", user.role);
+      console.log("USER PERMISSIONS:", userPermissions);
+      console.log("REQUIRED:", requiredPermission);
+      console.log("AUTH HEADER:", req.headers.authorization);
+      console.log("Headers:", req.headers);
+      console.log("Body:", req.body);
+
+      if (!userPermissions.includes(requiredPermission)) {
+        return res
+          .status(statusCodes.FORBIDDEN)
+          .json({ message: "Access denied" });
+      }
+
+      next();
+    } catch (error) {
+      return res
+        .status(statusCodes.UNAUTHORIZED)
+        .json({ message: "Permission error" });
     }
-
-    const userPermissions = rolePermissions[userRole] || [];
-
-    const hasPermission = requiredPermissions.every((perm) =>
-      userPermissions.includes(perm)
-    );
-
-    if (!hasPermission) {
-      return res.status(403).json({
-        success: false,
-        message: "Forbidden: insufficient permissions",
-      });
-    }
-
-    next();
   };
 };
 

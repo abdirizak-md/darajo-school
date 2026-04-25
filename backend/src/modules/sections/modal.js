@@ -12,11 +12,7 @@ const sectionSchema = new mongoose.Schema(
       type: String,
       required: true, // e.g. "R-101"
     },
-
-    description: {
-      type: String,
-      default: "",
-    },
+    
 
     capacity: {
       type: Number,

@@ -60,7 +60,7 @@ const studentSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-studentSchema.index({ admissionNumber: 1 });
+// studentSchema.index({ admissionNumber: 1 });
 studentSchema.index({ classId: 1, sectionId: 1 });
 
 export default mongoose.model("Student", studentSchema);

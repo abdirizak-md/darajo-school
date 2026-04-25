@@ -3,11 +3,14 @@ import User from "../../modules/user/modal.js";
 import messages from "../constant/message.js";
 import statusCodes from "../constant/statusCode.js";
 
+
+
+
 const authMiddleware = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
 
-    if (!authHeader || !authHeader.startsWith("Bearer")) {
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
       return res
         .status(statusCodes.UNAUTHORIZED)
         .json({ message: messages.AUTH.UNAUTHORIZED });

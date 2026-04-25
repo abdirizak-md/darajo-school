@@ -7,6 +7,10 @@ import ParentRouter from "./routes/parent.js";
 import SubjectRouter from "./routes/subject.js";
 import routeAtten from "./routes/attendance.js";
 import routerUsers from "./routes/users.js";
+import examRoute from "./routes/exam.js";
+import examResults from "./routes/resultExam.js";
+
+
 
 import cors from "cors";
 
@@ -32,7 +36,8 @@ app.use("/api", ParentRouter);
 app.use("/api", SubjectRouter);
 app.use("/api", routeAtten);
 app.use("/api", routerUsers);
-
+app.use('/api', examRoute)
+app.use('/api', examResults)
 
 
 app.get("/", (req, res) => {

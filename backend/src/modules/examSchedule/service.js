@@ -1,4 +1,4 @@
-import ExamSchedule from "./examSchedule.model.js";
+import ExamSchedule from "./modal.js";
 import AppError from "../../common/utils/appError.js";
 
 export const createSchedule = async (data) => {

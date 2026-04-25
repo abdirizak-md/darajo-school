@@ -1,4 +1,4 @@
-import statusCodes from "../../common/constants/statusCodes.js";
+import statusCodes from "../../common/constant/statusCode.js";
 
 export const validateCreateExam = (req, res, next) => {
   const {

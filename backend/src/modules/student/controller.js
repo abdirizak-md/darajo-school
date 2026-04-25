@@ -1,6 +1,7 @@
 import * as service from "./service.js";
 import { asyncHandler } from "../../common/utils/asyncHandler.js";
 import STUDENT_MESSAGES  from "../../common/constant/student.js";
+import * as resultService from "../../modules/examResult/service.js";
 
 // ➕ CREATE
 export const createStudent = asyncHandler(async (req, res) => {
@@ -81,5 +82,20 @@ export const deleteStudent = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     message: STUDENT_MESSAGES.DELETED,
+  });
+});
+
+
+
+export const getStudentCGPA = asyncHandler(async (req, res) => {
+  const cgpa = await resultService.calculateStudentCGPA(
+    req.params.studentId
+  );
+
+  return apiResponse(res, {
+    success: true,
+    message: "CGPA calculated successfully",
+    statusCode: statusCodes.SUCCESS,
+    data: { cgpa },
   });
 });

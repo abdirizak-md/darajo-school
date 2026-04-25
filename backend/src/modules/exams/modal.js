@@ -33,7 +33,7 @@ const examSchema = new mongoose.Schema(
 
     examDate: {
       type: Date,
-      required: true,
+      required: false,
     },
 
     startTime: {
@@ -51,7 +51,7 @@ const examSchema = new mongoose.Schema(
 
     passMarks: {
       type: Number,
-      required: true,
+      required: false,
     },
 
     status: {
