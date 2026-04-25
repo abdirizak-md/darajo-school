@@ -36,7 +36,7 @@ const student = data?.data?.data || [];
     <div className="bg-white p-6 mb-8 shadow rounded-md">
         <div className="flex justify-between items-center mb-8">
             <span className='text-[#333] text-2xl font-bold'>Student Directory</span>
-            <button className='px-5 py-2 text-white bg-[#006b3f] rounded-md flex items-center gap-2' onClick={() => setmodelStudent(true)}><FaPlus />Add Student</button>
+            <button className='px-5 py-2 text-white bg-orange-500 rounded-md flex items-center gap-2' onClick={() => setmodelStudent(true)}><FaPlus />Add Student</button>
         </div>
         
         <form className="grid grid-cols-1  lg:grid-cols-[3fr_2fr_150px] md:grid-cols-[3fr_2fr_150px] gap-5 ">
@@ -88,7 +88,7 @@ const student = data?.data?.data || [];
                             <span>{student.fullName}</span>
                             <div className="flex items-center gap-2">
                             <span className='text-sm text-[#666]'>{student.gender}</span>
-                            <span className='text-[#006b3f]'>•</span>
+                            <span className='text-orange-500'>•</span>
                             <span className='text-sm text-[#666]'>{calculateAge(student.birthDate)}</span>
                             </div>
                         </div>

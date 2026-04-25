@@ -7,16 +7,16 @@ const SectionsComponent = ({setAddSection}) => {
     <div className="bg-white p-6 mb-6 shadow rounded-md">
         <div className="flex justify-between items-center mb-4">
             <span className='text-[#333] text-2xl font-bold'>Manage Sections</span>
-            <button className='px-5 py-2 cursor-pointer text-white bg-[#006b3f] rounded-md inline-flex items-center gap-2' onClick={() => setAddSection(true)}><FaPlus />Add Section</button>
+            <button className='px-5 py-2 cursor-pointer text-white bg-orange-500 rounded-md inline-flex items-center gap-2' onClick={() => setAddSection(true)}><FaPlus />Add Section</button>
         </div>
                 
         <form className="grid grid-cols-1 md:grid-cols-[3fr_2fr_150px] gap-5 mb-4">
             <div className="mb-4">
-                <input type="text" placeholder='Search Sections...' className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-lg transition-all duration-300 ease-in-out placeholder:text-sm focus:outline-[#006b3f]"/>
+                <input type="text" placeholder='Search Sections...' className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-lg transition-all duration-300 ease-in-out placeholder:text-sm focus:outline-orange5bg-orange-500"/>
             </div>
 
             <div className="mb-4">
-                <select name="subject" id="subject" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-lg focus:outline-[#006b3f] transition-all duration-300 ease-in-out" required>
+                <select name="subject" id="subject" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-lg focus:outline-orange5bg-orange-500 transition-all duration-300 ease-in-out" required>
                     <option value="">Select Section</option>
                     <option value="All Sections">All Sections</option>
                     <option value="Section A">Section A</option>

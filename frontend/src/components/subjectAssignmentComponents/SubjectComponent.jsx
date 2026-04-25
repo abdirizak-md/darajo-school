@@ -28,7 +28,7 @@ const SubjectComponent = ({ setAddSubject }) => {
         </span>
 
         <button
-          className='lg:px-5 px-3 py-2 cursor-pointer text-white bg-[#006b3f] rounded-md inline-flex items-center gap-2'
+          className='lg:px-5 px-3 py-2 cursor-pointer text-white bg-orange-500 rounded-md inline-flex items-center gap-2'
           onClick={() => setAddSubject(true)}
         >
           <FaPlus />Add Subjects

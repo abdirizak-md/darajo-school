@@ -7,7 +7,7 @@ const LessonsPlanComponent = ({lessonPlansName}) => {
         { lessonPlansName.map((lesson, index) => ( <div key={index} className="">
             <div className="flex justify-between items-center mb-4">
                 <span className='text-[#333] lg:text-2xl font-bold'>{lesson.subjectName} Lesson Plan</span>
-                <button className='lg:px-5 px-3 py-2 cursor-pointer text-white bg-[#006b3f] rounded-md inline-flex items-center gap-2'><FaPlus />Create {lesson.subjectNames}</button>
+                <button className='lg:px-5 px-3 py-2 cursor-pointer text-white bg-orange-500 rounded-md inline-flex items-center gap-2'><FaPlus />Create {lesson.subjectNames}</button>
             </div>
 
             <form className="grid grid-cols-1 lg:grid-cols-[3fr_150px] md:grid-cols-[3fr_2fr_150px] gap-3">

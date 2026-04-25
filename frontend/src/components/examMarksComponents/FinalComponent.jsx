@@ -4,10 +4,10 @@ const FinalComponent = () => {
   return (
     <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-6 mt-4">
         {   exams.map((exam, index) => (
-        <div key={index} className="bg-[#f8f9fa] rounded-2xl p-6 shadow-[0_5px_20px_rgba(0,0,0,0.1)] border border-b-4 border-b-[#006b3f]">
+        <div key={index} className="bg-[#f8f9fa] rounded-2xl p-6 shadow-[0_5px_20px_rgba(0,0,0,0.1)] border border-b-4 border-b-orange-500">
             <div className="flex justify-between items-start mb-4">
-                <h1 className='text-lg font-medium text-[#006b3f] mb-2'>{exam.examName}</h1>
-                <span className={`py-1 px-2.5 rounded-2xl text-lg text-[#006b3f] font-medium`}>Score: {exam.score}</span>
+                <h1 className='text-lg font-medium text-orange-500 mb-2'>{exam.examName}</h1>
+                <span className={`py-1 px-2.5 rounded-2xl text-lg text-orange-500 font-medium`}>Score: {exam.score}</span>
             </div>
             <div className="bg-[#f8f9fa] rounded-lg p-1 mb-4">
                 <ul className="pl-6 text-sm list-disc">

@@ -2,6 +2,10 @@ import { useState } from 'react'
 import { MdArrowBackIos } from 'react-icons/md'
 import { Link } from 'react-router-dom'
 import TotalComponent from '../components/dashboardComponents/TotalComponent'
+import DailyReportsComponent from '../components/attendanceComponents/DailyAttendanceComponent'
+import DailyAttendanceComponent from '../components/attendanceComponents/DailyAttendanceComponent'
+import ByClassAttendanceComponent from '../components/attendanceComponents/ByClassAttendanceComponent'
+import ByStudentAttendanceComponent from '../components/attendanceComponents/ByStudentAttendanceComponent'
 
 const AttendanceReport = () => {
   const [active, setActive] = useState('daily')
@@ -14,7 +18,7 @@ const AttendanceReport = () => {
       {/* Back Button */}
       <Link 
         to='/' 
-        className="flex justify-center w-fit items-center cursor-default p-3 rounded-md bg-[#006b3f] mb-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-md active:scale-95"
+        className="flex justify-center w-fit items-center cursor-default p-3 rounded-md bg-orange-500 mb-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-md active:scale-95"
       >
         <MdArrowBackIos className='text-white' size={24}/>
         <span className='text-white font-medium'>Back to Dashboard</span>
@@ -22,7 +26,7 @@ const AttendanceReport = () => {
 
       {/* Header */}
       <div className="bg-linear-0 to-white from-[#f8f9fa] rounded-md p-8 shadow-[0_5px_20px_rgba(0,0,0,0.1)] mb-8">
-        <h1 className='text-[#006b3f] text-3xl font-bold mb-4'>📊 Attendance Report</h1>
+        <h1 className='text-orange-500 text-3xl font-bold mb-4'>📊 Attendance Report</h1>
         <span className='text-[#666]'>
           Monitor student attendance, track absences, and analyze trends
         </span>
@@ -36,7 +40,7 @@ const AttendanceReport = () => {
         <button
           onClick={() => setActive('daily')}
           className={`px-8 py-3 border border-[#e1e5e9] hover:shadow-md active:scale-95 transition-all duration-200 rounded-md shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${
-            active === 'daily' ? 'bg-[#006b3f] text-white' : 'bg-white'
+            active === 'daily' ? 'bg-orange-500 text-white' : 'bg-white'
           }`}
         >
           Daily Report
@@ -45,7 +49,7 @@ const AttendanceReport = () => {
         <button
           onClick={() => setActive('class')}
           className={`px-8 py-3 border border-[#e1e5e9] hover:shadow-md active:scale-95 transition-all duration-200 rounded-md shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${
-            active === 'class' ? 'bg-[#006b3f] text-white' : 'bg-white'
+            active === 'class' ? 'bg-orange-500 text-white' : 'bg-white'
           }`}
         >
           By Class
@@ -54,7 +58,7 @@ const AttendanceReport = () => {
         <button
           onClick={() => setActive('student')}
           className={`px-8 py-3 border border-[#e1e5e9] hover:shadow-md active:scale-95 transition-all duration-200 rounded-md shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${
-            active === 'student' ? 'bg-[#006b3f] text-white' : 'bg-white'
+            active === 'student' ? 'bg-orange-500 text-white' : 'bg-white'
           }`}
         >
           By Student
@@ -62,10 +66,10 @@ const AttendanceReport = () => {
       </div>
 
       {/* Filters (optional toggle) */}
-      <div className="mb-6">
+      {/* <div className="mb-6">
         <button
           onClick={() => setShowFilter(!showFilter)}
-          className="px-6 py-2 bg-[#006b3f] text-white rounded-md shadow hover:shadow-md active:scale-95 transition"
+          className="px-6 py-2 bg-orange-500 text-white rounded-md shadow hover:shadow-md active:scale-95 transition"
         >
           {showFilter ? 'Hide Filters' : 'Show Filters'}
         </button>
@@ -75,31 +79,16 @@ const AttendanceReport = () => {
             <p className="text-[#666]">Filters (date range, class, section)</p>
           </div>
         )}
-      </div>
+      </div> */}
 
       {/* Dynamic Content */}
       <div className="bg-white rounded-md p-6 shadow-[0_5px_20px_rgba(0,0,0,0.08)]">
         
-        {active === 'daily' && (
-          <div>
-            <h2 className="text-xl font-semibold mb-4">Daily Attendance</h2>
-            <p className="text-[#666]">View attendance records for a selected date</p>
-          </div>
-        )}
+        {active === 'daily' && <DailyAttendanceComponent />}
 
-        {active === 'class' && (
-          <div>
-            <h2 className="text-xl font-semibold mb-4">Class Attendance</h2>
-            <p className="text-[#666]">Attendance grouped by class/section</p>
-          </div>
-        )}
+        {active === 'class' && <ByClassAttendanceComponent />}
 
-        {active === 'student' && (
-          <div>
-            <h2 className="text-xl font-semibold mb-4">Student Attendance</h2>
-            <p className="text-[#666]">Individual student attendance history</p>
-          </div>
-        )}
+        {active === 'student' && <ByStudentAttendanceComponent />}
 
       </div>
 

@@ -7,7 +7,7 @@ const PayrollComponent = () => {
     <div className="bg-white p-6 mb-6 shadow rounded-md">
         <div className="flex justify-between items-center mb-4">
             <span className='text-[#333] text-2xl font-bold'>Class Schedule</span>
-            <button className='px-5 py-2 cursor-pointer text-white bg-[#006b3f] rounded-md inline-flex items-center gap-2'><FaPlus />Create Schedule</button>
+            <button className='px-5 py-2 cursor-pointer text-white bg-orange-500 rounded-md inline-flex items-center gap-2'><FaPlus />Create Schedule</button>
         </div>
         
     <form className="grid grid-cols-1 md:grid-cols-[3fr_200px] gap-5 mb-4">

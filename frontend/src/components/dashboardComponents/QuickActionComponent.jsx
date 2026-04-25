@@ -6,7 +6,7 @@ const QuickActionComponent = () => {
         <h1 className='text-lg mb-6 text-gray-700 font-bold'>Quick Actions</h1>
         <div className="rounded-2xl p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {actions.map((action) => (
-            <button key={action.label} className="flex items-center gap-3 p-3 bg-gray-100 hover:bg-[#f97316] hover:text-white rounded-lg transition">
+            <button key={action.label} className="flex items-center gap-3 p-3 bg-gray-100 hover:bg-orange-500 hover:text-white rounded-lg transition">
                 <action.icon size={20} />
                 <span>{action.label}</span>
             </button>

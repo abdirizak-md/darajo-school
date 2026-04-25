@@ -8,7 +8,7 @@ const GradeComponent = () => {
     <div className="bg-white p-6 mb-6 shadow rounded-md">
         <div className="flex justify-between items-center mb-4">
             <span className='text-[#333] lg:text-2xl font-bold'>Grade Management</span>
-            <button className='lg:px-5 py-2 px-3 cursor-pointer text-white bg-[#006b3f] rounded-md inline-flex items-center gap-2'><FaPlus />Import Grades</button>
+            <button className='lg:px-5 py-2 px-3 cursor-pointer text-white bg-orange-500 rounded-md inline-flex items-center gap-2'><FaPlus />Import Grades</button>
         </div>
             
         <form className="grid grid-cols-1  lg:grid-cols-[3fr_2fr_150px] md:grid-cols-[3fr_2fr_150px] gap-5 ">

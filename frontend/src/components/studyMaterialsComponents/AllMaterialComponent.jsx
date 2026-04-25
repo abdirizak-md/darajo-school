@@ -8,7 +8,7 @@ const AllMaterialComponent = () => {
     <div className="bg-white p-6 mb-6 shadow rounded-md">
         <div className="flex justify-between items-center mb-4">
             <span className='text-[#333] lg:text-2xl font-bold'>Study Materils Library</span>
-            <button className='lg:px-5 px-3 py-2 cursor-pointer text-white bg-[#006b3f] rounded-md inline-flex items-center gap-2'><FaPlus />Upload Materials</button>
+            <button className='lg:px-5 px-3 py-2 cursor-pointer text-white bg-orange-500 rounded-md inline-flex items-center gap-2'><FaPlus />Upload Materials</button>
         </div>
         
         <form className="grid grid-cols-1 lg:grid-cols-[3fr_2fr_150px] md:grid-cols-[3fr_2fr_150px] gap-3">
@@ -33,10 +33,10 @@ const AllMaterialComponent = () => {
 
         <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-6 mt-4">
         {   studyMaterials.map((material, index) => (
-            <div key={index} className="bg-white rounded-2xl p-6 shadow-[0_5px_20px_rgba(0,0,0,0.1)] border-l-4 border-l-[#006b3f]">
+            <div key={index} className="bg-white rounded-2xl p-6 shadow-[0_5px_20px_rgba(0,0,0,0.1)] border-l-4 border-l-orange-500">
             <div className="flex justify-between items-start mb-4">
                     <div className="">
-                        <h1 className='text-lg font-medium text-[#006b3f] mb-2'>{material.materials}</h1>
+                        <h1 className='text-lg font-medium text-orange-500 mb-2'>{material.materials}</h1>
                         <p className='text-[1rem] text-[#333] mb-2'>{material.subject} • {material.classLevel}</p>
                         <div className="flex gap-3.5 text-[#333] mb-4 text-sm">
                             <span className='text-[#666] text-sm'>{material.durations}</span>

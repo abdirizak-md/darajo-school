@@ -10,6 +10,7 @@ import StudyMaterials from './pages/StudyMaterials.jsx'
 import ExamsMarks from './pages/ExamsMarks.jsx'
 import FeesCollection from './pages/FeesCollection.jsx'
 import PendingFees from './pages/PendingFees.jsx'
+import Communications from './pages/Communications.jsx'
 import StaffDirectory from './pages/StaffDirectory.jsx'
 import Payroll from './pages/Payroll.jsx'
 import StudentInfo from './pages/StudentInfo.jsx'
@@ -56,7 +57,7 @@ const router = createBrowserRouter([
         element: <StudyMaterials />
       },
       {        
-        path: '/exams',
+        path: '/exams-marks',
         element: <ExamsMarks />
       },
       {        
@@ -66,6 +67,10 @@ const router = createBrowserRouter([
       {        
         path: '/pending-fees',
         element: <PendingFees />
+      },
+      {        
+        path: '/communications',
+        element: <Communications />
       },
       {        
         path: '/staff-directory',

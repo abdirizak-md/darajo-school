@@ -1,4 +1,4 @@
-import { FaBook, FaCalendar, FaCalendarCheck, FaChalkboardUser, FaClipboardCheck, FaClock, FaFile, FaGraduationCap, FaMoneyBill, FaTachographDigital, FaUserGraduate, FaUsers } from "react-icons/fa6"
+import { FaBook, FaCalendar, FaCalendarCheck, FaChalkboardUser, FaClipboardCheck, FaClock, FaComment, FaFile, FaGraduationCap, FaMoneyBill, FaTachographDigital, FaUserGraduate, FaUsers } from "react-icons/fa6"
 
 export const dashboard = [
       {
@@ -32,7 +32,7 @@ export const academics = [
       {
         label: 'Exams & Marks',
         icon: FaClipboardCheck ,
-        path: '/exams',
+        path: '/exams-marks',
       },
     ]
 
@@ -40,6 +40,10 @@ export const academics = [
 export const feesAccounts = [
       { label: 'Fees Collection', icon: FaMoneyBill , path: '/fees-collection' },
       { label: 'Pending Fees', icon: FaClock , path: '/pending-fees' },
+    ]
+
+export const Onlines = [
+      { label: 'Communications', icon: FaComment , path: '/communications' },
     ]
     
 export const staffManagements = [
