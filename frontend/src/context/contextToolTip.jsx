@@ -31,7 +31,7 @@ export const TooltipProvider = ({ children }) => {
       {tooltip.visible &&
         createPortal(
           <div
-            className="fixed z-[9999] -translate-y-1/2 whitespace-nowrap rounded-lg bg-gray-900 px-3 py-1 text-xs text-white shadow-lg pointer-events-none"
+            className="fixed z-999 -translate-y-1/2 whitespace-nowrap rounded-lg bg-gray-900 px-3 py-1 text-xs text-white shadow-lg pointer-events-none"
             style={{
               top: tooltip.y,
               left: tooltip.x,

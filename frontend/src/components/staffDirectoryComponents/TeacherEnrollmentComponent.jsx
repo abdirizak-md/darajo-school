@@ -1,14 +1,14 @@
 import React from 'react'
 import { FaPlus } from 'react-icons/fa6'
 import { IoSearchOutline } from 'react-icons/io5'
-import staffs from '../../Data/staffs'
 
-const TeacherEnrollmentComponent = ({setTeacherEnrollMentModal}) => {
+const TeacherEnrollmentComponent = ({setEnrolled}) => {
+    const enrolls = []
   return (
     <div className="bg-white p-6 mb-8 shadow rounded-md">
       <div className="flex justify-between items-center mb-8">
           <span className='text-[#333] text-2xl font-bold'>Teacher Enrollment</span>
-          <button className='px-5 py-2 text-white bg-orange-500 rounded-md flex items-center gap-2' onClick={() => setTeacherEnrollMentModal(true)}><FaPlus />Enroll</button>
+          <button className='px-5 py-2 text-white bg-orange-500 rounded-md flex items-center gap-2' onClick={() => setEnrolled(true)}><FaPlus />Enroll</button>
       </div>
       
       <form className="grid grid-cols-1  lg:grid-cols-[3fr_2fr_150px] md:grid-cols-[3fr_2fr_150px] gap-5 ">
@@ -44,13 +44,20 @@ const TeacherEnrollmentComponent = ({setTeacherEnrollMentModal}) => {
                 </tr>
             </thead>
             <tbody className='table-row-group border-inherit'>
-                {   staffs.map((staff, index) => (
+                {enrolls.length === 0 && (
+                        <tr>
+                            <td colSpan="6" className="p-4 text-center text-gray-500">
+                            No enrolls found.
+                            </td>
+                        </tr>
+                    )}
+                {   enrolls.map((enroll, index) => (
                     <tr key={index} className="hover:bg-[#f8f9fa]">
-                    <td className='p-4 border-b border-[#e1e5e9] text-left'> {staff.staffMember}</td>
-                    <td className='p-4 border-b border-[#e1e5e9] text-left'> {staff.role}</td>
-                    <td className='p-4 border-b border-[#e1e5e9] text-left'>{staff.department}</td>
-                    <td className='p-4 border-b border-[#e1e5e9] text-left'>{staff.phone}</td>
-                    <td className='p-4 border-b border-[#e1e5e9] text-left'>{staff.email}</td>
+                    <td className='p-4 border-b border-[#e1e5e9] text-left'> {enroll.enrollMember}</td>
+                    <td className='p-4 border-b border-[#e1e5e9] text-left'> {enroll.role}</td>
+                    <td className='p-4 border-b border-[#e1e5e9] text-left'>{enroll.department}</td>
+                    <td className='p-4 border-b border-[#e1e5e9] text-left'>{enroll.phone}</td>
+                    <td className='p-4 border-b border-[#e1e5e9] text-left'>{enroll.email}</td>
                     <td className='p-4 border-b border-[#e1e5e9] text-left flex gap-2'>
                         <button className='bg-[#f8f9fa] hover:bg-[#ffffff] text-[#333] border border-[#e1e5e9] px-4 py-2 rounded-md'>View</button>
                         <button className='bg-[#fcd116] hover:bg-[#ffda33] text-[#333] border border-[#e1e5e9] px-4 py-2 rounded-md' onClick={() => startUpdatingIndex(index)}>Edit</button>

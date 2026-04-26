@@ -5,8 +5,7 @@ import { useCreateStudentMutation } from "../redux/features/studentApi";
 import { useGetClassesQuery } from "../redux/features/classApi";
 import { useGetSectionsQuery } from "../redux/features/sectionApi";
 
-const TeacherEnrollmentModal
- = ({ setTeacherEnrollmentModal }) => {
+const TeacherEnrollmentModal = ({ setEnrolled }) => {
   const [createStudent, { isLoading }] = useCreateStudentMutation();
 
   // ✅ Classes (always load)
@@ -63,7 +62,7 @@ const TeacherEnrollmentModal
         {/* HEADER */}
         <div className="flex justify-between p-4 border-b">
           <h2 className="text-xl font-bold">Add Teacher</h2>
-          <IoClose size={26} onClick={() => setTeacherEnrollmentModal(false)} />
+          <IoClose size={26} onClick={() => setEnrolled(false)} />
         </div>
 
         {/* FORM */}

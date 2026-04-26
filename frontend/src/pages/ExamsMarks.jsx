@@ -5,6 +5,7 @@ import TotalComponent from '../components/dashboardComponents/TotalComponent'
 import FinalComponent from '../components/examMarksComponents/FinalComponent'
 import AllClassesExamMarkComponent from '../components/examMarksComponents/AllClassesExamMarkComponent'
 import SectionExamMarkComponent from '../components/examMarksComponents/SectionExamMarkComponent'
+import SchedulesExamMarkComponent from '../components/examMarksComponents/SchedulesExamMarkComponent'
 
 
 const ExamsMarks = () => {
@@ -30,11 +31,12 @@ const ExamsMarks = () => {
         <div className="flex gap-5 mb-8">
             <button onClick={() => setActive('classes')} className={`px-8 py-3 border border-[#e1e5e9]  hover:shadow-md active:scale-95 transition-all duration-200 rounded-md shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active == 'classes' ? 'bg-orange-500 text-white' : 'bg-white'}`}>All Classes</button>
             <button onClick={() => setActive('sections')} className={`px-8 py-3 border border-[#e1e5e9] hover:shadow-md active:scale-95 transition-all duration-200 rounded-md shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active == 'sections' ? 'bg-orange-500 text-white' : 'bg-white'}`}>Sections</button>
-            <button onClick={() => setActive('schedules')} className={`px-8 py-3 border border-[#e1e5e9]  hover:shadow-md active:scale-95 transition-all duration-200 rounded-md shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active == 'schedules' ? 'bg-orange-500 text-white' : 'bg-white'}`}>Schedules</button>
+            <button onClick={() => setActive('Exams')} className={`px-8 py-3 border border-[#e1e5e9]  hover:shadow-md active:scale-95 transition-all duration-200 rounded-md shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active == 'Exams' ? 'bg-orange-500 text-white' : 'bg-white'}`}>Exams Entry</button>
          </div>
 
          { active === 'classes' && <AllClassesExamMarkComponent /> }
          { active === 'sections' && <SectionExamMarkComponent /> }
+         { active === 'Exams' && <SchedulesExamMarkComponent /> }
     </section>
   )
 }

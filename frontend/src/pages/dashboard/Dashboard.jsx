@@ -12,15 +12,18 @@ const Dashboard = () => {
   return (
         // Main Admin Dashboard
     <div className='bg-[#f5f7fa] p-8 transition-all duration-300 ease-in-out'>
-            {close && <div className="fixed z-1000 left-0 top-0 w-full h-full bg-[rgba(0,0,0,0.5)] ">
-              <ASide close={close} setClose={setClose}/>
-              </div>}
+            {close && 
+            <div className="fixed inset-0 z-40 flex h-screen">
+              <ASide close={close} setClose={setClose} className="h-screen overflow-y-auto"/>
+              <div className="flex-1 bg-black/50 "></div>
+            </div>
+              }
           <div className="flex items-center justify-between mb-8">
             <div className="flex flex-col">
               <h1 className='text-3xl text-[#333] font-bold'>Welcome back, Admin!</h1>
               <p className='text-[#666] text-md'>Here's what's happening at our school today</p>
             </div>
-            <MdMenu size={32} className='lg:hidden md:hidden'  onClick={() => setClose(true)}/>
+            { !close && <MdMenu size={32} className='lg:hidden text-orange-500'  onClick={() => setClose(true)}/>}
           </div>
 
           {/* cards */}

@@ -59,22 +59,14 @@ const handleSubmit = async (e) => {
                 <label htmlFor="lessonTitle" className="font-medium block mb-2 text-[#333]">Class Name *</label>
                 <input type="text" name="className" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm transition-all duration-300 ease-in-out" value={formData.className} onChange={handleChange} placeholder='Enter class name'/>
             </div>
-            {/* teacher */}
-          <div className="mb-4">
-            <label>teacher</label>
-            <select
-              value={formData.teacherId}
-              onChange={(e) => setFormData({...formData, teacherId: e.target.value})}
-              className="w-full p-2 border"
-            >
-              <option value="">Select a teacher</option>
-              {teachers?.map((teacher) => (
-                <option key={teacher._id} value={teacher._id}>
-                  {teacher.fullName}
-                </option>
-              ))}
-            </select>
-          </div>
+            <div className="grid grid-cols-2 gap-5">
+
+
+              
+
+
+               
+            </div>
 
             <div className="flex gap-4 justify-end mt-8 pt-4 border-t border-[#e1e5e9]">
                 <button type='button' className="bg-[#f8f9fa] hover:bg-[#e9ecef] text-[#333] border border-[#e1e5e9] px-6 py-3 rounded-md cursor-pointer font-medium inline-flex items-center gap-2 transition-all duration-300 ease-in-out" onClick={() => setAllClasse(false)}>Cancel</button>

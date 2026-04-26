@@ -9,7 +9,7 @@ const AllClassesComponent = ({setAllClasse}) => {
     const { data, isLoading, isError } = useGetClassesQuery();
     const { data: studentsData } = useGetStudentsQuery();
     // console.log("CLASSES DATA:", data);
-    console.log("STUDENTS DATA:", studentsData?.data?.data);
+    // console.log("STUDENTS DATA:", studentsData?.data?.data);
 
     if (isLoading) return <div>Loading classes...</div>;
     if (isError) return <div>Error loading classes</div>;

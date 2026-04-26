@@ -19,7 +19,7 @@ const ASide = ({close, setClose}) => {
   }
 
   return (
-    <aside className={`${close ? '' : 'hidden'} lg:flex flex-col h-screen backdrop-blur-xl bg-white/10 border-r border-white/10 shadow-2xl transition-all duration-300 ease-in-out  ${open ? 'w-72' : 'w-20'} `} >
+    <aside className={`${close ? '' : 'hidden'} lg:flex flex-col h-screen overflow-y-auto custom-scrollbar backdrop-blur-xl bg-white/10 border-r border-white/10 shadow-2xl transition-all duration-300 ease-in-out  ${open ? 'w-72' : 'w-20'} `} >
       
       {/* Top Brand */}
       <div className="flex items-center justify-between px-4 py-5 border-b border-white/10">

@@ -41,51 +41,51 @@ const router = createBrowserRouter([
     element: <PlainLayout />,
     children: [
       {        
-        path: '/classes',
+        path: '/classes&sectionsPage',
         element: <ClassesSections />
       },
       {        
-        path: '/subjectsAssignment',
+        path: '/subjects&assignmentsPage',
         element: <SubjectsAssignment />
       },
       {        
-        path: '/lesson-plans',
+        path: '/lesson-plansPage',
         element: <LessonPlans />
       },
       {        
-        path: '/materials',
+        path: '/materialsPage',
         element: <StudyMaterials />
       },
       {        
-        path: '/exams-marks',
+        path: '/exams-marksPage',
         element: <ExamsMarks />
       },
       {        
-        path: '/fees-collection',
+        path: '/fees-collectionPage',
         element: <FeesCollection />
       },
       {        
-        path: '/pending-fees',
+        path: '/pending-feesPage',
         element: <PendingFees />
       },
       {        
-        path: '/communications',
+        path: '/communicationsPage',
         element: <Communications />
       },
       {        
-        path: '/staff-directory',
+        path: '/staff-directoryPage',
         element: <StaffDirectory />
       },
       {        
-        path: '/payroll',
+        path: '/payrollPage',
         element: <Payroll />
       },
       {        
-        path: '/Student-info',
+        path: '/student-infoPage',
         element: <StudentInfo />
       },
       {        
-        path: '/attendance-reports',
+        path: '/attendance-reportsPage',
         element: <AttendanceReports />
       },
       {        

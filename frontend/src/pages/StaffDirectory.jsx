@@ -11,7 +11,7 @@ import TeacherEnrollmentModal from '../boxModels/teacherEnrollmentModal'
 
 const StaffDirectory = () => {
     const [teacherModal, setTeacherModal] = useState(false);
-    const [teacherEnrollMentModal, setTeacherEnrollmentModal] = useState(false)
+    const [enrolled, setEnrolled] = useState(false);
     const [active, setActive] = useState('Staff');
     const [sectionn, setSectionn] = useState(false);
     const [allClasse, setAllClasse] = useState(false);
@@ -146,14 +146,14 @@ const StaffDirectory = () => {
         { active === 'payroll' && <PayrollComponent />} 
 
         {/* enroll */}
-        { active === 'enroll' && <TeacherEnrollmentComponent setTeacherEnrollMentModal={setTeacherEnrollMentModal} />} 
+        { active === 'enroll' && <TeacherEnrollmentComponent setEnrolled={setEnrolled}/>} 
 
 
         {/* box modal to add new teachers*/}
         {   teacherModal && <AddTeacherModal setTeacherModal={setTeacherModal}/>}
 
         {/* box modal to enroll teachers*/}
-        {   teacherEnrollMentModal && <TeacherEnrollmentModal setTeacherEnrollMentModal={setTeacherEnrollMentModal}/>}
+        {   enrolled && <TeacherEnrollmentModal setEnrolled={setEnrolled}/>}
     </section>
   )
 }
