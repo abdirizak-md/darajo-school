@@ -9,7 +9,6 @@ export const createSectionService = async (data) => {
 export const getSectionsService = async () => {
   return await Section.find()
     .populate("classId", "name")
-    .populate("classTeacherId", "fullName subject")
     .lean();
 };
 
@@ -17,7 +16,6 @@ export const getSectionsService = async () => {
 export const getSectionByIdService = async (id) => {
   return await Section.findById(id)
     .populate("classId", "name")
-    .populate("classTeacherId", "fullName subject")
     .lean();
 };
 

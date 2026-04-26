@@ -20,27 +20,20 @@
       },
 
       // 👇 TEACHER CAN TEACH MULTIPLE CLASSES
-      classIds: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Class",
-        },
-
-      // 👇 TEACHER CAN TEACH MULTIPLE SECTIONS
-      sectionIds: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Section",
-        },
-
-      subject: {
-        type: String,
-        required: true,
-      },
+     
 
       phone: String,
       email: {
         type: String,
         unique: true,
         sparse: true,
+      },
+      address: String,
+      password: {
+        type: String,
+        required: true,
+        select: false,
+      
       },
 
       status: {
@@ -52,7 +45,7 @@
     { timestamps: true }
   );
 
-  // 🚀 performance index
-  teacherSchema.index({ classIds: 1, sectionIds: 1 });
+ 
+
 
   export default mongoose.model("Teacher", teacherSchema);

@@ -12,7 +12,15 @@ const parentSchema = new mongoose.Schema(
       required: true,
       unique: true, // 🔥 important
     },
-    email: String,
+    email: {
+      type: String,
+      required: true,
+      unique: true, // 🔥 important
+    },
+    password: {
+      type: String,
+      required: true,
+    },
     address: String,
   },
   { timestamps: true }

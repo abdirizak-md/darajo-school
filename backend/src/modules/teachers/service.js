@@ -7,18 +7,12 @@ export const createTeacherService = async (data) => {
 
 // 📄 GET ALL
 export const getTeachersService = async () => {
-  return await Teacher.find()
-    .populate("classIds", "name")
-    .populate("sectionIds", "name")
-    .lean();
+  return await Teacher.find().lean();
 };
 
 // 🔍 GET ONE
 export const getTeacherByIdService = async (id) => {
-  return await Teacher.findById(id)
-    .populate("classIds", "name")
-    .populate("sectionIds", "name")
-    .lean();
+  return await Teacher.findById(id).lean();
 };
 
 // ✏️ UPDATE

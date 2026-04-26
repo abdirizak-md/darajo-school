@@ -2,8 +2,13 @@ import React from 'react'
 import { FaPlus } from 'react-icons/fa6'
 import { IoSearchOutline } from 'react-icons/io5'
 import staffs from '../../Data/staffs'
+import { useGetTeachersQuery } from '../../redux/features/teacherApi'
 
 const StaffDirectoryComponent = ({setTeacherModal}) => {
+  const { data, isLoading, isError } = useGetTeachersQuery();
+const teachers = data?.data || [];
+
+
   return (
     <div className="bg-white p-6 mb-8 shadow rounded-md">
       <div className="flex justify-between items-center mb-8">
@@ -36,8 +41,7 @@ const StaffDirectoryComponent = ({setTeacherModal}) => {
             <thead>
                 <tr>
                     <th className="p-4 bg-[#f8f9fa] text-[#333] font-semibold border-b border-[#e1e5e9] text-left">Staff Member</th>
-                    <th className="p-4 bg-[#f8f9fa] text-[#333] font-semibold border-b border-[#e1e5e9] text-left">Role</th>
-                    <th className="p-4 bg-[#f8f9fa] text-[#333] font-semibold border-b border-[#e1e5e9] text-left">Department</th>
+                    <th className="p-4 bg-[#f8f9fa] text-[#333] font-semibold border-b border-[#e1e5e9] text-left">EmployeeID</th>
                     <th className="p-4 bg-[#f8f9fa] text-[#333] font-semibold border-b border-[#e1e5e9] text-left">Phone</th>
                     <th className="p-4 bg-[#f8f9fa] text-[#333] font-semibold border-b border-[#e1e5e9] text-left">Email</th>
                     <th className="p-4 bg-[#f8f9fa] text-[#333] font-semibold border-b border-[#e1e5e9] text-left">Status</th>
@@ -45,14 +49,13 @@ const StaffDirectoryComponent = ({setTeacherModal}) => {
                 </tr>
             </thead>
             <tbody className='table-row-group border-inherit'>
-                {   staffs.map((staff, index) => (
+                {   teachers?.map((teacher, index) => (
                     <tr key={index} className="hover:bg-[#f8f9fa]">
-                    <td className='p-4 border-b border-[#e1e5e9] text-left'> {staff.staffMember}</td>
-                    <td className='p-4 border-b border-[#e1e5e9] text-left'> {staff.role}</td>
-                    <td className='p-4 border-b border-[#e1e5e9] text-left'>{staff.department}</td>
-                    <td className='p-4 border-b border-[#e1e5e9] text-left'>{staff.phone}</td>
-                    <td className='p-4 border-b border-[#e1e5e9] text-left'>{staff.email}</td>
-                    <td className='p-4 border-b border-[#e1e5e9] text-left capitalize'><span className={`py-1 px-2.5 rounded-2xl text-sm font-medium  ${staff.status === 'Active' ? 'bg-[#d1fae5] text-[#10b981]' : ''} ${staff.status === 'Pending' ? ' bg-[#fef3c7] text-[#92400e]' : ''} ${staff.status === 'Completed' ? ' bg-[#dbeafe] text-[#1e40af]' : ''}`}>{staff.status}</span></td>
+                    <td className='p-4 border-b border-[#e1e5e9] text-left'> {teacher.fullName}</td>
+                    <td className='p-4 border-b border-[#e1e5e9] text-left'> {teacher.employeeId}</td>
+                    <td className='p-4 border-b border-[#e1e5e9] text-left'>{teacher.phone}</td>
+                    <td className='p-4 border-b border-[#e1e5e9] text-left'>{teacher.email}</td>
+                    <td className='p-4 border-b border-[#e1e5e9] text-left capitalize'><span className={`py-1 px-2.5 rounded-2xl text-sm font-medium  ${teacher.status === 'Active' ? 'bg-[#d1fae5] text-[#10b981]' : ''} ${teacher.status === 'Pending' ? ' bg-[#fef3c7] text-[#92400e]' : ''} ${teacher.status === 'Completed' ? ' bg-[#dbeafe] text-[#1e40af]' : ''}`}>{teacher.status}</span></td>
                     <td className='p-4 border-b border-[#e1e5e9] text-left flex gap-2'>
                         <button className='bg-[#f8f9fa] hover:bg-[#ffffff] text-[#333] border border-[#e1e5e9] px-4 py-2 rounded-md'>View</button>
                         <button className='bg-[#fcd116] hover:bg-[#ffda33] text-[#333] border border-[#e1e5e9] px-4 py-2 rounded-md' onClick={() => startUpdatingIndex(index)}>Edit</button>

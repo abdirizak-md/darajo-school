@@ -1,10 +1,10 @@
 export const validateCreateTeacher = (req, res, next) => {
-  const { fullName, employeeId, subject } = req.body;
+  const { fullName, employeeId, password } = req.body;
 
-  if (!fullName || !employeeId || !subject) {
+  if (!fullName || !employeeId || !password) {
     return res.status(400).json({
       success: false,
-      message: "fullName, employeeId and subject are required",
+      message: "fullName, employeeId and password are required",
     });
   }
 

@@ -12,28 +12,40 @@ export const createClassService = async (data) => {
   return await Class.create(data);
 };
 
-// 📄 GET ALL (FIXED ❗ NO POPULATE)
+// 📄 GET ALL (SAFE POPULATE)
 export const getClassesService = async (query = {}) => {
-  const { page = 1, limit = 10 } = query;
+  const page = Number(query.page) || 1;
+  const limit = Number(query.limit) || 10;
 
   const data = await Class.find()
+    .populate({
+      path: "teacherId",
+      select: "fullName email phone",
+      strictPopulate: false, // ✅ prevents crash
+    })
     .skip((page - 1) * limit)
-    .limit(Number(limit))
+    .limit(limit)
     .lean();
 
   const total = await Class.countDocuments();
 
   return {
     total,
-    page: Number(page),
-    limit: Number(limit),
+    page,
+    limit,
     data,
   };
 };
 
-// 🔍 GET ONE
+// 🔍 GET ONE (SAFE POPULATE)
 export const getClassByIdService = async (id) => {
-  const data = await Class.findById(id).lean();
+  const data = await Class.findById(id)
+    .populate({
+      path: "teacherId",
+      select: "fullName email phone",
+      strictPopulate: false, // ✅ prevents crash
+    })
+    .lean();
 
   if (!data) throw new Error(CLASS_MESSAGES.NOT_FOUND);
 

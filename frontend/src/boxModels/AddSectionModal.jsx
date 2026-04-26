@@ -2,13 +2,11 @@ import { useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 import { useCreateSectionMutation } from '../redux/features/sectionApi';
 import { useGetClassesQuery } from '../redux/features/classApi';
-import { useGetTeachersQuery } from '../redux/features/teacherApi';
 
 const AddSectionModal = ({ setAddSection }) => {
 
   const [name, setName] = useState('');
   const [classId, setClassId] = useState('');
-  const [teacherId, setTeacherId] = useState('');
   const [roomNumber, setRoomNumber] = useState('');
   const [status, setStatus] = useState('Active');
 
@@ -16,11 +14,9 @@ const AddSectionModal = ({ setAddSection }) => {
 
   // ✅ FETCH DATA
   const { data: classData } = useGetClassesQuery();
-  const { data: teacherData } = useGetTeachersQuery();
 
   // ✅ SAFE ACCESS
   const classes = classData?.data || [];
-  const teachers = teacherData?.data || [];
 
   // ✅ SUBMIT
   const handleSubmit = async (e) => {
@@ -34,7 +30,6 @@ const AddSectionModal = ({ setAddSection }) => {
       await createSection({
         name,
         classId,
-        classTeacherId: teacherId || null,
         roomNumber,
         status,
       }).unwrap();
@@ -89,23 +84,6 @@ const AddSectionModal = ({ setAddSection }) => {
               {classes.map((cls) => (
                 <option key={cls._id} value={cls._id}>
                   {cls.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* ✅ TEACHER DROPDOWN */}
-          <div className="mb-4">
-            <label>Teacher</label>
-            <select
-              value={teacherId}
-              onChange={(e) => setTeacherId(e.target.value)}
-              className="w-full p-2 border"
-            >
-              <option value="">Select Teacher</option>
-              {teachers.map((teacher) => (
-                <option key={teacher._id} value={teacher._id}>
-                  {teacher.fullName}
                 </option>
               ))}
             </select>

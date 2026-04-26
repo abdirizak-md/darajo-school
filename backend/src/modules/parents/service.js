@@ -1,5 +1,5 @@
 import Parent from "./modal.js";
-import Student from "../student/modal.js";
+import Student from "../student/modal.js"; // ✅ FIX: missing import
 
 // ➕ CREATE
 export const createParentService = async (data) => {
@@ -42,13 +42,21 @@ export const getParentByIdService = async (id) => {
 
 // ✏️ UPDATE
 export const updateParentService = async (id, data) => {
-  return await Parent.findByIdAndUpdate(id, data, {
+  const updated = await Parent.findByIdAndUpdate(id, data, {
     new: true,
     runValidators: true,
   });
+
+  if (!updated) throw new Error("Parent not found");
+
+  return updated;
 };
 
 // ❌ DELETE
 export const deleteParentService = async (id) => {
-  return await Parent.findByIdAndDelete(id);
+  const deleted = await Parent.findByIdAndDelete(id);
+
+  if (!deleted) throw new Error("Parent not found");
+
+  return deleted;
 };

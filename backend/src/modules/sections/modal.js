@@ -24,15 +24,6 @@ const sectionSchema = new mongoose.Schema(
       ref: "Class",
       required: true,
     },
-
-    classTeacherId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Teacher",
-    },
-
-
-  
-
     status: {
       type: String,
       enum: ["Active", "Inactive"],

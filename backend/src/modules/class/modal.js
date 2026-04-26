@@ -6,7 +6,12 @@ const classSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-    }
+    },
+
+    teacherId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Teacher",
+    },
  
  
   },

@@ -1,8 +1,20 @@
 import { FaPlus } from 'react-icons/fa6'
 import { IoSearchOutline } from 'react-icons/io5'
 import allClasses from '../../Data/allClasses'
+import { useGetClassesQuery } from '../../redux/features/classApi'
+import { useGetStudentsQuery } from '../../redux/features/studentApi'
+
 
 const AllClassesComponent = ({setAllClasse}) => {
+    const { data, isLoading, isError } = useGetClassesQuery();
+    const { data: studentsData } = useGetStudentsQuery();
+    // console.log("CLASSES DATA:", data);
+    console.log("STUDENTS DATA:", studentsData?.data?.data);
+
+    if (isLoading) return <div>Loading classes...</div>;
+    if (isError) return <div>Error loading classes</div>;
+
+
   return (
     <div className="bg-white p-6 mb-8 shadow rounded-md">
         <div className="flex justify-between items-center mb-8">
@@ -22,7 +34,7 @@ const AllClassesComponent = ({setAllClasse}) => {
                     <option value="Class 9">Class 9</option>
                     <option value="Class 10">Class 10</option>
                     <option value="Class 11">Class 11</option>
-                    <option value="Class 12">Class 12</option>
+                    <option value="Class 12">Class 123</option>
                 </select>
             </div>
 
@@ -34,40 +46,43 @@ const AllClassesComponent = ({setAllClasse}) => {
     
         {/* All Classes */}
         <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-5">
-            {   allClasses.map((classs, index) => (
+            {   data?.data?.map((classs, index) => (
             <div key={index} className="bg-white rounded-2xl border-l-4 border-orange-500 p-6 shadow-[0_5px_20px_rgba(0,0,0,0.1)] cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_25px_25px_rgba(0,0,0,0.1)]">
                 <div className="flex justify-between items-center mb-4">
-                    <h1 className='text-orange-500 text-2xl font-bold mb-1'>Class {classs.classs}</h1>
+                    <h1 className='text-orange-500 text-2xl font-bold mb-1'>{classs.name}</h1>
                     <div>
                         <span className={`py-1 px-2.5 rounded-2xl text-sm font-medium  ${classs.status === 'Active' ? 'bg-[#d1fae5] text-[#10b981]' : ''} ${classs.status === 'Pending' ? ' bg-[#fef3c7] text-[#92400e]' : ''} ${classs.status === 'Completed' ? ' bg-[#dbeafe] text-[#1e40af]' : ''}`}>{classs.status}</span>
                     </div>
+                    {/* {console.log("CLASS DATA:", classs.teacherId?.fullName)} */}
                 </div>
                 <div className="flex justify-between items-center">
                     <div className="flex flex-col">
                         <span className='text-[#666]'>Students</span>
-                        <span className='font-medium'>{classs.students}</span>
+                        <span className='font-medium'>{studentsData?.data.data.length || 0}</span>
                     </div>
                     <div className="flex flex-col">
-                        <span className='text-[#666]'>Class Teacher</span>
-                        <span className='font-medium'>{classs.classTeacher}</span>
+                        <span className=    'text-[#666]'>Class Teacher</span>
+                       <span className='font-medium'>
+                        {classs.teacherId?.fullName || "No Teacher"}
+                        </span>
                     </div>
                 </div>
                 <div className="flex justify-between items-center mt-4">
                     <div className="flex flex-col">
                         <span className='text-[#666]'>Room</span>
-                        <span className='font-medium'>{classs.room}</span>
+                        <span className='font-medium'>{classs.sectionId?.roomNumber}</span>
                     </div>
-                    <div className="flex flex-col">
+                    {/* <div className="flex flex-col">
                         <span className='text-[#666]'>Schedule</span>
                         <span className='font-medium'>{classs.schedule}</span>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="flex justify-between gap-1 text-sm mt-4">
                     <button className='px-5 py-1.5 border border-[#e1e5e9] bg-[#f8f9fa] text-[#666] rounded-lg cursor-pointer'>View Details</button>
                     <button className='px-5 py-1.5 border border-[#fcd116] bg-[#fcd116]  rounded-lg cursor-pointer'>Edit</button>
                     <button className='px-5 py-1.5 border border-[#ce1126] bg-[#ce1126] text-white rounded-lg cursor-pointer'>Delete</button>
                 </div>
-            </div> ))}
+            </div> )) }
         </div>
     </div>
   )

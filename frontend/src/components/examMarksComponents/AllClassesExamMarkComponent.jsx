@@ -22,10 +22,18 @@ const AllClassesExamMarkComponent = ({setTeacherModal}) => {
 
         <div className="">
             <select name="subject" id="subject" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-lg transition-all duration-300 ease-in-out" required>
-                <option value="">Select Role</option>
-                <option value="Staff">Staff</option>
-                <option value="Administrators">Administrators</option>
-                <option value="Support Staff">Support Staff</option>
+                <option value="">Select class</option>
+                <option value="Staff">class 8</option>
+                <option value="Administrators">class 9</option>
+                <option value="Support Staff">class 10</option>
+            </select>
+        </div>
+        <div className="">
+            <select name="subject" id="subject" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-lg transition-all duration-300 ease-in-out" required>
+                <option value="">Select section</option>
+                <option value="Staff">Section A</option>
+                <option value="Administrators">Section B</option>
+                <option value="Support Staff">Section C</option>
             </select>
         </div>
 

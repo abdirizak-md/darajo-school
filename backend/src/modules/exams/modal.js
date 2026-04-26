@@ -33,7 +33,7 @@ const examSchema = new mongoose.Schema(
 
     examDate: {
       type: Date,
-      required: false,
+      required: true,
     },
 
     startTime: {

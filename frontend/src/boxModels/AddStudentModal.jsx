@@ -6,11 +6,14 @@ import { useGetClassesQuery } from "../redux/features/classApi";
 import { useGetSectionsQuery } from "../redux/features/sectionApi";
 
 const AddStudentModal = ({ setmodelStudent }) => {
-  const [createStudent, { isLoading }] = useCreateStudentMutation();
+  const [createStudent, { isLoading , isError}] = useCreateStudentMutation();
 
   // ✅ Classes (always load)
   const { data: classesData } = useGetClassesQuery();
   const { data: sectionsData } = useGetSectionsQuery();
+
+  if (isLoading) console.log("Loading classes...");
+if (isError) console.log("Error fetching classes");
 
   // ✅ Form state
   const [formData, setFormData] = useState({
