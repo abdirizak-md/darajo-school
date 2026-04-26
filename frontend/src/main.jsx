@@ -22,6 +22,7 @@ import RegisterUI from './pages/RegisterPage.jsx'
 import SubjectsAssignment from './pages/SubjectsAssignment.jsx'
 import { Provider } from 'react-redux'
 import { store } from './redux/store.js'
+import Parents from './pages/Parents.jsx'
 
 const router = createBrowserRouter([
   {
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
       {        
         path: '/communicationsPage',
         element: <Communications />
+      },
+      {        
+        path: '/parents',
+        element: <Parents />
       },
       {        
         path: '/staff-directoryPage',

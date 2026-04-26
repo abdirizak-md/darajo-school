@@ -9,6 +9,7 @@ import routeAtten from "./routes/attendance.js";
 import routerUsers from "./routes/users.js";
 import examRoute from "./routes/exam.js";
 import examResults from "./routes/resultExam.js";
+import assrouteAssignTeacherign from "./routes/assignTeacher.js";
 
 
 
@@ -38,6 +39,7 @@ app.use("/api", routeAtten);
 app.use("/api", routerUsers);
 app.use('/api', examRoute)
 app.use('/api', examResults)
+app.use('/api', assrouteAssignTeacherign)
 
 
 app.get("/", (req, res) => {

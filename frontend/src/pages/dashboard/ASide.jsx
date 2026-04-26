@@ -7,6 +7,7 @@ import {
   dashboard,
   feesAccounts,
   Onlines,
+  Parents,
   staffManagements,
   studentManagement
 } from '../../Data/sideBar';
@@ -46,6 +47,7 @@ const ASide = ({close, setClose}) => {
         <SidebarComponent title="ACADEMICS" items={academics} open={open} />
         <SidebarComponent title="FEES & ACCOUNTS" items={feesAccounts} open={open} />
         <SidebarComponent title="ONLINE" items={Onlines} open={open} />
+        <SidebarComponent title="PARENTS" items={Parents} open={open} />
         <SidebarComponent title="STUDENT MANAGEMENT" items={studentManagement} open={open} />
         <SidebarComponent title="STAFF MANAGEMENT" items={staffManagements} open={open} />
       </div>

@@ -30,8 +30,8 @@ router.post(
 // 📚 VIEW EXAMS (ALL ROLES THAT HAVE ACCESS)
 router.get(
   "/",
-  authMiddleware,
-  permissionMiddleware(permissions.VIEW_EXAM),
+  // authMiddleware,
+  // permissionMiddleware(permissions.VIEW_EXAM),
   getExams
 );
 

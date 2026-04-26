@@ -1,5 +1,5 @@
-import SubjectAssign from "./model.js";
-import { SUBJECT_ASSIGN_MESSAGES } from "../../common/constant/constant.js";
+import SubjectAssign from "./modal.js";
+import { SUBJECT_ASSIGN_MESSAGES } from "../../common/constant/jubjectAssign.js";
 
 // ➕ ASSIGN
 export const assignSubjectService = async (data) => {
@@ -7,6 +7,8 @@ export const assignSubjectService = async (data) => {
     subjectId: data.subjectId,
     classId: data.classId,
   });
+
+  console.log("Checking for existing assignment:", exists); // Debug log
 
   if (exists) {
     throw new Error(SUBJECT_ASSIGN_MESSAGES.EXISTS);

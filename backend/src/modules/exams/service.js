@@ -8,8 +8,21 @@ export const createExam = async (data) => {
 
 export const getExams = async () => {
   return await Exam.find({ isDeleted: false })
-    .populate("classId")
-    .populate("subjectId");
+    .populate({
+      path: "classId",
+      select: "name",
+      strictPopulate: false, // ✅ prevents crash
+    })
+    .populate({
+      path: "subjectId",
+      select: "name",
+      strictPopulate: false, // ✅ prevents crash
+    })
+    .populate({
+      path: "sectionId",
+      select: "name",
+      strictPopulate: false, // ✅ prevents crash
+    });
 };
 
 export const updateExam = async (id, data) => {

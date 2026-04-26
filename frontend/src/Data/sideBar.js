@@ -42,6 +42,9 @@ export const feesAccounts = [
       { label: 'Pending Fees', icon: FaClock , path: '/pending-feesPage' },
     ]
 
+export const Parents = [
+      { label: 'Parents', icon: FaComment , path: '/parents' },
+    ]
 export const Onlines = [
       { label: 'Communications', icon: FaComment , path: '/communicationsPage' },
     ]

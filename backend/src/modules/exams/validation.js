@@ -2,7 +2,7 @@ import statusCodes from "../../common/constant/statusCode.js";
 
 export const validateCreateExam = (req, res, next) => {
   const {
-    title,
+   
     type,
     classId,
     subjectId,
@@ -12,7 +12,7 @@ export const validateCreateExam = (req, res, next) => {
   } = req.body;
 
   if (
-    !title ||
+   
     !type ||
     !classId ||
     !subjectId ||

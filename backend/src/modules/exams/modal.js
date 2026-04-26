@@ -2,12 +2,6 @@ import mongoose from "mongoose";
 
 const examSchema = new mongoose.Schema(
   {
-    title: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-
     type: {
       type: String,
       enum: ["Midterm", "Final", "Quiz", "Test"],

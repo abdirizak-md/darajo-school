@@ -1,21 +1,32 @@
 import React from 'react'
 import { FaPlus } from 'react-icons/fa6'
 import { IoSearchOutline } from 'react-icons/io5'
-import staffs from '../../Data/staffs'
+import { useGetExamMarksQuery } from '../../redux/features/examApi'
 
 const AllClassesExamMarkComponent = ({setTeacherModal}) => {
-    const examesmarks = [
-        { class: 'Class 1', subject: 'Mathematics', examDate: '2023-10-15', maxMarks: 100, passingMarks: 40, status: 'Active' },
-        { class: 'Class 2', subject: 'Science', examDate: '2023-10-16', maxMarks: 100, passingMarks: 40, status: 'Pending' },
-        { class: 'Class 3', subject: 'English', examDate: '2023-10-17', maxMarks: 100, passingMarks: 40, status: 'Completed' }
-    ];
+    const { data: examMarks, isLoading, isError } = useGetExamMarksQuery();
+
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+    // console.log(examMarks);
+    // console.log(isError);
+
+    // examMarks.data?.forEach(exam => {
+    //     console.log("EXAM DATE:", exam);
+    // });
+
+    if (isError) {
+        return <div>Error occurred while fetching exam marks.</div>;
+    }
   return (
     <div className="bg-white p-6 mb-8 shadow rounded-md">
       <div className="flex justify-between items-center mb-8">
-          <span className='text-[#333] text-2xl font-bold'>All Classes</span>
+          <span className='text-[#333] text-2xl font-bold'>All Classes Examination</span>
       </div>
       
-      <form className="grid grid-cols-1  lg:grid-cols-[3fr_2fr_150px] md:grid-cols-[3fr_2fr_150px] gap-5 ">
+      <form className="grid grid-cols-1  lg:grid-cols-[3fr_2fr_2fr_150px] md:grid-cols-[3fr_2fr_150px] gap-5 ">
         <div className="">
             <input type="text" placeholder='Search Classes...' className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-lg transition-all duration-300 ease-in-out placeholder:text-sm"/>
         </div>
@@ -23,7 +34,6 @@ const AllClassesExamMarkComponent = ({setTeacherModal}) => {
         <div className="">
             <select name="subject" id="subject" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-lg transition-all duration-300 ease-in-out" required>
                 <option value="">Select class</option>
-                <option value="Staff">class 8</option>
                 <option value="Administrators">class 9</option>
                 <option value="Support Staff">class 10</option>
             </select>
@@ -47,11 +57,12 @@ const AllClassesExamMarkComponent = ({setTeacherModal}) => {
         <table className="min-w-200 w-full border-collapse mt-4">
             <thead>
                 <tr>
+                    <th className="p-4 bg-[#f8f9fa] text-[#333] font-semibold border-b border-[#e1e5e9] text-left">Exam Type</th>
                     <th className="p-4 bg-[#f8f9fa] text-[#333] font-semibold border-b border-[#e1e5e9] text-left">Class</th>
                     <th className="p-4 bg-[#f8f9fa] text-[#333] font-semibold border-b border-[#e1e5e9] text-left">Subject</th>
                     <th className="p-4 bg-[#f8f9fa] text-[#333] font-semibold border-b border-[#e1e5e9] text-left">Exam Date</th>
                     <th className="p-4 bg-[#f8f9fa] text-[#333] font-semibold border-b border-[#e1e5e9] text-left">Max Marks</th>
-                    <th className="p-4 bg-[#f8f9fa] text-[#333] font-semibold border-b border-[#e1e5e9] text-left">Passing Marks</th>
+                    <th className="p-4 bg-[#f8f9fa] text-[#333] font-semibold border-b border-[#e1e5e9] text-left">Pass Marks</th>
                     <th className="p-4 bg-[#f8f9fa] text-[#333] font-semibold border-b border-[#e1e5e9] text-left">Status</th>
                     <th className="p-4 bg-[#f8f9fa] text-[#333] font-semibold border-b border-[#e1e5e9] text-left">Actions</th>
                 </tr>
@@ -59,18 +70,19 @@ const AllClassesExamMarkComponent = ({setTeacherModal}) => {
             
             
             <tbody className='table-row-group border-inherit'>
-                {examesmarks.length === 0 && (
+                {examMarks?.data.length === 0 && (
                     <tr>
                         <td colSpan="8" className='p-4 border-b border-[#e1e5e9] text-center text-[#666]'>No Exam Marks Found</td>
                     </tr>
                 ) }
-                {   examesmarks.map((exam, index) => (
+                {   examMarks?.data.map((exam, index) => (
                     <tr key={index} className="hover:bg-[#f8f9fa]">
-                    <td className='p-4 border-b border-[#e1e5e9] text-left'> {exam.class}</td>
-                    <td className='p-4 border-b border-[#e1e5e9] text-left'> {exam.subject}</td>
-                    <td className='p-4 border-b border-[#e1e5e9] text-left'>{exam.examDate}</td>
-                    <td className='p-4 border-b border-[#e1e5e9] text-left'>{exam.maxMarks}</td>
-                    <td className='p-4 border-b border-[#e1e5e9] text-left'>{exam.passingMarks}</td>
+                    <td className='p-4 border-b border-[#e1e5e9] text-left'> {exam.type}</td>
+                    <td className='p-4 border-b border-[#e1e5e9] text-left'> {exam.classId?.name}</td>
+                    <td className='p-4 border-b border-[#e1e5e9] text-left'> {exam.subjectId?.name}</td>
+                    <td className='p-4 border-b border-[#e1e5e9] text-left'>{exam.examDate.split("T")[0]}</td>
+                    <td className='p-4 border-b border-[#e1e5e9] text-left'>{exam.totalMarks}</td>
+                    <td className='p-4 border-b border-[#e1e5e9] text-left'>{exam.passMarks}</td>
                     <td className='p-4 border-b border-[#e1e5e9] text-left capitalize'><span className={`py-1 px-2.5 rounded-2xl text-sm font-medium  ${exam.status === 'Active' ? 'bg-[#d1fae5] text-[#10b981]' : ''} ${exam.status === 'Pending' ? ' bg-[#fef3c7] text-[#92400e]' : ''} ${exam.status === 'Completed' ? ' bg-[#dbeafe] text-[#1e40af]' : ''}`}>{exam.status}</span></td>
                     <td className='p-4 border-b border-[#e1e5e9] text-left flex gap-2'>
                         <button className='bg-[#f8f9fa] hover:bg-[#ffffff] text-[#333] border border-[#e1e5e9] px-4 py-2 rounded-md'>View</button>
