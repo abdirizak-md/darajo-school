@@ -49,6 +49,13 @@ const teachers = data?.data || [];
                 </tr>
             </thead>
             <tbody className='table-row-group border-inherit'>
+                {teachers.length === 0 && (
+                        <tr>
+                            <td colSpan="6" className="p-4 text-center text-gray-500">
+                            No teachers found.
+                            </td>
+                        </tr>
+                    )}
                 {   teachers?.map((teacher, index) => (
                     <tr key={index} className="hover:bg-[#f8f9fa]">
                     <td className='p-4 border-b border-[#e1e5e9] text-left'> {teacher.fullName}</td>

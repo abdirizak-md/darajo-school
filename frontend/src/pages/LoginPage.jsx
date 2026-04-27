@@ -3,7 +3,7 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { HiOutlinePencilAlt } from "react-icons/hi";
 import { Link } from "react-router-dom";
 
-export default function LoginUI() {
+const LoginPage = () => {
   return (
     <div className="h-screen w-full bg-black flex items-center justify-center">
       {/* Background Image */}
@@ -86,3 +86,5 @@ export default function LoginUI() {
     </div>
   );
 }
+
+export default LoginPage;

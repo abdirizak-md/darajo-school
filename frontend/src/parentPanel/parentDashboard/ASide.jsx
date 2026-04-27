@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { FaUserGraduate } from 'react-icons/fa6';
 import { MdArrowBackIos, MdClose } from 'react-icons/md';
-import SidebarComponent from "../../components/dashboardComponents/SidebarComponent";
-import { academics, Communications, dashboard, feesAccounts, Parents, staffManagements, studentManagement } from '../../Data/sideBar';
+import { academics, dashboard, feesAccounts } from '../../Data/parentPanelData/parentSideBar';
+import SidebarComponent from '../../components/dashboardComponents/SidebarComponent';
 
 const ASide = ({close, setClose}) => {
   const [open, setOpen] = useState(true);
@@ -33,10 +33,6 @@ const ASide = ({close, setClose}) => {
         <SidebarComponent title="DASHBOARD" items={dashboard} open={open} />
         <SidebarComponent title="ACADEMICS" items={academics} open={open} />
         <SidebarComponent title="FEES & ACCOUNTS" items={feesAccounts} open={open} />
-        <SidebarComponent title="COMMUNICATIONS" items={Communications} open={open} />
-        <SidebarComponent title="PARENTS" items={Parents} open={open} />
-        <SidebarComponent title="STUDENT MANAGEMENT" items={studentManagement} open={open} />
-        <SidebarComponent title="STAFF MANAGEMENT" items={staffManagements} open={open} />
       </div>
     </aside>
   )

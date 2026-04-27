@@ -13,9 +13,9 @@ import { FaArrowDown, FaArrowUp, FaCalendar, FaChalkboardUser, FaClock, FaEnvelo
 
 const CardComponent = () => {
   return (
-    <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4 mb-8">
+    <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-8 mb-8">
       {schoolData.map((data, index) => (
-        <div key={index} className={`bg-white rounded-4xl border-l-4 ${data.borderColors} p-6 shadow-2xs shadow-white cursor-pointer transition-all duration-300 hover:-translate-y-2`}>
+        <div key={index} className={`bg-white rounded-4xl border-l-4 shadow-2xl ${data.borderColors} p-6 shadow-2xs shadow-white cursor-pointer transition-all duration-300 hover:-translate-y-2`}>
           <div className="flex justify-between items-center mb-4">
             <h1 className='text-[#666] font-medium'>{data.title}</h1>
             <div className={`${data.iconBgColor} p-3 rounded-lg`}>

@@ -1,30 +1,60 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { Provider } from 'react-redux'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import App from './App.jsx'
-import './index.css'
-import ClassesSections from './pages/ClassesSections.jsx'
-import Dashboard from './pages/dashboard/Dashboard.jsx'
-import LessonPlans from './pages/LessonPlans.jsx'
-import StudyMaterials from './pages/StudyMaterials.jsx'
-import ExamsMarks from './pages/ExamsMarks.jsx'
-import FeesCollection from './pages/FeesCollection.jsx'
-import PendingFees from './pages/PendingFees.jsx'
-import Communications from './pages/Communications.jsx'
-import StaffDirectory from './pages/StaffDirectory.jsx'
-import Payroll from './pages/Payroll.jsx'
-import StudentInfo from './pages/StudentInfo.jsx'
-import AttendanceReports from './pages/AttendanceReports.jsx'
 import PlainLayout from './PlainLayout.jsx'
 import { TooltipProvider } from './context/contextToolTip.jsx'
+import './index.css'
+import AttendanceReportPage from './pages/AttendanceReportsPage.jsx'
+import ClassesSectionsPage from './pages/ClassesSectionsPage.jsx'
+import CommunicationsPage from './pages/CommunicationsPage.jsx'
+import ExamsMarksPage from './pages/ExamsMarksPage.jsx'
+import FeesCollectionPage from './pages/FeesCollectionPage.jsx'
+import LessonPlansPage from './pages/LessonPlansPage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
-import RegisterUI from './pages/RegisterPage.jsx'
-import SubjectsAssignment from './pages/SubjectsAssignment.jsx'
-import { Provider } from 'react-redux'
+import ParentsPage from './pages/ParentsPage.jsx'
+import PayrollsPage from './pages/PayrollsPage.jsx'
+import PendingFeesPage from './pages/PendingFeesPage.jsx'
+import RegisterPage from './pages/RegisterPage.jsx'
+import StaffDirectoryPage from './pages/StaffDirectoryPage.jsx'
+import StudentInfoPage from './pages/StudentInfoPage.jsx'
+import StudyMaterialspage from './pages/StudyMaterialsPage.jsx'
+import SubjectsAssignmentPage from './pages/SubjectsAssignmentPage.jsx'
+import DashboardPage from './pages/dashboard/DashboardPage.jsx'
 import { store } from './redux/store.js'
-import Parents from './pages/Parents.jsx'
+import StudentDashboardPage from './studentPanel/studentDashboard/StudentDashboardPage.jsx'
+import StudentPanelAttendanceReportPage from './studentPanel/pages/StudentPanelAttendanceReportsPage.jsx'
+import StudentPanelClassesSectionsPage from './studentPanel/pages/StudentPanelClassesSectionsPage.jsx'
+import StudentPanelExamsMarksPage from './studentPanel/pages/StudentPanelExamsMarksPage.jsx'
+import StudentPanelLessonPlansPage from './studentPanel/pages/StudentPanelLessonPlansPage.jsx'
+import StudentPanelStudyMaterialsPage from './studentPanel/pages/StudentPanelStudyMaterialsPage.jsx'
+import StudentPanelSubjectsAssignmentPage from './studentPanel/pages/StudentPanelSubjectsAssignmentPage.jsx'
+import StudentPanelStudentInfoPage from './studentPanel/pages/StudentPanelStudentInfoPage.jsx'
+import StudentPanelFeesCollectionPage from './studentPanel/pages/StudentPanelFeesCollectionPage.jsx'
+import TeacherDashboardPage from './teacherPanel/teacherDashboard/teacherDashboardPage.jsx'
+import TeacherPanelAttendanceReportPage from './teacherPanel/pages/TeacherPanelAttendanceReportsPage.jsx'
+import TeacherPanelClassesSectionsPage from './teacherPanel/pages/TeacherPanelClassesSectionsPage.jsx'
+import TeacherPanelExamsMarksPage from './teacherPanel/pages/TeacherPanelExamsMarksPage.jsx'
+import TeacherPanelFeesCollectionPage from './teacherPanel/pages/TeacherPanelFeesCollectionPage.jsx'
+import TeacherPanelLessonPlansPage from './teacherPanel/pages/TeacherPanelLessonPlansPage.jsx'
+import TeacherPanelStudentInfoPage from './teacherPanel/pages/TeacherPanelStudentInfoPage.jsx'
+import TeacherPanelStudyMaterialsPage from './teacherPanel/pages/TeacherPanelStudyMaterialsPage.jsx'
+import TeacherPanelSubjectsAssignmentPage from './teacherPanel/pages/TeacherPanelSubjectsAssignmentPage.jsx'
+import TeacherPanelStaffDirectoryPage from './teacherPanel/pages/TeacherPanelStaffDirectoryPage.jsx'
+import ParentDashboardPage from './parentPanel/parentDashboard/ParentDashboardPage.jsx'
+import ParentPanelStaffDirectoryPage from './parentPanel/pages/ParentPanelStaffDirectoryPage.jsx'
+import ParentPanelSubjectsAssignmentPage from './parentPanel/pages/ParentPanelSubjectsAssignmentPage.jsx'
+import ParentPanelStudyMaterialsPage from './parentPanel/pages/ParentPanelStudyMaterialsPage.jsx'
+import ParentPanelStudentInfoPage from './parentPanel/pages/ParentPanelStudentInfoPage.jsx'
+import ParentPanelLessonPlansPage from './parentPanel/pages/ParentPanelLessonPlansPage.jsx'
+import ParentPanelFeesCollectionPage from './parentPanel/pages/ParentPanelFeesCollectionPage.jsx'
+import ParentPanelExamsMarksPage from './parentPanel/pages/ParentPanelExamsMarksPage.jsx'
+import ParentPanelClassesSectionsPage from './parentPanel/pages/ParentPanelClassesSectionsPage.jsx'
+import ParentPanelAttendanceReportPage from './parentPanel/pages/ParentPanelAttendanceReportsPage.jsx'
 
 const router = createBrowserRouter([
+  // Dashboard Route
   {
     path: '/',
     element: <App />,
@@ -32,66 +62,67 @@ const router = createBrowserRouter([
     children: [
       {        
         index: true,
-        path: '/',
-        element: <Dashboard />
+        element: <DashboardPage />
       },
       
     ]
   },
+
+  // Main App Routes
   {
     element: <PlainLayout />,
     children: [
       {        
-        path: '/classes&sectionsPage',
-        element: <ClassesSections />
+        path: '/classes-sections-page',
+        element: <ClassesSectionsPage />
       },
       {        
-        path: '/subjects&assignmentsPage',
-        element: <SubjectsAssignment />
+        path: '/subjects-assignments-page',
+        element: <SubjectsAssignmentPage />
       },
       {        
-        path: '/lesson-plansPage',
-        element: <LessonPlans />
+        path: '/lesson-plans-page',
+        element: <LessonPlansPage />
       },
       {        
-        path: '/materialsPage',
-        element: <StudyMaterials />
+        path: '/materials-page',
+        element: <StudyMaterialspage />
       },
       {        
-        path: '/exams-marksPage',
-        element: <ExamsMarks />
+        path: '/exams-marks-page',
+        element: <ExamsMarksPage />
       },
       {        
-        path: '/fees-collectionPage',
-        element: <FeesCollection />
+        path: '/fees-collection-page',
+        element: <FeesCollectionPage />
       },
       {        
-        path: '/pending-feesPage',
-        element: <PendingFees />
+        path: '/pending-fees-page',
+        element: <PendingFeesPage />
       },
       {        
-        path: '/communicationsPage',
-        element: <Communications />
+        path: '/communications-page',
+        element: <CommunicationsPage />
       },
       {        
-        path: '/parents',
-        element: <Parents />
+        path: '/parents-page',
+        element: <ParentsPage />
       },
       {        
-        path: '/staff-directoryPage',
-        element: <StaffDirectory />
+        path: '/staff-directory-page',
+        element: <StaffDirectoryPage />
       },
       {        
-        path: '/payrollPage',
-        element: <Payroll />
+        path: '/payroll-page',
+        element: <PayrollsPage />
       },
       {        
-        path: '/student-infoPage',
-        element: <StudentInfo />
+        path: '/student-info-page',
+        element: <StudentInfoPage />
       },
       {        
-        path: '/attendance-reportsPage',
-        element: <AttendanceReports />
+        path: '/attendance-reports-page',
+        element: <AttendanceReportPage />
       },
       {        
         path: '/login',
@@ -99,10 +130,126 @@ const router = createBrowserRouter([
       },
       {        
         path: '/register',
-        element: <RegisterUI />
+        element: <RegisterPage />
       },
+      
     ]
-  }
+  },
+
+  // Student Panel Routes
+  {
+    path: '/student',
+    element: <StudentDashboardPage />
+    },
+    {
+      path: '/student/attendance-reports-page',
+      element: <StudentPanelAttendanceReportPage />
+    },
+    {
+      path: '/student/classes-sections-page',
+      element: <StudentPanelClassesSectionsPage />
+    },
+    {
+      path: '/student/subjects-assignments-page',
+      element: <StudentPanelSubjectsAssignmentPage />
+    },
+    {
+      path: '/student/lesson-plans-page',
+      element: <StudentPanelLessonPlansPage />
+    },
+    {
+      path: '/student/study-materials-page',
+      element: <StudentPanelStudyMaterialsPage />
+    },
+    {
+      path: '/student/exams-marks-page',
+      element: <StudentPanelExamsMarksPage />
+    },
+    {
+      path: '/student/subjects-assignments-page',
+      element: <StudentPanelSubjectsAssignmentPage />
+    },
+    {
+      path: '/student/student-info-page',
+      element: <StudentPanelStudentInfoPage />
+    },
+    {
+      path: '/student/fees-collection-page',
+      element: <StudentPanelFeesCollectionPage />
+    },
+
+    // Teacher Panel Routes
+    {
+      path: '/teacher',
+      element: <TeacherDashboardPage />
+     },
+     {
+      path: '/teacher/attendance-reports-page',
+      element: <TeacherPanelAttendanceReportPage />
+     },
+     {
+      path: '/teacher/classes-sections-page',
+      element: <TeacherPanelClassesSectionsPage />
+     },
+     {
+      path: '/teacher/exams-marks-page',
+      element: <TeacherPanelExamsMarksPage />
+     },
+     {
+      path: '/teacher/lesson-plans-page',
+      element: <TeacherPanelLessonPlansPage />
+     },
+     {
+      path: '/teacher/student-info-page',
+      element: <TeacherPanelStudentInfoPage />
+     },
+     {
+      path: '/teacher/study-materials-page',
+      element: <TeacherPanelStudyMaterialsPage />
+     },
+     {
+      path: '/teacher/staff-directory-page',
+      element: <TeacherPanelStaffDirectoryPage />
+     },
+
+      // Parent Panel Routes
+    {
+      path: '/parent',
+      element: <ParentDashboardPage />
+     },
+     {
+      path: '/parent/attendance-reports-page',
+      element: <ParentPanelAttendanceReportPage />
+     },
+     {
+      path: '/parent/classes-sections-page',
+      element: <ParentPanelClassesSectionsPage />
+     },
+     {
+      path: '/parent/exams-marks-page',
+      element: <ParentPanelExamsMarksPage />
+     },
+     {
+      path: '/parent/lesson-plans-page',
+      element: <ParentPanelLessonPlansPage />
+     },
+     {
+      path: '/parent/student-info-page',
+      element: <ParentPanelStudentInfoPage />
+     },
+     {
+      path: '/parent/study-materials-page',
+      element: <ParentPanelStudyMaterialsPage />
+     },
+     {
+      path: '/parent/subjects-assignments-page',
+      element: <ParentPanelSubjectsAssignmentPage />
+     },
+     {
+      path: '/parent/staff-directory-page',
+      element: <ParentPanelStaffDirectoryPage />
+     },
+     
 ])
 
 createRoot(document.getElementById('root')).render(

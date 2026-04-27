@@ -1,60 +1,36 @@
-import { FaBook, FaCalendar, FaCalendarCheck, FaChalkboardUser, FaClipboardCheck, FaClock, FaComment, FaFile, FaGraduationCap, FaMoneyBill, FaTachographDigital, FaUserGraduate, FaUsers } from "react-icons/fa6"
+import { FaBook, FaCalendar, FaCalendarCheck, FaChalkboardUser, FaClipboardCheck, FaClock, FaComment, FaFile, FaGraduationCap, FaMoneyBill, FaPeopleArrows, FaPeopleGroup, FaTachographDigital, FaUserGraduate, FaUsers } from "react-icons/fa6"
 
 export const dashboard = [
-      {
-        label: 'Overview',
-        icon: FaTachographDigital,
-        path: '/',
-      },
+      { label: 'Overview', icon: FaTachographDigital, path: '/', },
     ]
     
 export const academics = [
-      {
-        label: 'Classes & Sections',
-        icon: FaGraduationCap ,
-        path: '/classes&sectionsPage',
-      },
-      {
-        label: 'Subjects & Assignments',
-        icon: FaBook ,
-        path: '/subjects&assignmentsPage',
-      },
-      {
-        label: 'Lesson Plans',
-        icon: FaChalkboardUser ,
-        path: '/lesson-plansPage',
-      },
-      {
-        label: 'Study Materials',
-        icon: FaFile ,
-        path: '/materialsPage',
-      },
-      {
-        label: 'Exams & Marks',
-        icon: FaClipboardCheck ,
-        path: '/exams-marksPage',
-      },
+      { label: 'Classes & Sections', icon: FaGraduationCap , path: '/classes-sections-page', },
+      { label: 'Subjects & Assignments', icon: FaBook , path: '/subjects-assignments-page', },
+      { label: 'Lesson Plans', icon: FaChalkboardUser , path: '/lesson-plans-page', },
+      { label: 'Study Materials', icon: FaFile , path: '/materials-page', },
+      { label: 'Exams & Marks', icon: FaClipboardCheck , path: '/exams-marks-page', },
     ]
 
     
 export const feesAccounts = [
-      { label: 'Fees Collection', icon: FaMoneyBill , path: '/fees-collectionPage' },
-      { label: 'Pending Fees', icon: FaClock , path: '/pending-feesPage' },
+      { label: 'Fees Collection', icon: FaMoneyBill , path: '/fees-collection-page' },
+      { label: 'Pending Fees', icon: FaClock , path: '/pending-fees-page' },
     ]
 
 export const Parents = [
-      { label: 'Parents', icon: FaComment , path: '/parents' },
+      { label: 'Parents', icon: FaPeopleGroup , path: '/parents-page' },
     ]
-export const Onlines = [
-      { label: 'Communications', icon: FaComment , path: '/communicationsPage' },
+export const Communications = [
+      { label: 'Communications', icon: FaComment , path: '/communications-page' },
     ]
     
 export const staffManagements = [
-      { label: 'Staff Directory', icon: FaUsers , path: '/staff-directoryPage' },
-      { label: 'Attendance Payroll', icon: FaCalendarCheck , path: '/payrollPage' },
+      { label: 'Staff Directory', icon: FaUsers , path: '/staff-directory-page' },
+      { label: 'Attendance Payroll', icon: FaCalendarCheck , path: '/payroll-page' },
     ]
     
 export const studentManagement = [
-      { label: 'Student Info', icon: FaUserGraduate , path: '/student-infoPage' },
-      { label: 'Attendance Reports', icon: FaCalendar , path: '/attendance-reportsPage' },
+      { label: 'Student Info', icon: FaUserGraduate , path: '/student-info-page' },
+      { label: 'Attendance Reports', icon: FaCalendar , path: '/attendance-reports-page' },
     ]

@@ -10,7 +10,7 @@ const SidebarComponent = ({ title, open, items }) => {
 
   return (
     <div className="mb-4">
-      {open && ( <p className="px-6 mb-3 text-[10px] tracking-[0.25em] text-black/50 font-semibold"> {title} </p> )}
+      {open && ( <p className="px-6 mb-3 text-[10px] tracking-[0.25em] text-orange-500 font-semibold"> {title} </p> )}
 
       <div>
         {items.map((item) => (
@@ -22,7 +22,7 @@ const SidebarComponent = ({ title, open, items }) => {
             <div className="flex items-center justify-center w-9 h-9 rounded-xl transition group-hover:scale-105">
               <item.icon className="text-lg text-orange-500" />
             </div>
-
+ 
             {open && ( <span className="transition-opacity duration-200"> {item.label} </span> )}
           </NavLink>
         ))}

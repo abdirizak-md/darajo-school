@@ -3,7 +3,7 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { HiOutlinePencilAlt } from "react-icons/hi";
 import { Link } from "react-router-dom";
 
-export default function RegisterUI() {
+const RegisterPage = () => {
   return (
     <div className="h-screen w-full bg-black flex items-center justify-center">
       {/* Background */}
@@ -113,3 +113,5 @@ export default function RegisterUI() {
     </div>
   );
 }
+
+export default RegisterPage;
