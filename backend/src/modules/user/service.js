@@ -91,25 +91,44 @@ export const createUserWithProfile = async (data) => {
 
 // 🔥 unified login
 export const loginUnified = async (identifier, password) => {
-  const user = await User.findOne({ identifier })
-    .select("+password")
-    .populate("profile");
+  try {
+    console.log("LOGIN INPUT:", identifier);
 
-  if (!user) {
-    throw new Error(messages.AUTH.INVALID_CREDENTIALS);
+    const user = await User.findOne({
+      $or: [
+        { email: identifier },
+        { identifier: identifier },
+      ],
+    }).select("+password");
+
+    console.log("USER FOUND:", user);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const isMatch = await comparePassword(password, user.password);
+
+    console.log("PASSWORD MATCH:", isMatch);
+
+    if (!isMatch) {
+      throw new Error("Wrong password");
+    }
+
+    const token = generateToken({
+      id: user._id,
+      role: user.role,
+      identifier: user.identifier,
+    });
+
+    return {
+      user,
+      token,
+      profile: user.profile,
+    };
+
+  } catch (error) {
+    console.error("🔥 REAL LOGIN ERROR:", error);
+    throw error;
   }
-
-  const isMatch = await comparePassword(password, user.password);
-
-  if (!isMatch) {
-    throw new Error(messages.AUTH.INVALID_CREDENTIALS);
-  }
-
-  const token = generateToken(user);
-
-  return {
-    user,
-    token,
-    profile: user.profile,
-  };
 };

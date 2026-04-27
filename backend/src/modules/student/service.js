@@ -1,108 +1,89 @@
 import Student from "./modal.js";
-import Parent from "../parents/modal.js";
+import User from "../user/modal.js";
+import { hashPassword } from "../../common/utils/hashPassword.js";
+import AppError from "../../common/utils/appError.js";
+import roles from "../../common/constant/roles.js";
 
-/**
- * ➕ CREATE STUDENT
- */
+// ➕ CREATE STUDENT + USER
 export const createStudentService = async (data) => {
   const {
-    parentName,
-    parentPhone,
-    email,
-    address,
-    ...studentData
+    fullName,
+    admissionNumber,
+    password,
+    gender,
+    birthDate,
+    classId,
+    sectionId,
+    parentId,
+    emergencyContact,
+    medicalInfo,
   } = data;
 
-  // ✅ validation
-  if (!studentData.classId || !studentData.sectionId) {
-    throw new Error("classId and sectionId are required");
+  // 1. validation
+  if (!fullName || !admissionNumber || !password || !classId || !sectionId) {
+    throw new AppError("Missing required fields", 400);
   }
 
-  // 🔍 find parent safely
-  let parent = null;
-
-  if (parentPhone) {
-    parent = await Parent.findOne({ phone: parentPhone });
-
-    if (!parent) {
-      parent = await Parent.create({
-        fullName: parentName,
-        phone: parentPhone,
-        email,
-        address,
-      });
-    }
-  }
-
-  // 🎓 create student
-  const student = await Student.create({
-    ...studentData,
-    parentId: parent ? parent._id : null,
+  // 2. check duplicate user
+  const existingUser = await User.findOne({
+    identifier: admissionNumber,
   });
 
-  return student;
+  if (existingUser) {
+    throw new AppError("Student already exists", 409);
+  }
+
+  // 3. hash password
+  const hashedPassword = await hashPassword(password);
+
+  // 4. create student
+  const student = await Student.create({
+    fullName,
+    admissionNumber,
+    gender,
+    birthDate,
+    classId,
+    sectionId,
+    parentId,
+    emergencyContact,
+    medicalInfo,
+  });
+
+  // 5. create user (AUTO LOGIN ACCOUNT)
+  const user = await User.create({
+    name: fullName,
+    identifier: admissionNumber,
+    password: hashedPassword,
+    role: roles.STUDENT,
+    profile: student._id,
+  });
+
+  return { student, user };
 };
 
-/**
- * 📄 GET ALL STUDENTS
- */
-export const getStudentsService = async (query = {}) => {
-  const { page = 1, limit = 10 } = query;
-
-  const students = await Student.find()
-    .populate("parentId", "fullName phone")
-    .populate("sectionId", "name")
-    .populate("classId", "name")
-    .skip((page - 1) * limit)
-    .limit(Number(limit))
+// 📄 GET ALL
+export const getStudentsService = async () => {
+  return await Student.find()
+    .populate("classId sectionId parentId")
     .lean();
-
-  const total = await Student.countDocuments();
-
-  return {
-    total,
-    page: Number(page),
-    limit: Number(limit),
-    data: students,
-  };
 };
 
-/**
- * 🔍 GET ONE
- */
+// 🔍 GET ONE
 export const getStudentByIdService = async (id) => {
-  const student = await Student.findById(id)
-    .populate("parentId", "fullName phone email address")
-    .populate("sectionId", "name")
-    .populate("classId", "name")
+  return await Student.findById(id)
+    .populate("classId sectionId parentId")
     .lean();
-
-  if (!student) throw new Error("Student not found");
-
-  return student;
 };
 
-/**
- * ✏️ UPDATE
- */
-export const updateStudentService = async (id, payload) => {
-  const updated = await Student.findByIdAndUpdate(id, payload, {
+// ✏️ UPDATE
+export const updateStudentService = async (id, data) => {
+  return await Student.findByIdAndUpdate(id, data, {
     new: true,
     runValidators: true,
   });
-
-  if (!updated) throw new Error("Student not found");
-
-  return updated;
 };
 
-/**
- * ❌ DELETE
- */
+// ❌ DELETE
 export const deleteStudentService = async (id) => {
-  const deleted = await Student.findByIdAndDelete(id);
-
-  if (!deleted) throw new Error("Student not found");
-
-  return deleted;
+  return await Student.findByIdAndDelete(id);
 };

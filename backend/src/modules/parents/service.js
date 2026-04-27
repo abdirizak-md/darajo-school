@@ -1,62 +1,61 @@
 import Parent from "./modal.js";
-import Student from "../student/modal.js"; // ✅ FIX: missing import
+import User from "../user/modal.js";
+import roles from "../../common/constant/roles.js";
+import AppError from "../../common/utils/appError.js";
+import { hashPassword } from "../../common/utils/hashPassword.js";
 
-// ➕ CREATE
+// ➕ CREATE PARENT + USER
 export const createParentService = async (data) => {
-  return await Parent.create(data);
-};
+  const { fullName, email, password, phone } = data;
 
-// 📄 GET ALL (with students)
-export const getParentsService = async () => {
-  const parents = await Parent.find().lean();
+  // 1. validation
+  if (!fullName || !email || !password) {
+    throw new AppError("Missing required fields", 400);
+  }
 
-  const result = await Promise.all(
-    parents.map(async (parent) => {
-      const students = await Student.find({
-        parentId: parent._id,
-      })
-        .select("fullName admissionNumber")
-        .lean();
-
-      return { ...parent, students };
-    })
-  );
-
-  return result;
-};
-
-// 🔍 GET ONE
-export const getParentByIdService = async (id) => {
-  const parent = await Parent.findById(id).lean();
-
-  if (!parent) throw new Error("Parent not found");
-
-  const students = await Student.find({
-    parentId: id,
-  })
-    .select("fullName admissionNumber")
-    .lean();
-
-  return { ...parent, students };
-};
-
-// ✏️ UPDATE
-export const updateParentService = async (id, data) => {
-  const updated = await Parent.findByIdAndUpdate(id, data, {
-    new: true,
-    runValidators: true,
+  // 2. check duplicate user
+  const exists = await User.findOne({
+    identifier: email,
   });
 
-  if (!updated) throw new Error("Parent not found");
+  if (exists) {
+    throw new AppError("Parent already exists", 409);
+  }
 
-  return updated;
-};
+  let parent;
 
-// ❌ DELETE
-export const deleteParentService = async (id) => {
-  const deleted = await Parent.findByIdAndDelete(id);
+  try {
+    // 3. create parent first
+    parent = await Parent.create({
+      fullName,
+      email,
+      phone,
+    });
 
-  if (!deleted) throw new Error("Parent not found");
+    // 4. hash password
+    const hashedPassword = await hashPassword(password);
 
-  return deleted;
+    // 5. create user account (same pattern as student/teacher)
+    const user = await User.create({
+      name: fullName,
+      email,
+      identifier: email,
+      password: hashedPassword,
+      role: roles.PARENT,
+      profile: parent._id,
+      profileModel: "Parent",
+    });
+
+    return { parent, user };
+  } catch (error) {
+    // rollback parent if user fails
+    if (parent?._id) {
+      await Parent.findByIdAndDelete(parent._id);
+    }
+
+    throw new AppError(
+      error.message || "Failed to create parent account",
+      500
+    );
+  }
 };

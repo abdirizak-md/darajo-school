@@ -1,24 +1,18 @@
-import mongoose from "mongoose";
-import roles from "../../common/constant/roles.js";
-
+  import mongoose from "mongoose";
+  import roles from "../../common/constant/roles.js";
 const userSchema = new mongoose.Schema(
   {
-    name: {
-      type: String,
-      required: true,
-    },
+    name: String,
 
-    // 🔥 unified login field
     identifier: {
       type: String,
       required: true,
-      unique: true, // email OR admissionNumber
+      unique: true,
     },
 
-    // optional (only for admin/teacher mostly)
     email: {
       type: String,
-      sparse: true, // allows null but keeps unique behavior
+      sparse: true,
     },
 
     password: {
@@ -29,15 +23,19 @@ const userSchema = new mongoose.Schema(
 
     role: {
       type: String,
-      enum: Object.values(roles),
+      enum: Object.values(roles), // ADMIN, TEACHER, STUDENT
       required: true,
     },
 
-    profile: {
-      type: mongoose.Schema.Types.ObjectId,
-      refPath: "role",
-    },
+    // ✅ NEW FIELD (IMPORTANT)
+profile: {
+  type: mongoose.Schema.Types.ObjectId,
+  ref: function () {
+    return this.role;
+  },
+},
 
+ 
     isActive: {
       type: Boolean,
       default: true,
@@ -46,4 +44,6 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema);
+
+export default User;

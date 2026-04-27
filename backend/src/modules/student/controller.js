@@ -1,101 +1,62 @@
 import * as service from "./service.js";
 import { asyncHandler } from "../../common/utils/asyncHandler.js";
-import STUDENT_MESSAGES  from "../../common/constant/student.js";
-import * as resultService from "../../modules/examResult/service.js";
 
-// ➕ CREATE
+
+
 export const createStudent = asyncHandler(async (req, res) => {
-  const data = await service.createStudentService(req.body);
+  const { student, user } = await service.createStudentService(req.body);
 
   res.status(201).json({
     success: true,
-    message: STUDENT_MESSAGES.CREATED,
-    data,
+    message: "Student created successfully",
+    data: {
+      student,
+      user: {
+        id: user._id,
+        role: user.role,
+        identifier: user.identifier,
+      },
+    },
   });
 });
 
-// 📄 GET ALL
+
 export const getStudents = asyncHandler(async (req, res) => {
-  const data = await service.getStudentsService(req.query);
+  const students = await service.getStudentsService();
 
   res.status(200).json({
     success: true,
-    message: STUDENT_MESSAGES.FETCHED_ALL,
-    data,
+    message: "Students fetched successfully",
+    data: students,
   });
 });
 
-// 🔍 GET ONE (FIXED)
 export const getStudent = asyncHandler(async (req, res) => {
-  const { id } = req.params;
-
-  // ✅ SAFETY CHECK
-  if (!id) {
-    return res.status(400).json({
-      success: false,
-      message: "Student ID is required",
-    });
-  }
-
-  const data = await service.getStudentByIdService(id);
+  const student = await service.getStudentByIdService(req.params.id);
 
   res.status(200).json({
     success: true,
-    message: STUDENT_MESSAGES.FETCHED_ONE,
-    data,
+    message: "Student fetched successfully",
+    data: student,
   });
 });
 
-// ✏️ UPDATE
 export const updateStudent = asyncHandler(async (req, res) => {
-  const { id } = req.params;
-
-  if (!id) {
-    return res.status(400).json({
-      success: false,
-      message: "Student ID is required",
-    });
-  }
-
-  const data = await service.updateStudentService(id, req.body);
+  const student = await service.updateStudentService(req.params.id, req.body);  
 
   res.status(200).json({
     success: true,
-    message: STUDENT_MESSAGES.UPDATED,
-    data,
+    message: "Student updated successfully",
+    data: student,
   });
 });
 
-// ❌ DELETE
 export const deleteStudent = asyncHandler(async (req, res) => {
-  const { id } = req.params;
+  await service.deleteStudentService(req.params.id);
 
-  if (!id) {
-    return res.status(400).json({
-      success: false,
-      message: "Student ID is required",
-    });
-  }
-
-  await service.deleteStudentService(id);
 
   res.status(200).json({
     success: true,
-    message: STUDENT_MESSAGES.DELETED,
-  });
-});
-
-
-
-export const getStudentCGPA = asyncHandler(async (req, res) => {
-  const cgpa = await resultService.calculateStudentCGPA(
-    req.params.studentId
-  );
-
-  return apiResponse(res, {
-    success: true,
-    message: "CGPA calculated successfully",
-    statusCode: statusCodes.SUCCESS,
-    data: { cgpa },
+    message: "Student deleted successfully",
   });
 });

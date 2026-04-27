@@ -29,6 +29,7 @@ const examResultSchema = new mongoose.Schema(
     sectionId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Section",
+      required: true,
     },
 
     totalMarks: {
@@ -43,26 +44,27 @@ const examResultSchema = new mongoose.Schema(
 
     grade: {
       type: String,
-      enum: ["A+", "A", "B", "C", "D", "F"],
+      enum: ["A+", "A", "A", "B", "C", "D", "F"],
     },
+
     gpa: {
-  type: Number,
-  default: 0,
-},
+      type: Number,
+      required: true,
+    },
 
     status: {
       type: String,
       enum: ["Pass", "Fail"],
-      default: "Pass",
+      required: true,
     },
   },
   { timestamps: true }
 );
 
-// prevent duplicate result per student per subject per exam
-// examResultSchema.index(
-//   { studentId: 1, examId: 1, subjectId: 1 },
-//   { unique: true }
-// );
+// prevent duplicate result per student per exam per subject
+examResultSchema.index(
+  { studentId: 1, examId: 1, subjectId: 1 },
+  { unique: true }
+);
 
 export default mongoose.model("ExamResult", examResultSchema);

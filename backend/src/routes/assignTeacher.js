@@ -1,7 +1,10 @@
-import express from 'express';
-import  assignTeacherRoutes  from '../modules/subjectAssignTeacher/route.js';
+import express from "express";
+import router from "../modules/subjectAssignTeacher/route.js";
 
-const routeAssignTeacher = express.Router();
-routeAssignTeacher.post('/assignTeachers', assignTeacherRoutes);
+const routeAssign = express.Router();
+routeAssign.use("/assign-teacher", router);
 
-export default routeAssignTeacher;
+export default routeAssign;
+
+
+

@@ -1,14 +1,8 @@
 import mongoose from "mongoose";
 
+
 const studentSchema = new mongoose.Schema(
   {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: false,
-      unique: true,
-    },
-
     fullName: {
       type: String,
       required: true,
@@ -25,7 +19,11 @@ const studentSchema = new mongoose.Schema(
     gender: {
       type: String,
       enum: ["male", "female"],
-      lowercase: true,
+      required: true,
+    },
+
+    birthDate: {
+      type: Date,
     },
 
     classId: {
@@ -39,8 +37,6 @@ const studentSchema = new mongoose.Schema(
       ref: "Section",
       required: true,
     },
-
-    rollNumber: String,
 
     parentId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -59,8 +55,5 @@ const studentSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
-// studentSchema.index({ admissionNumber: 1 });
-studentSchema.index({ classId: 1, sectionId: 1 });
 
 export default mongoose.model("Student", studentSchema);
