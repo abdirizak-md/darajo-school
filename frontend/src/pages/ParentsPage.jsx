@@ -44,19 +44,14 @@ const ParentsInfoPage = () => {
         </div>
 
         <div className="flex gap-5 mb-8">
-            <button 
-                onClick={() => setActive('parents')} 
-                className={`px-8 py-3 border border-[#e1e5e9] hover:shadow-md active:scale-95 transition-all duration-200 rounded-md shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active === 'parents' ? 'bg-orange-500 text-white' : 'bg-white'}`}
-            >
-                All Parents
-            </button>
-
-            <button 
-                onClick={() => setActive('student')} 
-                className={`px-8 py-3 border border-[#e1e5e9] hover:shadow-md active:scale-95 transition-all duration-200 rounded-md shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active === 'student' ? 'bg-orange-500 text-white' : 'bg-white'}`}
-            >
-                Student
-            </button>
+            {
+                ['All Parents', 'Student'].map((item, index) => (
+                    <button 
+                        onClick={() => setActive(item)} 
+                        className={`px-8 py-3 border border-[#e1e5e9] hover:shadow-md active:scale-95 transition-all duration-200 rounded-md shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active === item ? 'bg-orange-500 text-white' : 'bg-white'}`}
+                    > {item} </button>
+                ))
+            }
         </div>
 
         {/* Parent Directory */}
