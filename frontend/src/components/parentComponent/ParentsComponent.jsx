@@ -3,7 +3,7 @@ import { IoSearchOutline } from 'react-icons/io5'
 import student from '../../Data/students'
 import { FaPlus } from 'react-icons/fa6'
 
-const ParentComponent = ({setParentModal}) => {
+const ParentsComponent = ({setParentModal}) => {
   return (
     <div className="bg-white p-6 mb-8 shadow rounded-md">
         <div className="flex justify-between items-center mb-8">
@@ -71,4 +71,4 @@ const ParentComponent = ({setParentModal}) => {
   )
 }
 
-export default ParentComponent
+export default ParentsComponent

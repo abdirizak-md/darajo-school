@@ -8,10 +8,12 @@ import AddSectionModal from '../boxModels/AddSectionModal'
 import AddSubjectModal from '../boxModels/AddSubjectModal'
 import AssignedTeachersComponent from '../components/subjectAssignmentComponents/AssignedTeachersComponent'
 import AddAssignedTeacherModal from '../boxModels/AddAssignedTeacherModal'
+import AddAssignmentModal from '../boxModels/AddAssignmentModal'
 
 const SubjectsAssignmentPage = () => {
     const [active, setActive] = useState('subjects');
     const [addSubject, setAddSubject] = useState(false);
+    const [addAssignment, setAddAssignment] = useState(false);
     const [assignedTeacher, setAssignedTeacher] = useState(false);
 
     const statusStyles = {
@@ -53,17 +55,18 @@ const SubjectsAssignmentPage = () => {
     
     
         <div className="flex gap-5 mb-8">
-            <button onClick={() => setActive('subjects')} className={`px-8 py-3 border border-[#e1e5e9]  rounded-md hover:shadow-md active:scale-95 transition-all duration-200 shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active == 'subjects' ? 'bg-orange-500 text-white' : 'bg-white'}`}>Subjects</button>
-            <button onClick={() => setActive('assignments')} className={`px-8 py-3 border border-[#e1e5e9] rounded-md hover:shadow-md active:scale-95 transition-all duration-200 shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active == 'assignments' ? 'bg-orange-500 text-white' : 'bg-white'}`}>Assignments</button>
-            <button onClick={() => setActive('grades')} className={`px-8 py-3 border border-[#e1e5e9]  rounded-md hover:shadow-md active:scale-95 transition-all duration-200 shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active == 'grades' ? 'bg-orange-500 text-white' : 'bg-white'}`}>Grades</button>
-            <button onClick={() => setActive('assignedTeachers')} className={`px-8 py-3 border border-[#e1e5e9]  rounded-md hover:shadow-md active:scale-95 transition-all duration-200 shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active == 'assignedTeachers' ? 'bg-orange-500 text-white' : 'bg-white'}`}>Assigned Teachers</button>
+            {
+                ['subjects', 'assignments', 'grades', 'assignedTeachers'].map(tab => (
+                    <button onClick={() => setActive(tab)} className={`px-8 py-3 border border-[#e1e5e9]  rounded-md hover:shadow-md active:scale-95 transition-all duration-200 shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active == tab ? 'bg-orange-500 text-white' : 'bg-white'}`}>{tab}</button>
+                ))
+            }
         </div>
     
         {/* Subjects */}
         { active == 'subjects' && <SubjectComponent  setAddSubject={setAddSubject}/>}
 
         {/* Assignments */}
-        { active === 'assignments' && <AssignmentComponent /> }
+        { active === 'assignments' && <AssignmentComponent setAddAssignment={setAddAssignment}/> }
 
         {/* grades */}
         { active === 'grades' && <GradeComponent /> }
@@ -74,6 +77,9 @@ const SubjectsAssignmentPage = () => {
 
         {/* box modal for sections*/}
         {   addSubject && <AddSubjectModal setAddSubject={setAddSubject}/> }
+
+        {/* box modal for assignment*/}
+        {   addAssignment && <AddAssignmentModal setAddAssignment={setAddAssignment}/> }
 
         {/* assigned teacher modal*/}
         {   assignedTeacher && <AddAssignedTeacherModal setAssignedTeacher={setAssignedTeacher}/> }

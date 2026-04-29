@@ -1,5 +1,5 @@
 export const validateCreateClass = (req, res, next) => {
-  const { name, sectionId, teacherId } = req.body || {}; // ✅ safe
+  const { name, sectionId, teacherId, status } = req.body || {}; // ✅ safe
 
   if (!name) {
   return res.status(400).json({
