@@ -1,36 +1,48 @@
 import { FaPlus } from 'react-icons/fa6'
 import { IoSearchOutline } from 'react-icons/io5'
 import sectionss from '../../Data/sections'
+import { useState } from 'react';
 
 const SectionsComponent = ({setAddSection}) => {
+    const [search, setSearch] = useState("");
+    const [selectedClass, setSelectedClass] = useState("");
+
+const data = [];s
+    const filteredClasses = data?.filter((classs) => {
+        const matchesSearch = classs?.name
+            ?.toLowerCase()
+            .includes(search.toLowerCase());
+
+        const matchesSelect = selectedClass
+            ? classs?.name === selectedClass
+            : true;
+
+        return matchesSearch && matchesSelect;
+    });
+
   return (
     <div className="bg-white p-6 mb-6 shadow rounded-md">
         <div className="flex justify-between items-center mb-4">
             <span className='text-[#333] text-2xl font-bold'>Manage Sections</span>
             <button className='px-5 py-2 cursor-pointer text-white bg-orange-500 rounded-md inline-flex items-center gap-2' onClick={() => setAddSection(true)}><FaPlus />Add Section</button>
         </div>
-                
-        <form className="grid grid-cols-1 md:grid-cols-[3fr_2fr_150px] gap-5 mb-4">
+
+         <form className="grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-5 mb-4">
             <div className="mb-4">
-                <input type="text" placeholder='Search Sections...' className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-lg transition-all duration-300 ease-in-out placeholder:text-sm focus:outline-orange5bg-orange-500"/>
+                <input type="text" name='section' placeholder='Search Sections...' className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-lg transition-all duration-300 ease-in-out placeholder:text-sm focus:outline-orange-500" value={search} onChange={(e) => setSearch(e.target.value)}/>
             </div>
 
             <div className="mb-4">
-                <select name="subject" id="subject" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-lg focus:outline-orange5bg-orange-500 transition-all duration-300 ease-in-out" required>
-                    <option value="">Select Section</option>
-                    <option value="All Sections">All Sections</option>
-                    <option value="Section A">Section A</option>
-                    <option value="Section B">Section B</option>
-                    <option value="Section C">Section C</option>
-                    <option value="Section D">Section D</option>
+                <select name="sections" id="sections" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-lg focus:outline-orange-500 transition-all duration-300 ease-in-out" value={selectedClass} onChange={(e) => setSelectedClass(e.target,value)} required>
+                    <option value="">Select section</option>
+                    <option value="All sectiones">All sectiones</option>
+                    <option value="section A">section A</option>
+                    <option value="section B">section B</option>
+                    <option value="section C">section C</option>
+                    <option value="section D">section D</option>
                 </select>
             </div>
-
-            <button type='submit' className="flex items-center gap-2 w-fit cursor-pointer px-4 py-2.5 border border-[#e1e5e9] rounded-md text-lg transition-all duration-300 ease-in-out mb-4">
-                <IoSearchOutline size={24}/>
-                Search
-            </button>
-            </form>
+        </form>
     
             <table className='w-full border-collapse mt-4'>
                 <thead>

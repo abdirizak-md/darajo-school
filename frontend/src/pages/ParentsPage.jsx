@@ -1,13 +1,15 @@
 import { useState } from 'react'
 import { MdArrowBackIos } from 'react-icons/md'
 import { Link } from 'react-router-dom'
-import ParentComponent from '../components/studentInfoComponents/ParentComponent'
+import ParentsComponent from '../components/parentComponent/ParentsComponent'
 import TodayAttendanceComponent from '../components/studentInfoComponents/TodayAttendanceComponent'
+import AddParentModal from '../boxModels/AddParentModal'
+import ParentChildStudentComponent from '../components/parentComponent/ParentChildStudentComponent'
 // import AddParentModal from '../boxModels/AddParentModal'
 
 const ParentsInfoPage = () => {
     const [active, setActive] = useState('parents');
-    const [modelParent, setmodelParent] = useState(false);
+    const [modelParent, setParentModal] = useState(false);
     const [modelContact, setmodelContact] = useState(false);
 
   return (
@@ -42,29 +44,24 @@ const ParentsInfoPage = () => {
         </div>
 
         <div className="flex gap-5 mb-8">
-            <button 
-                onClick={() => setActive('parents')} 
-                className={`px-8 py-3 border border-[#e1e5e9] hover:shadow-md active:scale-95 transition-all duration-200 rounded-md shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active === 'parents' ? 'bg-orange-500 text-white' : 'bg-white'}`}
-            >
-                All Parents
-            </button>
-
-            <button 
-                onClick={() => setActive('contact')} 
-                className={`px-8 py-3 border border-[#e1e5e9] hover:shadow-md active:scale-95 transition-all duration-200 rounded-md shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active === 'contact' ? 'bg-orange-500 text-white' : 'bg-white'}`}
-            >
-                Communications
-            </button>
+            {
+                ['All Parents', 'Student'].map((item, index) => (
+                    <button 
+                        onClick={() => setActive(item)} 
+                        className={`px-8 py-3 border border-[#e1e5e9] hover:shadow-md active:scale-95 transition-all duration-200 rounded-md shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active === item ? 'bg-orange-500 text-white' : 'bg-white'}`}
+                    > {item} </button>
+                ))
+            }
         </div>
 
         {/* Parent Directory */}
-        {/* {active === 'parents' && <ParentComponent />} */}
+        {active === 'parents' && <ParentsComponent setParentModal={setParentModal} />}
 
-        {/* Communication / Contact logs */}
-        {/* {active === 'contact' && <TodayAttendanceComponent setmodelAttendance={setmodelContact} />} */}
+        {/* student logs */}
+        {active === 'student' && <ParentChildStudentComponent />}
 
         {/* Add Parent Modal */}
-        {/* {modelParent && <AddParentModal setmodelParent={setmodelParent} />} */}
+        {modelParent && <AddParentModal setParentModal={setParentModal} />}
     </section>
   )
 }

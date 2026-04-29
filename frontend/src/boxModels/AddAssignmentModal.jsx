@@ -3,9 +3,9 @@ import { IoClose } from 'react-icons/io5';
 import { useCreateSectionMutation } from '../redux/features/sectionApi';
 import { useGetClassesQuery } from '../redux/features/classApi';
 
-const AddSectionModal = ({ setAddSection }) => {
+const AddAssignmentModal = ({ setAddAssignment }) => {
 
-  const [name, setName] = useState('');
+  const [title, setTitle] = useState('');
   const [classId, setClassId] = useState('');
   const [roomNumber, setRoomNumber] = useState('');
   const [status, setStatus] = useState('Active');
@@ -22,20 +22,20 @@ const AddSectionModal = ({ setAddSection }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!name || !classId || !roomNumber) {
+    if (!title || !classId || !roomNumber) {
       return alert("Please fill required fields");
     }
 
     try {
       await createSection({
-        name,
+        title,
         classId,
         roomNumber,
         status,
       }).unwrap();
 
       alert("Section created successfully ✅");
-      setAddSection(false);
+      setAddAssignment(false);
 
     } catch (err) {
       console.error(err);
@@ -49,8 +49,8 @@ const AddSectionModal = ({ setAddSection }) => {
 
         {/* HEADER */}
         <div className="flex justify-between p-6 border-b border-[#e1e5e9]">
-          <h1 className="text-2xl text-orange-500 font-bold"> Create Section </h1>
-          <IoClose className='hover:text-orange-500 transition-all duration-200' size={28} onClick={() => setAddSection(false)} />
+          <h1 className="text-2xl text-orange-500 font-bold"> Create Assignment </h1>
+          <IoClose className='hover:text-orange-500 transition-all duration-200' size={28} onClick={() => setAddAssignment(false)} />
         </div>
 
         {/* FORM */}
@@ -58,8 +58,8 @@ const AddSectionModal = ({ setAddSection }) => {
 
           {/* SECTION NAME */}
           <div className="mb-4">
-                <label htmlFor="sectionName" className="font-medium block mb-2 text-[#333]">Section Name <span className="text-red-500">*</span></label> 
-                <input type="text" name="sectionName" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm transition-all duration-300 ease-in-out" value={name} onChange={() => setName(e.target.value)} placeholder='Enter section name'/>
+                <label htmlFor="assignmentTitle" className="font-medium block mb-2 text-[#333]">Assignment Title <span className="text-red-500">*</span></label> 
+                <input type="text" name="assignmentTitle" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm transition-all duration-300 ease-in-out" value={title} onChange={() => setTitle(e.target.value)} placeholder='Enter section name'/>
             </div>
 
           {/* ✅ CLASS DROPDOWN */}
@@ -92,7 +92,7 @@ const AddSectionModal = ({ setAddSection }) => {
 
           {/* BUTTONS */}
           <div className="flex gap-4 justify-end mt-8 pt-4 border-t border-[#e1e5e9]">
-                <button type='button' className="bg-[#f8f9fa] hover:bg-[#e9ecef] text-[#333] border border-[#e1e5e9] px-6 py-3 rounded-md cursor-pointer font-medium inline-flex items-center gap-2 transition-all duration-300 ease-in-out" onClick={() => setAddSection(false)}>Cancel</button>
+                <button type='button' className="bg-[#f8f9fa] hover:bg-[#e9ecef] text-[#333] border border-[#e1e5e9] px-6 py-3 rounded-md cursor-pointer font-medium inline-flex items-center gap-2 transition-all duration-300 ease-in-out" onClick={() => setAddAssignment(false)}>Cancel</button>
                 <button className="bg-orange-500 hover:bg-orange-600 text-white border border-[#e1e5e9] px-6 py-3 rounded-md cursor-pointer font-medium inline-flex items-center gap-2 transition-all duration-300 ease-in-out">{isLoading ? 'Saving...': 'Create Section'}</button>
           </div>
 
@@ -102,4 +102,4 @@ const AddSectionModal = ({ setAddSection }) => {
   );
 };
 
-export default AddSectionModal;
+export default AddAssignmentModal;

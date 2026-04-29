@@ -7,7 +7,7 @@ export const apiSlice = createApi({
 
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
-      console.log("API TOKEN:", token);
+      // console.log("API TOKEN:", token);
 
       if (token) {
         headers.set("authorization", `Bearer ${token}`);

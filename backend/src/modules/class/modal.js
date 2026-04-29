@@ -12,8 +12,12 @@ const classSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Teacher",
     },
- 
- 
+
+    status: {
+      type: String,
+      enum: ["active", "pending", "completed"],
+      default: "active", // optional but typical
+    },
   },
   { timestamps: true }
 );
