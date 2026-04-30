@@ -4,6 +4,7 @@ import { IoClose } from "react-icons/io5";
 import { useCreateStudentMutation } from "../redux/features/studentApi";
 import { useGetClassesQuery } from "../redux/features/classApi";
 import { useGetSectionsQuery } from "../redux/features/sectionApi";
+import { useGetParentsQuery } from "../redux/features/parentApi";
 
 const AddStudentModal = ({ setmodelStudent }) => {
   const [createStudent, { isLoading , isError}] = useCreateStudentMutation();
@@ -11,23 +12,24 @@ const AddStudentModal = ({ setmodelStudent }) => {
   // ✅ Classes (always load)
   const { data: classesData } = useGetClassesQuery();
   const { data: sectionsData } = useGetSectionsQuery();
+  const { data: parentsData } = useGetParentsQuery();
 
   if (isLoading) console.log("Loading classes...");
 if (isError) console.log("Error fetching classes");
+console.log("parentsData:", parentsData);
 
   // ✅ Form state
   const [formData, setFormData] = useState({
     fullName: "",
     admissionNumber: "",
+    password: "",
     dateOfBirth: "",
     gender: "",
     admissionDate: "",
     classId: "",
     sectionId: "",
-    parentName: "",
-    parentPhone: "",
-    email: "",
-    address: "",
+    parentId: "",
+   
     medicalInfo: "",
     status: "Active",
     emergencyContact: "",
@@ -98,6 +100,15 @@ if (isError) console.log("Error fetching classes");
             className="w-full border p-2"
             required
           />
+          {/* PASSWORD */}
+          <input
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            className="w-full border p-2"
+            required
+          />
 
           
           {/* GENDER */}
@@ -144,42 +155,28 @@ if (isError) console.log("Error fetching classes");
                 {s.name}
               </option>
             ))}
+
+
+          </select>
+          {/* Parent */}
+          <select
+            name="parentId"
+            value={formData.parentId}
+            onChange={handleChange}
+            className="w-full border p-2"
+            required
+            disabled={!formData.classId}
+          >
+            <option value="">Select Parent</option>
+            {parentsData?.data.map((parent) => (
+              <option key={parent._id} value={parent._id}>
+                {parent.fullName}
+              </option>
+            ))}
           </select>
 
-          {/* PARENT */}
-          <input
-            name="parentName"
-            placeholder="Parent Name"
-            value={formData.parentName}
-            onChange={handleChange}
-            className="w-full border p-2"
-          />
+        
 
-          <input
-            name="parentPhone"
-            placeholder="Parent Phone"
-            value={formData.parentPhone}
-            onChange={handleChange}
-            className="w-full border p-2"
-          />
-
-          {/* EMAIL */}
-          <input
-            name="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
-            className="w-full border p-2"
-          />
-
-          {/* ADDRESS */}
-          <textarea
-            name="address"
-            placeholder="Address"
-            value={formData.address}
-            onChange={handleChange}
-            className="w-full border p-2"
-          />
 
           {/* EMERGENCY */}
           <input

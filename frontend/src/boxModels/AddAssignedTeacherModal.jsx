@@ -1,92 +1,68 @@
 import { useState } from "react";
 import { IoClose } from "react-icons/io5";
-import { useCreateSubjectMutation } from "../redux/features/subject";
+import { useGetTeachersQuery } from "../redux/features/teacherApi";
+import { useGetClassesQuery } from "../redux/features/classApi";
+import { useGetSectionsQuery } from "../redux/features/sectionApi";
+import { useGetSubjectsQuery } from "../redux/features/subject";
+import { useCreateAssignmentMutation } from "../redux/features/assignModule";
 
-const AddAssignedTeacherModal = ({ setAssignModal }) => {
-  const [createSubject, { isLoading }] = useCreateSubjectMutation();
+const AddAssignedTeacherModal = ({ setAssignedTeacher }) => {
 
-  const [name, setName] = useState("");
-  const [code, setCode] = useState("");
-  const [description, setDescription ] = useState("");
-  const [status, setStatus] = useState("ACTIVE");
+  const [createAssignment, { isLoading }] = useCreateAssignmentMutation();
 
-  // ✅ ALERT STATE
-  const [message, setMessage] = useState("");
-  const [type, setType] = useState(""); // success | error
+  const { data: teachers } = useGetTeachersQuery();
+  const { data: classes } = useGetClassesQuery();
+  const { data: sections } = useGetSectionsQuery();
+  const { data: subjects } = useGetSubjectsQuery();
 
-  const showAlert = (msg, type = "success") => {
-    setMessage(msg);
-    setType(type);
-
-    setTimeout(() => {
-      setMessage("");
-      setType("");
-    }, 3000);
-  };
+  const [teacherId, setTeacherId] = useState("");
+  const [classId, setClassId] = useState("");
+  const [sectionId, setSectionId] = useState("");
+  const [subjectId, setSubjectId] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!name.trim() || !code.trim()) {
-      showAlert("Please fill all required fields!", "error");
+    if (!teacherId || !classId || !sectionId || !subjectId) {
+      alert("All fields are required");
       return;
     }
 
     try {
-      await createSubject({
-        name,
-        code,
-        description,
-        status,
+      await createAssignment({
+        teacherId,
+        classId,
+        sectionId,
+        subjectId,
       }).unwrap();
 
-      // reset form
-      setName("");
-      setCode("");
-      setDescription("");
-      setStatus("ACTIVE");
+      alert("Teacher assigned successfully");
 
-      // ✅ show success first
-      showAlert("Subject created successfully!", "success");
+      setTeacherId("");
+      setClassId("");
+      setSectionId("");
+      setSubjectId("");
 
-      // ⛔ close modal after alert shows
-      setTimeout(() => {
-        setAssignModal(false);
-      }, 1000);
+      setAssignedTeacher(false);
+
     } catch (error) {
-      console.log(error);
-
-      showAlert(
-        error?.data?.message || "Failed to create subject",
-        "error"
-      );
+      console.error(error);
+      alert(error?.data?.message || "Something went wrong");
     }
   };
 
   return (
-    <div className="fixed z-50 left-0 top-0 w-full h-full bg-[rgba(0,0,0,0.5)] flex items-center justify-center">
-
-      <div className="bg-white rounded-lg w-[50%] max-h-[90vh] overflow-y-auto relative">
-
-        {/* 🔔 ALERT */}
-        {message && (
-          <div
-            className={`absolute top-2 left-1/2 -translate-x-1/2 px-4 py-2 rounded text-white ${
-              type === "success" ? "bg-green-600" : "bg-red-600"
-            }`}
-          >
-            {message}
-          </div>
-        )}
+    <div className="fixed z-50 left-0 top-0 w-full h-full bg-black/50 flex items-center justify-center">
+      <div className="bg-white rounded-lg w-[50%] max-h-[90vh] overflow-y-auto">
 
         {/* HEADER */}
         <div className="flex justify-between p-6 border-b">
           <h1 className="text-2xl font-bold text-[#006b3f]">
-            Create New Subject
+            Assign Teacher to Class
           </h1>
 
           <IoClose
-            size={30}
+            size={28}
             className="cursor-pointer"
             onClick={() => setAssignModal(false)}
           />
@@ -95,60 +71,83 @@ const AddAssignedTeacherModal = ({ setAssignModal }) => {
         {/* FORM */}
         <form className="p-6" onSubmit={handleSubmit}>
 
-          {/* NAME */}
+          {/* TEACHER */}
           <div className="mb-4">
             <label className="block mb-2 font-medium">
-              Subject Name *
-            </label>
-            <input
-              type="text"
-              placeholder="Enter subject name"
-              className="w-full p-2 border rounded"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
-
-          {/* CODE */}
-          <div className="mb-4">
-
-              <label className="block mb-2 font-medium">
-                Subject Code *
-              </label>
-              <input
-                type="text"
-                placeholder="Enter subject code"
-                className="w-full p-2 border rounded"
-                value={code}
-                onChange={(e) => setCode(e.target.value)}
-              />
-            </div>
-          <div className="mb-4">
-
-              <label className="block mb-2 font-medium">
-                Subject Description *
-              </label>
-              <input
-                type="text"
-                placeholder="Enter subject description"
-                className="w-full p-2 border rounded"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-            </div>
-          {/* STATUS */}
-          <div className="mb-4">
-            <label className="block mb-2 font-medium">
-              Status
+              Teacher <span className="text-red-500">*</span>
             </label>
 
             <select
               className="w-full p-2 border rounded"
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
+              value={teacherId}
+              onChange={(e) => setTeacherId(e.target.value)}
             >
-              <option value="ACTIVE">ACTIVE</option>
-              <option value="INACTIVE">INACTIVE</option>
+              <option value="">Select teacher</option>
+              {teachers?.data?.map((t) => (
+                <option key={t._id} value={t._id}>
+                  {t.fullName}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* CLASS */}
+          <div className="mb-4">
+            <label className="block mb-2 font-medium">
+              Class <span className="text-red-500">*</span>
+            </label>
+
+            <select
+              className="w-full p-2 border rounded"
+              value={classId}
+              onChange={(e) => setClassId(e.target.value)}
+            >
+              <option value="">Select class</option>
+              {classes?.data?.map((c) => (
+                <option key={c._id} value={c._id}>
+                  {c.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* SECTION */}
+          <div className="mb-4">
+            <label className="block mb-2 font-medium">
+              Section <span className="text-red-500">*</span>
+            </label>
+
+            <select
+              className="w-full p-2 border rounded"
+              value={sectionId}
+              onChange={(e) => setSectionId(e.target.value)}
+            >
+              <option value="">Select section</option>
+              {sections?.data?.map((s) => (
+                <option key={s._id} value={s._id}>
+                  {s.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* SUBJECT */}
+          <div className="mb-4">
+            <label className="block mb-2 font-medium">
+              Subject <span className="text-red-500">*</span>
+            </label>
+
+            <select
+              className="w-full p-2 border rounded"
+              value={subjectId}
+              onChange={(e) => setSubjectId(e.target.value)}
+            >
+              <option value="">Select subject</option>
+              {subjects?.data?.map((s) => (
+                <option key={s._id} value={s._id}>
+                  {s.name}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -167,7 +166,7 @@ const AddAssignedTeacherModal = ({ setAssignModal }) => {
               disabled={isLoading}
               className="px-4 py-2 bg-green-600 text-white disabled:opacity-50"
             >
-              {isLoading ? "Creating..." : "Create Subject"}
+              {isLoading ? "Assigning..." : "Assign"}
             </button>
           </div>
 

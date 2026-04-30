@@ -1,10 +1,8 @@
-import {asyncHandler} from "../../common/utils/asyncHandler.js";
+import { asyncHandler } from "../../common/utils/asyncHandler.js";
 import apiResponse from "../../common/utils/responseApi.js";
-
 import * as resultService from "./service.js";
-import resultMessages from "../../common/constant/examResult.js";
-
 import statusCodes from "../../common/constant/statusCode.js";
+import resultMessages from "../../common/constant/examResult.js";
 
 export const createResult = asyncHandler(async (req, res) => {
   const result = await resultService.createResult(req.body);
@@ -18,7 +16,7 @@ export const createResult = asyncHandler(async (req, res) => {
 });
 
 export const getResults = asyncHandler(async (req, res) => {
-  const results = await resultService.getResults();
+  const results = await resultService.getResults(req.user);
 
   return apiResponse(res, {
     success: true,
@@ -60,15 +58,12 @@ export const deleteResult = asyncHandler(async (req, res) => {
   });
 });
 
-
-export const getStudentCGPA = asyncHandler(async (req, res) => {
-  const cgpa = await resultService.calculateStudentCGPA(
-    req.params.studentId
-  );
+export const calculateStudentCGPA = asyncHandler(async (req, res) => {
+  const cgpa = await resultService.calculateStudentCGPA(req.params.studentId);
 
   return apiResponse(res, {
     success: true,
-    message: "CGPA fetched successfully",
+    message: resultMessages.CGPA_CALCULATED || "CGPA calculated",
     statusCode: statusCodes.SUCCESS,
     data: { cgpa },
   });

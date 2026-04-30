@@ -9,8 +9,9 @@ import routeAtten from "./routes/attendance.js";
 import routerUsers from "./routes/users.js";
 import examRoute from "./routes/exam.js";
 import examResults from "./routes/resultExam.js";
-import assrouteAssignTeacherign from "./routes/assignTeacher.js";
-
+import routeAssign from "./routes/assignTeacher.js";
+import routersEntryMark from "./routes/entryMark.js";
+import routersCommunication from "./routes/communication.js";
 
 
 import cors from "cors";
@@ -39,7 +40,9 @@ app.use("/api", routeAtten);
 app.use("/api", routerUsers);
 app.use('/api', examRoute)
 app.use('/api', examResults)
-app.use('/api', assrouteAssignTeacherign)
+app.use('/api', routeAssign)
+app.use('/api', routersEntryMark)
+app.use('/api', routersCommunication)
 
 
 app.get("/", (req, res) => {

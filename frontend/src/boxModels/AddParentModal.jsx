@@ -1,63 +1,57 @@
 import React, { useState } from "react";
 import { IoClose } from "react-icons/io5";
-
-import { useCreateStudentMutation } from "../redux/features/studentApi";
-import { useGetClassesQuery } from "../redux/features/classApi";
-import { useGetSectionsQuery } from "../redux/features/sectionApi";
+import { useCreateParentMutation } from "../redux/features/parentApi";
 
 const AddParentModal = ({ setParentModal }) => {
-  const [createStudent, { isLoading , isError}] = useCreateStudentMutation();
+  const [createParent, { isLoading, isError }] = useCreateParentMutation();
 
-  // ✅ Classes (always load)
-  const { data: classesData } = useGetClassesQuery();
-  const { data: sectionsData } = useGetSectionsQuery();
-
-  if (isLoading) console.log("Loading classes...");
-if (isError) console.log("Error fetching classes");
-
-  // ✅ Form state
   const [formData, setFormData] = useState({
-    dateOfBirth: "",
-    gender: "",
-    admissionDate: "",
-    parentName: "",
-    parentPhone: "",
-    email: "",
-    address: "",
-    status: "Active",
-    emergencyContact: "",
-  });
+  fullName: "",
+  phone: "",
+  password: "",
+  gender: "",
+  email: "",
+  address: "",
+  status: "Active",
+  emergencyContact: "",
+});
 
-  
-
-  const classes = classesData?.data || [];
-  const sections = sectionsData?.data || [];
-
-  // 🔄 handle change
   const handleChange = (e) => {
-    const { name, value } = e.target;
-
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
-
-      // reset section when class changes
-      ...(name === "classId" ? { sectionId: "" } : {}),
+      [e.target.name]: e.target.value,
     }));
   };
 
-  // 🚀 submit
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      await createStudent(formData).unwrap();
+      await createParent(formData).unwrap();
 
-      alert("Student created successfully");
+      alert("Parent created successfully");
+
+      // reset form
+      setFormData({
+        fullName: "",
+        phone: "",
+        password: "",
+        gender: "",
+        email: "",
+        address: "",
+        status: "Active",
+        emergencyContact: "",
+      });
+
       setParentModal(false);
     } catch (error) {
-      console.log(error);
-      alert("Failed to create student");
+      console.log("Create parent error:", error);
+
+      alert(
+        error?.data?.message ||
+        error?.error ||
+        "Failed to create parent"
+      );
     }
   };
 
@@ -73,34 +67,35 @@ if (isError) console.log("Error fetching classes");
 
         {/* FORM */}
         <form onSubmit={handleSubmit} className="p-4 space-y-3">
-          {/* PARENT */}
-          <input
-            name="parentName"
-            placeholder="Parent Name"
-            value={formData.parentName}
-            onChange={handleChange}
-            className="w-full border p-2"
-          />
-          <input
-            name="parentPhone"
-            placeholder="Parent Phone"
-            value={formData.parentPhone}
-            onChange={handleChange}
-            className="w-full border p-2"
-          />
-          {/* GENDER */}
-         <select
-          name="gender"
-          value={formData.gender}
+
+        <input
+        name="fullName"
+        placeholder="Full Name"
+        value={formData.fullName}
+        onChange={handleChange}
+        className="w-full border p-2"
+      />
+
+        <input
+          name="phone"
+          placeholder="Phone"
+          value={formData.phone}
           onChange={handleChange}
           className="w-full border p-2"
-          required
-        >
-        <option value="">Select Gender</option>
-        <option value="male">Male</option>
-        <option value="female">Female</option>
-      </select>
-      {/* EMAIL */}
+        />
+
+          <select
+            name="gender"
+            value={formData.gender}
+            onChange={handleChange}
+            className="w-full border p-2"
+            required
+          >
+            <option value="">Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+
           <input
             name="email"
             placeholder="Email"
@@ -109,18 +104,22 @@ if (isError) console.log("Error fetching classes");
             className="w-full border p-2"
           />
 
-          {/* ADDRESS */}
+          <input
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            className="w-full border p-2"
+          />
+
           <textarea
             name="address"
             placeholder="Address"
             value={formData.address}
             onChange={handleChange}
             className="w-full border p-2"
-          />  
+          />
 
-          
-
-          {/* EMERGENCY */}
           <input
             name="emergencyContact"
             placeholder="Emergency Contact"
@@ -129,7 +128,6 @@ if (isError) console.log("Error fetching classes");
             className="w-full border p-2"
           />
 
-          {/* STATUS */}
           <select
             name="status"
             value={formData.status}
@@ -140,7 +138,6 @@ if (isError) console.log("Error fetching classes");
             <option value="Inactive">Inactive</option>
           </select>
 
-          {/* BUTTON */}
           <button
             type="submit"
             disabled={isLoading}

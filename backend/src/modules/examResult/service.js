@@ -1,19 +1,16 @@
 import ExamResult from "./modal.js";
 import AppError from "../../common/utils/appError.js";
+import { getGradeAndGpa } from "../../common/utils/gpaCalculator.js";
 
-const calculateGrade = (marks, total) => {
-  const percent = (marks / total) * 100;
-
-  if (percent >= 90) return "A+";
-  if (percent >= 80) return "A";
-  if (percent >= 70) return "B";
-  if (percent >= 60) return "C";
-  if (percent >= 50) return "D";
-  return "F";
-};
-
+// CREATE
 export const createResult = async (data) => {
-  const { studentId, examId, subjectId, totalMarks, obtainedMarks } = data;
+  const {
+    studentId,
+    examId,
+    subjectId,
+    totalMarks,
+    obtainedMarks,
+  } = data;
 
   const existing = await ExamResult.findOne({
     studentId,
@@ -25,39 +22,60 @@ export const createResult = async (data) => {
     throw new AppError("Result already exists", 409);
   }
 
-  const grade = calculateGrade(obtainedMarks, totalMarks);
+  const { grade, gpa } = getGradeAndGpa(obtainedMarks, totalMarks);
 
   const status = obtainedMarks >= totalMarks * 0.5 ? "Pass" : "Fail";
 
-  const result = await ExamResult.create({
+  return await ExamResult.create({
     ...data,
     grade,
+    gpa,
     status,
   });
-
-  return result;
 };
 
-export const getResults = async () => {
-  return await ExamResult.find()
+// GET ALL (ROLE FILTERED)
+export const getResults = async (user) => {
+  let filter = {};
+
+  if (user.role === "teacher") {
+    filter.classId = { $in: user.classIds || [] };
+  }
+
+  if (user.role === "student") {
+    filter.studentId = user.id;
+  }
+
+  return await ExamResult.find(filter)
     .populate("studentId")
     .populate("examId")
     .populate("subjectId");
 };
 
+// GET ONE STUDENT
 export const getStudentResults = async (studentId) => {
   return await ExamResult.find({ studentId })
     .populate("examId")
     .populate("subjectId");
 };
 
+// UPDATE
 export const updateResult = async (id, data) => {
   const result = await ExamResult.findById(id);
 
   if (!result) throw new AppError("Result not found", 404);
 
-  if (data.obtainedMarks && data.totalMarks) {
-    data.grade = calculateGrade(data.obtainedMarks, data.totalMarks);
+  if (
+    data.obtainedMarks !== undefined &&
+    data.totalMarks !== undefined
+  ) {
+    const { grade, gpa } = getGradeAndGpa(
+      data.obtainedMarks,
+      data.totalMarks
+    );
+
+    data.grade = grade;
+    data.gpa = gpa;
     data.status =
       data.obtainedMarks >= data.totalMarks * 0.5 ? "Pass" : "Fail";
   }
@@ -68,26 +86,26 @@ export const updateResult = async (id, data) => {
   return result;
 };
 
+// DELETE
 export const deleteResult = async (id) => {
   const result = await ExamResult.findById(id);
 
   if (!result) throw new AppError("Result not found", 404);
 
   await result.deleteOne();
-
   return true;
 };
 
-
-
+// CGPA (SAFE VERSION)
 export const calculateStudentCGPA = async (studentId) => {
   const results = await ExamResult.find({ studentId });
 
-  if (!results.length) return 0;
+  if (!results || results.length === 0) return 0;
 
-  const totalGpa = results.reduce((sum, r) => sum + (r.gpa || 0), 0);
+  const totalGpa = results.reduce(
+    (sum, r) => sum + (r.gpa || 0),
+    0
+  );
 
-  const cgpa = totalGpa / results.length;
-
-  return Number(cgpa.toFixed(2));
+  return Number((totalGpa / results.length).toFixed(2));
 };

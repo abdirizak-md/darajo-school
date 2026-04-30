@@ -1,54 +1,74 @@
 import Student from "../student/modal.js";
 import ExamResult from "../examResult/modal.js";
+import SubjectAssign from "../subjectAssignTeacher/modal.js";
 import AppError from "../../common/utils/appError.js";
 import { getGradeAndGpa } from "../../common/utils/gpaCalculator.js";
 
-const calculateGrade = (marks, total) => {
-  const percent = (marks / total) * 100;
-
-  if (percent >= 90) return "A+";
-  if (percent >= 80) return "A";
-  if (percent >= 70) return "B";
-  if (percent >= 60) return "C";
-  if (percent >= 50) return "D";
-  return "F";
-};
-
-// 1. Get students for marks entry screen
+// 🔐 Get students (teacher restricted)
 export const getStudentsForMarksEntry = async ({
   classId,
   sectionId,
+  teacherId,
 }) => {
-  const students = await Student.find({
+  const assignment = await SubjectAssign.findOne({
+    teacherId,
+    classId,
+    sectionId,
+  });
+
+  if (!assignment) {
+    throw new AppError("Not allowed to access this class", 403);
+  }
+
+  return await Student.find({
     classId,
     sectionId,
     status: "Active",
     isDeleted: false,
   }).select("fullName admissionNumber");
-
-  return students;
 };
 
-// 2. Bulk marks save (teacher submits form)
-export const saveMarks = async ({
-  examId,
-  subjectId,
-  classId,
-  sectionId,
-  totalMarks,
-  marksList,
-}) => {
-  // marksList = [{ studentId, obtainedMarks }]
+// 🔐 Save marks (MAIN LOGIC)
+export const saveMarks = async (data, user) => {
+  const {
+    examId,
+    subjectId,
+    classId,
+    sectionId,
+    totalMarks,
+    marksList,
+  } = data;
+
+  // verify teacher assignment
+  // const assignment = await SubjectAssign.findOne({
+  //   teacherId: user.id,
+  //   subjectId,
+  //   classId,
+  //   sectionId,
+  // });
+
+  // if (!assignment) {
+  //   throw new AppError("Unauthorized marks entry", 403);
+  // }
 
   const results = [];
 
   for (const item of marksList) {
-    const grade = calculateGrade(item.obtainedMarks, totalMarks);
+    if (
+      item.obtainedMarks === undefined ||
+      item.studentId === undefined
+    ) {
+      continue; // skip invalid row safely
+    }
+
+    const { grade, gpa } = getGradeAndGpa(
+      item.obtainedMarks,
+      totalMarks
+    );
 
     const status =
       item.obtainedMarks >= totalMarks * 0.5 ? "Pass" : "Fail";
 
-    // upsert (update if exists, else create)
     const result = await ExamResult.findOneAndUpdate(
       {
         studentId: item.studentId,
@@ -64,6 +84,7 @@ export const saveMarks = async ({
         totalMarks,
         obtainedMarks: item.obtainedMarks,
         grade,
+        gpa,
         status,
       },
       { new: true, upsert: true }

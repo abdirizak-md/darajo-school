@@ -2,13 +2,18 @@ import React from 'react'
 import { FaPlus } from 'react-icons/fa6'
 import { IoSearchOutline } from 'react-icons/io5'
 import staffs from '../../Data/staffs'
+import { useGetAssignmentsQuery } from '../../redux/features/assignModule'
 
 const SchedulesExamMarkComponent = ({setTeacherModal}) => {
+        const { data: assignments } = useGetAssignmentsQuery();
     const examsmarksections = [
         { section: 'section A', subject: 'Mathematics', examDate: '2023-10-15', maxMarks: 100, passingMarks: 40, status: 'Active' },
         { section: 'section B', subject: 'Science', examDate: '2023-10-16', maxMarks: 100, passingMarks: 40, status: 'Pending' },
         { section: 'section C', subject: 'English', examDate: '2023-10-17', maxMarks: 100, passingMarks: 40, status: 'Completed' }
     ];
+
+    console.log(assignments);
+    console.log(assignments?.data?.[0]?.sectionId?.name);
   return (
     <div className="bg-white p-6 mb-8 shadow rounded-md">
       <div className="flex justify-between items-center mb-8">
@@ -38,6 +43,22 @@ const SchedulesExamMarkComponent = ({setTeacherModal}) => {
                 <option value="Section C">Section C</option>
             </select>
         </div>
+        <div className="">
+            <select name="section" id="section" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-lg transition-all duration-300 ease-in-out" required>
+                <option value="">Select Subject</option>
+                <option value="Section A">Mathematics</option>
+                <option value="Section B">Science</option>
+                <option value="Section C">English</option>
+            </select>
+        </div>
+        <div className="">
+            <select name="section" id="section" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-lg transition-all duration-300 ease-in-out" required>
+                <option value="">Select Exam Type</option>
+                <option value="Section A">Mid-term</option>
+                <option value="Section B">Final</option>
+                <option value="Section C">Quiz</option>
+            </select>
+        </div>
 
         <div className="flex items-center gap-2 w-fit cursor-pointer px-5 py-2.5 border border-[#e1e5e9] rounded-md text-lg transition-all duration-300 ease-in-out ">
             <IoSearchOutline size={24}/>
@@ -56,14 +77,14 @@ const SchedulesExamMarkComponent = ({setTeacherModal}) => {
                     </tr>
                 </thead>
                 <tbody className='table-row-group border-inherit'>
-                    {examsmarksections.length === 0 && (
+                    {assignments?.data?.length === 0 && (
                         <tr>
                             <td colSpan="8" className='p-4 border-b border-[#e1e5e9] text-center text-[#666]'>No Exam Marks Found</td>
                         </tr>
                     ) }
-                    {   examsmarksections.map((exam, index) => (
+                    {   assignments?.data?.map((exam, index) => (
                         <tr key={index} className="hover:bg-[#f8f9fa]">
-                        <td className='p-4 border-b border-[#e1e5e9] text-left'> {exam.section}</td>
+                        <td className='p-4 border-b border-[#e1e5e9] text-left'> {exam.sectionId?.name}</td>
                         <td className='p-4 border-b border-[#e1e5e9] text-left'> {exam.subject}</td>
                         <td className='p-4 border-b border-[#e1e5e9] text-left flex gap-2'>
                             <input type="number" name='exam' className='border border-[#e1e5e9] rounded-md p-2.5 w-1/5 '/>
