@@ -43,6 +43,22 @@ const SchedulesExamMarkComponent = ({setTeacherModal}) => {
                 <option value="Section C">Section C</option>
             </select>
         </div>
+        <div className="">
+            <select name="section" id="section" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-lg transition-all duration-300 ease-in-out" required>
+                <option value="">Select Subject</option>
+                <option value="Section A">Mathematics</option>
+                <option value="Section B">Science</option>
+                <option value="Section C">English</option>
+            </select>
+        </div>
+        <div className="">
+            <select name="section" id="section" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-lg transition-all duration-300 ease-in-out" required>
+                <option value="">Select Exam Type</option>
+                <option value="Section A">Mid-term</option>
+                <option value="Section B">Final</option>
+                <option value="Section C">Quiz</option>
+            </select>
+        </div>
 
         <div className="flex items-center gap-2 w-fit cursor-pointer px-5 py-2.5 border border-[#e1e5e9] rounded-md text-lg transition-all duration-300 ease-in-out ">
             <IoSearchOutline size={24}/>

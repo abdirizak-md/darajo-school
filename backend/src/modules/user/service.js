@@ -111,7 +111,7 @@ export const loginUnified = async (identifier, password) => {
 
     console.log("PASSWORD MATCH:", isMatch);
 
-    if (!isMatch) {
+    if (!isMatch) { 
       throw new Error("Wrong password");
     }
 

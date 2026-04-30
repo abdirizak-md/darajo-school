@@ -20,7 +20,7 @@ export const createStudentService = async (data) => {
   } = data;
 
   // 1. validation
-  if (!fullName || !admissionNumber || !password || !classId || !sectionId) {
+  if (!fullName || !admissionNumber  || !classId || !sectionId || !parentId) {
     throw new AppError("Missing required fields", 400);
   }
 
@@ -40,9 +40,10 @@ export const createStudentService = async (data) => {
   const student = await Student.create({
     fullName,
     admissionNumber,
+    password,
     gender,
-    birthDate,
-    classId,
+      birthDate,
+      classId,
     sectionId,
     parentId,
     emergencyContact,

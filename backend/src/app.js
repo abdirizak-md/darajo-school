@@ -11,7 +11,7 @@ import examRoute from "./routes/exam.js";
 import examResults from "./routes/resultExam.js";
 import routeAssign from "./routes/assignTeacher.js";
 import routersEntryMark from "./routes/entryMark.js";
-
+import routersCommunication from "./routes/communication.js";
 
 
 import cors from "cors";
@@ -42,8 +42,8 @@ app.use('/api', examRoute)
 app.use('/api', examResults)
 app.use('/api', routeAssign)
 app.use('/api', routersEntryMark)
+app.use('/api', routersCommunication)
 
-console.log("Assign route hit");
 
 app.get("/", (req, res) => {
   res.send("School Management API 🚀");

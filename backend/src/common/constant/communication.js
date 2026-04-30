@@ -1,0 +1,17 @@
+export const MESSAGE_TYPES = {
+  GENERAL: "GENERAL",
+  ANNOUNCEMENT: "ANNOUNCEMENT",
+  ALERT: "ALERT",
+};
+
+export const PRIORITY = {
+  LOW: "LOW",
+  MEDIUM: "MEDIUM",
+  HIGH: "HIGH",
+};
+
+export const RECIPIENTS = {
+  ALL_PARENTS: "ALL_PARENTS",
+  ALL_STUDENTS: "ALL_STUDENTS",
+  ALL_TEACHERS: "ALL_TEACHERS",
+};

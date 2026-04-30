@@ -2,12 +2,13 @@ export const validateCreateStudent = (req, res, next) => {
   const {
     fullName,
     admissionNumber,
+    password,
     classId,
     sectionId,
   } = req.body;
 
   // ❌ required fields check
-  if (!fullName || !admissionNumber || !classId || !sectionId) {
+  if (!fullName || !admissionNumber || !classId || !sectionId || !password) {
     return res.status(400).json({
       success: false,
       message:

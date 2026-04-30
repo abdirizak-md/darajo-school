@@ -59,3 +59,21 @@ export const createParentService = async (data) => {
     );
   }
 };
+
+
+// 🧾 GET ALL PARENTS
+export const getParentsService = async () => {
+
+
+  return await Parent.find();
+
+};
+
+// 🧾 GET SINGLE PARENT
+export const getParentByIdService = async (id) => {
+  const parent = await Parent.findById(id);
+  if (!parent) {
+    throw new AppError("Parent not found", 404);
+  }
+  return parent;
+};

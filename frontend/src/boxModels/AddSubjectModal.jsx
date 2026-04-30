@@ -4,6 +4,7 @@ import { useCreateSubjectMutation } from "../redux/features/subject";
 
 const AddSubjectModal = ({ setAddSubject }) => {
   const [createSubject, { isLoading }] = useCreateSubjectMutation();
+  console.log("🚀 ~ file: AddSubjectModal.jsx:6 ~ AddSubjectModal ~ isLoading:", isLoading)
 
   const [name, setName] = useState("");
   const [code, setCode] = useState("");
@@ -86,23 +87,23 @@ const AddSubjectModal = ({ setAddSubject }) => {
           {/* NAME */}
           <div className="mb-4">
                 <label htmlFor="subjectName" className="font-medium block mb-2 text-[#333]">Subject Name <span className="text-red-500">*</span></label>
-                <input type="text" name="subjectName" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm transition-all duration-300 ease-in-out" value={name} onChange={() => setName(e.target.value)} placeholder='Enter class name'/>
+                <input type="text" name="subjectName" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm transition-all duration-300 ease-in-out" value={name} onChange={(e) => setName(e.target.value)} placeholder='Enter class name'/>
             </div>
 
           {/* CODE */}
           <div className="mb-4">
                 <label htmlFor="subjectCode" className="font-medium block mb-2 text-[#333]">Subject Code <span className="text-red-500">*</span></label>
-                <input type="text" name="subjectCode" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm transition-all duration-300 ease-in-out" value={code} onChange={() => setCode(e.target.value)} placeholder='Enter class name'/>
+                <input type="text" name="subjectCode" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm transition-all duration-300 ease-in-out" value={code} onChange={(e) => setCode(e.target.value)} placeholder='Enter class name'/>
             </div>
             {/* subject description */}
           <div className="mb-4">
                 <label htmlFor="subjectDes" className="font-medium block mb-2 text-[#333]">Subject Description <span className="text-red-500">*</span></label>
-                <input type="text" name="subjectDes" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm transition-all duration-300 ease-in-out" value={description} onChange={() => setDescription(e.target.value)} placeholder='Enter class name'/>
+                <input type="text" name="subjectDes" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm transition-all duration-300 ease-in-out" value={description} onChange={(e) => setDescription(e.target.value)} placeholder='Enter class name'/>
             </div>
           {/* STATUS */}
           <div className="mb-4">
                 <label htmlFor="status" className="font-medium block mb-2 text-[#333]">Select Status <span className="text-red-500">*</span></label>
-                <select name="status" id="status" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm transition-all duration-300 ease-in-out" value={status} onChange={() => setStatus(e.target.value)} required>
+                <select name="status" id="status" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm transition-all duration-300 ease-in-out" value={status} onChange={(e) => setStatus(e.target.value)} required>
                     <option value="">Select Status</option>
                     <option value="active">Active</option>
                     <option value="pending">Pending</option>
@@ -113,7 +114,7 @@ const AddSubjectModal = ({ setAddSubject }) => {
           {/* BUTTONS */}
           <div className="flex gap-4 justify-end mt-8 pt-4 border-t border-[#e1e5e9]">
                 <button type='button' className="bg-[#f8f9fa] hover:text-orange-500 hover:bg-[#e9ecef] text-[#333] border border-[#e1e5e9] px-6 py-3 rounded-md cursor-pointer font-medium inline-flex items-center gap-2 transition-all duration-300 ease-in-out" onClick={() => setAddSubject(false)}>Cancel</button>
-                <button className="bg-orange-500 hover:bg-orange-600 text-white border border-[#e1e5e9] px-6 py-3 rounded-md cursor-pointer font-medium inline-flex items-center gap-2 transition-all duration-300 ease-in-out">Create Class</button>
+                <button type="submit" className="bg-orange-500 hover:bg-orange-600 text-white border border-[#e1e5e9] px-6 py-3 rounded-md cursor-pointer font-medium inline-flex items-center gap-2 transition-all duration-300 ease-in-out">Create Class</button>
           </div>
 
         </form>

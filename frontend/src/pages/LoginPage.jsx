@@ -4,6 +4,73 @@ import { Link, useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../redux/features/userApi";
 
 export default function LoginUI() {
+  const navigate = useNavigate();
+  const [login, { isLoading }] = useLoginMutation();
+
+
+  // ✅ state
+  const [form, setForm] = useState({
+    identifier: "",
+    password: "",
+  });
+
+  const [error, setError] = useState("");
+
+  // ✅ handle input
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // ✅ handle submit
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    // validation
+    if (!form.identifier || !form.password) {
+      setError("All fields are required");
+      return;
+    }
+
+    try {
+    const res = await login(form).unwrap();
+
+console.log("FULL RESPONSE:", res);
+
+// ✅ correct access
+const token = res.data.token;
+const user = res.data.user;
+
+// store
+localStorage.setItem("token", token);
+localStorage.setItem("user", JSON.stringify(user));
+
+// redirect
+switch (user.role) {
+  case "ADMIN":
+    navigate("/");
+    break;
+  case "TEACHER":
+    navigate("/teacher");
+    break;
+  case "STUDENT":
+    navigate("/student");
+    break;
+    case "PARENT":
+    navigate("/parent");
+    break;
+  default:
+    navigate("/login");
+}
+
+    } catch (err) {
+      setError(err?.data?.message || "Login failed");
+    }
+  };
+
   return (
     <div className="h-screen w-full bg-black flex items-center justify-center">
       
@@ -20,8 +87,15 @@ export default function LoginUI() {
         </div>
 
         {/* Form */}
-        <div className="p-5 space-y-4">
+        <form className="p-5 space-y-4" onSubmit={handleSubmit}>
           
+          {/* Error */}
+          {error && (
+            <div className="text-red-500 text-sm text-center">
+              {error}
+            </div>
+          )}
+
           {/* Identifier */}
           <div>
             <label className="text-xs text-gray-600 block mb-1">
@@ -60,13 +134,14 @@ export default function LoginUI() {
 
           {/* Button */}
           <button
-            onClick={handleSubmit}
+            type="submit"
             disabled={isLoading}
-            className="w-full bg-green-700 text-white py-2 rounded-lg hover:bg-green-800"
+            className="w-full bg-green-700 text-white py-2 rounded-lg hover:bg-green-800 disabled:opacity-50"
           >
             {isLoading ? "Logging in..." : "Login"}
           </button>
 
+          {/* Footer */}
           <p className="text-center text-xs text-gray-500">
             Don't have an account?{" "}
             <Link to="/register" className="text-blue-500">
@@ -74,7 +149,7 @@ export default function LoginUI() {
             </Link>
           </p>
 
-        </div>
+        </form>
       </div>
     </div>
   );
