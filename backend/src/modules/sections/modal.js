@@ -26,7 +26,7 @@ const sectionSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["Active", "Inactive"],
+      enum: ["Active", "Pending", "Completed"],
       default: "Active",
     },
   },

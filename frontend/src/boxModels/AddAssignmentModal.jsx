@@ -4,11 +4,17 @@ import { useCreateSectionMutation } from '../redux/features/sectionApi';
 import { useGetClassesQuery } from '../redux/features/classApi';
 
 const AddAssignmentModal = ({ setAddAssignment }) => {
-
-  const [title, setTitle] = useState('');
-  const [classId, setClassId] = useState('');
-  const [roomNumber, setRoomNumber] = useState('');
   const [status, setStatus] = useState('Active');
+  const [formData, setFormData] = useState({
+    title: '',
+    subject: '',
+    classes: '',
+    sections: '',
+    dueDate: '',
+    submission: '',
+    status: ''
+
+  });
 
   const [createSection, { isLoading }] = useCreateSectionMutation();
 
@@ -17,6 +23,13 @@ const AddAssignmentModal = ({ setAddAssignment }) => {
 
   // ✅ SAFE ACCESS
   const classes = classData?.data || [];
+
+  const handleChange = () => {
+    setFormData([
+      ...formData,
+      [e.target.name], e.target.value,
+    ])
+  }
 
   // ✅ SUBMIT
   const handleSubmit = async (e) => {
@@ -56,16 +69,37 @@ const AddAssignmentModal = ({ setAddAssignment }) => {
         {/* FORM */}
         <form className="p-6" onSubmit={handleSubmit}>
 
-          {/* SECTION NAME */}
+          {/* title NAME */}
           <div className="mb-4">
                 <label htmlFor="assignmentTitle" className="font-medium block mb-2 text-[#333]">Assignment Title <span className="text-red-500">*</span></label> 
-                <input type="text" name="assignmentTitle" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm transition-all duration-300 ease-in-out" value={title} onChange={() => setTitle(e.target.value)} placeholder='Enter section name'/>
+                <input type="text" name="assignmentTitle" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm transition-all duration-300 ease-in-out" value={formData.title} onChange={handleChange} placeholder='Enter section name'/>
             </div>
 
-          {/* ✅ CLASS DROPDOWN */}
+          {/* subject DROPDOWN */}
+          <div className="mb-4">
+            <label htmlFor="subject" className="font-medium block mb-2 text-[#333]">Select subject <span className="text-red-500">*</span></label>
+            <select name="subject" id="subject" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm transition-all duration-300 ease-in-out" value={formData.subject} onChange={handleChange} required>
+              <option value="">Select Section</option>
+                {classes.map((cls) => (
+                  <option key={cls._id} value={cls._id}> {cls.name} </option>
+                ))}
+            </select>
+          </div>
+          {/* section DROPDOWN */}
+          <div className="mb-4">
+            <label htmlFor="section" className="font-medium block mb-2 text-[#333]">Select section <span className="text-red-500">*</span></label>
+            <select name="section" id="section" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm transition-all duration-300 ease-in-out" value={formData.sections} onChange={handleChange} required>
+              <option value="">Select Section</option>
+                {classes.map((cls) => (
+                  <option key={cls._id} value={cls._id}> {cls.name} </option>
+                ))}
+            </select>
+          </div>
+
+          {/* CLASS DROPDOWN */}
           <div className="mb-4">
             <label htmlFor="classes" className="font-medium block mb-2 text-[#333]">Select class <span className="text-red-500">*</span></label>
-            <select name="classes" id="classes" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm transition-all duration-300 ease-in-out" value={classes} onChange={() => setClassId(e.target.value)} required>
+            <select name="classes" id="classes" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm transition-all duration-300 ease-in-out" value={formData.classes} onChange={handleChange} required>
               <option value="">Select Class</option>
                 {classes.map((cls) => (
                   <option key={cls._id} value={cls._id}> {cls.name} </option>
@@ -75,19 +109,24 @@ const AddAssignmentModal = ({ setAddAssignment }) => {
 
           {/* ROOM */}
           <div className="mb-4">
-                <label htmlFor="roomNumber" className="font-medium block mb-2 text-[#333]">Room Number <span className="text-red-500">*</span></label>
-                <input type="text" name="roomNumber" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm transition-all duration-300 ease-in-out" value={roomNumber} onChange={() => setRoomNumber(e.target.value)} placeholder='Enter class name'/>
+                <label htmlFor="dueDate" className="font-medium block mb-2 text-[#333]">Due Date <span className="text-red-500">*</span></label>
+                <input type="text" name="dueDate" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm transition-all duration-300 ease-in-out" value={formData.dueDate} onChange={handleChange} placeholder='Enter class name'/>
             </div>
 
           {/* STATUS */}
           <div className="mb-4">
                 <label htmlFor="status" className="font-medium block mb-2 text-[#333]">Select Status <span className="text-red-500">*</span></label>
-                <select name="status" id="status" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm transition-all duration-300 ease-in-out" value={status} onChange={() => setStatus(e.target.value)} required>
+                <select name="status" id="status" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm transition-all duration-300 ease-in-out" value={status} onChange={handleChange} required>
                     <option value="">Select Status</option>
                     <option value="active">Active</option>
                     <option value="pending">Pending</option>
                     <option value="completed">Completed</option>
                 </select>
+            </div>
+
+            <div className="mb-4">
+                <label htmlFor="submission" className="font-medium block mb-2 text-[#333]">Submission Date<span className="text-red-500">*</span></label>
+                <input type="text" name="submission" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm transition-all duration-300 ease-in-out" value={formData.submission} onChange={handleChange} placeholder='Enter class name'/>
             </div>
 
           {/* BUTTONS */}

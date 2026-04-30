@@ -27,7 +27,7 @@ export const Communications = [
     
 export const staffManagements = [
       { label: 'Staff Directory', icon: FaUsers , path: '/staff-directory-page' },
-      { label: 'Attendance Payroll', icon: FaCalendarCheck , path: '/payroll-page' },
+      { label: 'Assign Teacher', icon: FaCalendarCheck , path: '/assign-teachers-page' },
     ]
     
 export const studentManagement = [

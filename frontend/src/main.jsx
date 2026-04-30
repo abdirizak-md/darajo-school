@@ -14,7 +14,7 @@ import FeesCollectionPage from './pages/FeesCollectionPage.jsx'
 import LessonPlansPage from './pages/LessonPlansPage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
 import ParentsPage from './pages/ParentsPage.jsx'
-import PayrollsPage from './pages/PayrollsPage.jsx'
+import PayrollsPage from './pages/AssignTeachersPage.jsx'
 import PendingFeesPage from './pages/PendingFeesPage.jsx'
 import RegisterPage from './pages/RegisterPage.jsx'
 import StaffDirectoryPage from './pages/StaffDirectoryPage.jsx'
@@ -52,6 +52,7 @@ import ParentPanelFeesCollectionPage from './parentPanel/pages/ParentPanelFeesCo
 import ParentPanelExamsMarksPage from './parentPanel/pages/ParentPanelExamsMarksPage.jsx'
 import ParentPanelClassesSectionsPage from './parentPanel/pages/ParentPanelClassesSectionsPage.jsx'
 import ParentPanelAttendanceReportPage from './parentPanel/pages/ParentPanelAttendanceReportsPage.jsx'
+import AssignTeachersPage from './pages/AssignTeachersPage.jsx'
 
 const router = createBrowserRouter([
   // Dashboard Route
@@ -113,8 +114,8 @@ const router = createBrowserRouter([
         element: <StaffDirectoryPage />
       },
       {        
-        path: '/payroll-page',
-        element: <PayrollsPage />
+        path: '/assign-teachers-page',
+        element: <AssignTeachersPage />
       },
       {        
         path: '/student-info-page',

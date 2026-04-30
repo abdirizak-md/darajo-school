@@ -6,7 +6,7 @@ import { IoSearchOutline } from 'react-icons/io5'
 
 import { useGetSubjectsQuery } from '../../redux/features/subject'
 
-const AssignedTeachersComponent = ({ setAssignedTeacher }) => {
+const AssignedTeachersComponent = ({ setAssignModal }) => {
 
   const { data, isLoading, isError } = useGetSubjectsQuery();
 
@@ -29,7 +29,7 @@ const AssignedTeachersComponent = ({ setAssignedTeacher }) => {
 
         <button
           className='lg:px-5 px-3 py-2 cursor-pointer text-white bg-orange-500 rounded-md inline-flex items-center gap-2'
-          onClick={() => setAssignedTeacher(true)}
+          onClick={() => setAssignModal(true)}
         >
           <FaPlus />Assign Teacher
         </button>

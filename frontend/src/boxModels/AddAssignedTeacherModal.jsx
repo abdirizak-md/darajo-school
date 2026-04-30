@@ -2,7 +2,7 @@ import { useState } from "react";
 import { IoClose } from "react-icons/io5";
 import { useCreateSubjectMutation } from "../redux/features/subject";
 
-const AddAssignedTeacherModal = ({ setAssignedTeacher }) => {
+const AddAssignedTeacherModal = ({ setAssignModal }) => {
   const [createSubject, { isLoading }] = useCreateSubjectMutation();
 
   const [name, setName] = useState("");
@@ -51,7 +51,7 @@ const AddAssignedTeacherModal = ({ setAssignedTeacher }) => {
 
       // ⛔ close modal after alert shows
       setTimeout(() => {
-        setAssignedTeacher(false);
+        setAssignModal(false);
       }, 1000);
     } catch (error) {
       console.log(error);
@@ -88,7 +88,7 @@ const AddAssignedTeacherModal = ({ setAssignedTeacher }) => {
           <IoClose
             size={30}
             className="cursor-pointer"
-            onClick={() => setAssignedTeacher(false)}
+            onClick={() => setAssignModal(false)}
           />
         </div>
 
@@ -157,7 +157,7 @@ const AddAssignedTeacherModal = ({ setAssignedTeacher }) => {
             <button
               type="button"
               className="px-4 py-2 border"
-              onClick={() => setAssignedTeacher(false)}
+              onClick={() => setAssignModal(false)}
             >
               Cancel
             </button>

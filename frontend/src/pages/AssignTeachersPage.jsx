@@ -7,11 +7,13 @@ import TotalComponent from '../components/dashboardComponents/TotalComponent'
 import AllClassesComponent from '../components/sectionClassComponents/AllClassesComponent'
 import ScheduleComponent from '../components/sectionClassComponents/ScheduleComponent'
 import SectionsComponent from '../components/sectionClassComponents/SectionsComponent'
+import AssignedTeachersComponent from '../components/subjectAssignmentComponents/AssignedTeachersComponent'
+import AddAssignedTeacherModal from '../boxModels/AddAssignedTeacherModal'
 
 
-const PayrollsPage = () => {
-  const [active, setActive] = useState('classes');
-  const [addSection, setAddSection] = useState(false);
+const AssignTeachersPage = () => {
+  const [active, setActive] = useState('');
+  const [assignModal, setAssignModal] = useState(false);
   const [allClasse, setAllClasse] = useState(false);
   
   return (
@@ -29,12 +31,22 @@ const PayrollsPage = () => {
 
 
         <div className="flex gap-5 mb-8">
-            <button onClick={() => setActive('classes')} className={`px-8 py-3 border border-[#e1e5e9]  hover:shadow-md active:scale-95 transition-all duration-200 rounded-md shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active == 'classes' ? 'bg-orange-500 text-white' : 'bg-white'}`}>All Classes</button>
-            <button onClick={() => setActive('sections')} className={`px-8 py-3 border border-[#e1e5e9] hover:shadow-md active:scale-95 transition-all duration-200 rounded-md shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active == 'sections' ? 'bg-orange-500 text-white' : 'bg-white'}`}>Sections</button>
-            <button onClick={() => setActive('schedules')} className={`px-8 py-3 border border-[#e1e5e9]  hover:shadow-md active:scale-95 transition-all duration-200 rounded-md shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active == 'schedules' ? 'bg-orange-500 text-white' : 'bg-white'}`}>Schedules</button>
-         </div>
+          {
+            ['Assign Teacher', 'Assign Student'].map((item, index) => (
+                <button key={index}
+                    onClick={() => setActive(item)} 
+                    className={`px-8 py-3 border border-[#e1e5e9] hover:shadow-md active:scale-95 transition-all duration-200 rounded-md shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active === item ? 'bg-orange-500 text-white' : 'bg-white'}`}
+                > {item} </button>
+            ))
+          }
+          </div>
+          {/* assign teacher component */}
+          {active === 'Assign Teacher' && <AssignedTeachersComponent setAssignModal={setAssignModal}/>}
+
+          {/* assign teacher modal */}
+          {assignModal && <AddAssignedTeacherModal setAssignModal={setAssignModal} />}
     </section>
   )
 }
 
-export default PayrollsPage
+export default AssignTeachersPage
