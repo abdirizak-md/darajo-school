@@ -1,14 +1,11 @@
 import { useState } from 'react'
 import { MdArrowBackIos } from 'react-icons/md'
 import { Link } from 'react-router-dom'
+import AddAssignmentModal from '../boxModels/AddAssignmentModal'
+import AddSubjectModal from '../boxModels/AddSubjectModal'
 import AssignmentComponent from '../components/subjectAssignmentComponents/AssignmentComponent'
 import GradeComponent from '../components/subjectAssignmentComponents/GradeComponent'
 import SubjectComponent from '../components/subjectAssignmentComponents/SubjectComponent'
-import AddSectionModal from '../boxModels/AddSectionModal'
-import AddSubjectModal from '../boxModels/AddSubjectModal'
-import AssignedTeachersComponent from '../components/subjectAssignmentComponents/AssignedTeachersComponent'
-import AddAssignedTeacherModal from '../boxModels/AddAssignedTeacherModal'
-import AddAssignmentModal from '../boxModels/AddAssignmentModal'
 
 const SubjectsAssignmentPage = () => {
     const [active, setActive] = useState('subjects');
@@ -56,8 +53,8 @@ const SubjectsAssignmentPage = () => {
     
         <div className="flex gap-5 mb-8">
             {
-                ['subjects', 'assignments', 'grades', 'assignedTeachers'].map(tab => (
-                    <button onClick={() => setActive(tab)} className={`px-8 py-3 border border-[#e1e5e9]  rounded-md hover:shadow-md active:scale-95 transition-all duration-200 shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active == tab ? 'bg-orange-500 text-white' : 'bg-white'}`}>{tab}</button>
+                ['subjects', 'assignments', 'grades'].map((tab, index) => (
+                    <button key={index} onClick={() => setActive(tab)} className={`px-8 py-3 border border-[#e1e5e9]  rounded-md hover:shadow-md active:scale-95 transition-all duration-200 shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active == tab ? 'bg-orange-500 text-white' : 'bg-white'}`}>{tab}</button>
                 ))
             }
         </div>
@@ -71,9 +68,6 @@ const SubjectsAssignmentPage = () => {
         {/* grades */}
         { active === 'grades' && <GradeComponent /> }
 
-        {/* assigned teachers  */}
-        { active === "assignedTeachers" && <AssignedTeachersComponent setAssignedTeacher={setAssignedTeacher}/>}
-
 
         {/* box modal for sections*/}
         {   addSubject && <AddSubjectModal setAddSubject={setAddSubject}/> }
@@ -81,8 +75,6 @@ const SubjectsAssignmentPage = () => {
         {/* box modal for assignment*/}
         {   addAssignment && <AddAssignmentModal setAddAssignment={setAddAssignment}/> }
 
-        {/* assigned teacher modal*/}
-        {   assignedTeacher && <AddAssignedTeacherModal setAssignedTeacher={setAssignedTeacher}/> }
     </section>
   )
 }

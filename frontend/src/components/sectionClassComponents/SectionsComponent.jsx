@@ -2,20 +2,25 @@ import { FaPlus } from 'react-icons/fa6'
 import { IoSearchOutline } from 'react-icons/io5'
 import sectionss from '../../Data/sections'
 import { useState } from 'react';
+import { useGetSectionsQuery } from '../../redux/features/sectionApi';
+import { useGetStudentsQuery } from '../../redux/features/studentApi';
 
 const SectionsComponent = ({setAddSection}) => {
-    const [search, setSearch] = useState("");
-    const [selectedClass, setSelectedClass] = useState("");
+    const { data, isLoading, isError } = useGetSectionsQuery();
+    const { data: studentsData } = useGetStudentsQuery();
 
-const data = [];s
-    const filteredClasses = data?.filter((classs) => {
+    const [search, setSearch] = useState("");
+    const [selectedSections, setSelectedSections] = useState("");
+
+    const filteredSections = data?.data?.filter((classs) => {
         const matchesSearch = classs?.name
             ?.toLowerCase()
             .includes(search.toLowerCase());
 
-        const matchesSelect = selectedClass
-            ? classs?.name === selectedClass
-            : true;
+        const matchesSelect =
+            selectedSections && selectedSections !== "All Sections"
+                ? classs?.name === selectedSections
+                : true;
 
         return matchesSearch && matchesSelect;
     });
@@ -33,13 +38,13 @@ const data = [];s
             </div>
 
             <div className="mb-4">
-                <select name="sections" id="sections" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-lg focus:outline-orange-500 transition-all duration-300 ease-in-out" value={selectedClass} onChange={(e) => setSelectedClass(e.target,value)} required>
+                <select name="sections" id="sections" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-lg focus:outline-orange-500 transition-all duration-300 ease-in-out" value={selectedSections} onChange={(e) => setSelectedSections(e.target.value)} required>
                     <option value="">Select section</option>
-                    <option value="All sectiones">All sectiones</option>
-                    <option value="section A">section A</option>
-                    <option value="section B">section B</option>
-                    <option value="section C">section C</option>
-                    <option value="section D">section D</option>
+                    <option value="All Sections">All sections</option>
+                    <option value="A">Section A</option>
+                    <option value="B">Section B</option>
+                    <option value="C">Section C</option>
+                    <option value="D">Section D</option>
                 </select>
             </div>
         </form>
@@ -64,13 +69,13 @@ const data = [];s
                             </td>
                         </tr>
                     )}
-                    {   sectionss.map((section, index) => (
+                    {   filteredSections?.map((section, index) => (
                         <tr key={index} className="hover:bg-[#f8f9fa]">
-                        <td className='p-4 border-b border-[#e1e5e9] text-left'> {section.sectionName}</td>
-                        <td className='p-4 border-b border-[#e1e5e9] text-left'> {section.classs}</td>
+                        <td className='p-4 border-b border-[#e1e5e9] text-left'>Section {section.name}</td>
+                        <td className='p-4 border-b border-[#e1e5e9] text-left'> {section.classId.name}</td>
                         <td className='p-4 border-b border-[#e1e5e9] text-left'>{section.students}</td>
                         <td className='p-4 border-b border-[#e1e5e9] text-left'>{section.teacher}</td>
-                        <td className='p-4 border-b border-[#e1e5e9] text-left'>{section.room}</td>
+                        <td className='p-4 border-b border-[#e1e5e9] text-left'>{section.roomNumber}</td>
                         <td className='p-4 border-b border-[#e1e5e9] text-left capitalize'><span className={`py-1 px-2.5 rounded-2xl text-sm font-medium  ${section.status === 'Active' ? 'bg-[#d1fae5] text-[#10b981]' : ''} ${section.status === 'Pending' ? ' bg-[#fef3c7] text-[#92400e]' : ''} ${section.status === 'Completed' ? ' bg-[#dbeafe] text-[#1e40af]' : ''}`}>{section.status}</span></td>
                         <td className='p-4 border-b border-[#e1e5e9] text-left flex gap-2'>
                             <button className='bg-[#f8f9fa] hover:bg-[#ffffff] text-[#333] border border-[#e1e5e9] px-4 py-1.5 rounded-md'>View</button>

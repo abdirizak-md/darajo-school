@@ -1,9 +1,7 @@
+import { useState } from 'react'
 import { FaPlus } from 'react-icons/fa6'
-import { IoSearchOutline } from 'react-icons/io5'
-import allClasses from '../../Data/allClasses'
 import { useGetClassesQuery } from '../../redux/features/classApi'
 import { useGetStudentsQuery } from '../../redux/features/studentApi'
-import { useState } from 'react'
 
 
 const AllClassesComponent = ({setAllClasse}) => {
@@ -19,9 +17,10 @@ const AllClassesComponent = ({setAllClasse}) => {
             ?.toLowerCase()
             .includes(search.toLowerCase());
 
-        const matchesSelect = selectedClass
-            ? classs?.name === selectedClass
-            : true;
+        const matchesSelect =
+            selectedClass && selectedClass !== "All Classes"
+                ? classs?.name === selectedClass
+                : true;
 
         return matchesSearch && matchesSelect;
     });
@@ -39,13 +38,13 @@ const AllClassesComponent = ({setAllClasse}) => {
             </div>
 
             <div className="mb-4">
-                <select name="subject" id="subject" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-lg focus:outline-orange-500 transition-all duration-300 ease-in-out" value={selectedClass} onChange={(e) => setSelectedClass(e.target,value)} required>
+                <select name="subject" id="subject" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-lg focus:outline-orange-500 transition-all duration-300 ease-in-out" value={selectedClass} onChange={(e) => setSelectedClass(e.target.value)} required>
                     <option value="">Select Class</option>
                     <option value="All Classes">All Classes</option>
                     <option value="Class 9">Class 9</option>
                     <option value="Class 10">Class 10</option>
                     <option value="Class 11">Class 11</option>
-                    <option value="Class 12">Class 123</option>
+                    <option value="Class 12">Class 12</option>
                 </select>
             </div>
         </form>

@@ -3,25 +3,43 @@ import recentPayments from '../../Data/recentPayments'
 import { IoSearchOutline } from 'react-icons/io5'
 import { FaPlus } from 'react-icons/fa6'
 
-const RecentPaymentComponent = () => {
+const RecentPaymentComponent = ({setRecordPayment}) => {
   return (
     <div className="bg-white p-6 mb-6 shadow rounded-md">
         <div className="flex justify-between items-center mb-4">
             <span className='text-[#333] lg:text-2xl font-bold'>Recent Payments</span>
-            <button className='px-3 lg:px-5 py-2 cursor-pointer text-white bg-[#006b3f] rounded-md inline-flex items-center gap-2'><FaPlus />Record Payments</button>
+            <button className='px-3 lg:px-5 py-2 cursor-pointer text-white bg-orange-500 rounded-md inline-flex items-center gap-2' onClick={() => setRecordPayment(true)}><FaPlus />Record Payments</button>
         </div>
             
-        <form className="grid grid-cols-1 lg:grid-cols-[3fr_2fr_150px] md:grid-cols-[3fr_2fr_150px] gap-3">
+        <form className="grid grid-cols-1 lg:grid-cols-[2fr_1fr_1fr_150px] md:grid-cols-[3fr_2fr_150px] gap-3">
             <div className="">
                 <input type="text" placeholder='Search Sections...' className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-lg transition-all duration-300 ease-in-out placeholder:text-sm focus:outline-[#006b3f]"/>
             </div>
             <div className="">
-                <select name="subject" id="subject" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-lg transition-all duration-300 ease-in-out" required>
-                    <option value="">Select Payment</option>
-                    <option value="All Payments">All Payments</option>
-                    <option value="Mobile Money">Mobile Money</option>
-                    <option value="Cash">Cash</option>
-                    <option value="Bank Transfer">Bank Transfer</option>
+                <select name="class" id="class" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-lg transition-all duration-300 ease-in-out" required>
+                    <option value="">Select class</option>
+                    <option value="class 1">class 1</option>
+                    <option value="class 2">class 2</option>
+                    <option value="class 3">class 3</option>
+                    <option value="class 4">class 4</option>
+                    <option value="class 5">class 5</option>
+                    <option value="class 6">class 6</option>
+                    <option value="class 7">class 7</option>
+                    <option value="class 8">class 8</option>
+                    <option value="class 9">class 9</option>
+                    <option value="class 10">class 10</option>
+                    <option value="class 11">class 11</option>
+                    <option value="class 12">class 12</option>
+                </select>
+            </div>
+            <div className="">
+                <select name="section" id="section" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-lg transition-all duration-300 ease-in-out" required>
+                    <option value="">Select Section</option>
+                    <option value="section A">Section A</option>
+                    <option value="section B">Section B</option>
+                    <option value="section C">Section C</option>
+                    <option value="section D">Section D</option>
+                    <option value="section E">Section E</option>
                 </select>
             </div>
 

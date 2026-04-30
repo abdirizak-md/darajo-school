@@ -29,8 +29,8 @@ const ClassesSectionsPage = () => {
 
         <div className="flex gap-5 mb-8">
             {
-                ['classes', 'sections', 'schedules'].map(tab => (
-                    <button onClick={() => setActive(tab)} className={`px-8 py-3 border border-[#e1e5e9]  hover:shadow-md active:scale-95 transition-all duration-200 rounded-md shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active == tab ? 'bg-orange-500 text-white' : 'bg-white'}`}>{tab}</button>
+                ['classes', 'sections', 'schedules'].map((tab, index) => (
+                    <button key={index} onClick={() => setActive(tab)} className={`px-8 py-3 border border-[#e1e5e9]  hover:shadow-md active:scale-95 transition-all duration-200 rounded-md shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active == tab ? 'bg-orange-500 text-white' : 'bg-white'}`}>{tab}</button>
                 ))
             }
          </div>

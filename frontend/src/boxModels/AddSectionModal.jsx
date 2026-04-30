@@ -59,14 +59,14 @@ const AddSectionModal = ({ setAddSection }) => {
           {/* SECTION NAME */}
           <div className="mb-4">
                 <label htmlFor="sectionName" className="font-medium block mb-2 text-[#333]">Section Name <span className="text-red-500">*</span></label> 
-                <input type="text" name="sectionName" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm transition-all duration-300 ease-in-out" value={name} onChange={() => setName(e.target.value)} placeholder='Enter section name'/>
+                <input type="text" name="sectionName" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm transition-all duration-300 ease-in-out" value={name} onChange={(e) => setName(e.target.value)} placeholder='Enter section name'/>
             </div>
 
           {/* ✅ CLASS DROPDOWN */}
           <div className="mb-4">
             <label htmlFor="classes" className="font-medium block mb-2 text-[#333]">Select class <span className="text-red-500">*</span></label>
-            <select name="classes" id="classes" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm transition-all duration-300 ease-in-out" value={classes} onChange={() => setClassId(e.target.value)} required>
-              <option value="">Select Class</option>
+            <select name="classes" id="classes" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm transition-all duration-300 ease-in-out" value={classId} onChange={(e) => setClassId(e.target.value)} required>
+              <option value=''>Select Class</option>
                 {classes.map((cls) => (
                   <option key={cls._id} value={cls._id}> {cls.name} </option>
                 ))}
@@ -76,17 +76,17 @@ const AddSectionModal = ({ setAddSection }) => {
           {/* ROOM */}
           <div className="mb-4">
                 <label htmlFor="roomNumber" className="font-medium block mb-2 text-[#333]">Room Number <span className="text-red-500">*</span></label>
-                <input type="text" name="roomNumber" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm transition-all duration-300 ease-in-out" value={roomNumber} onChange={() => setRoomNumber(e.target.value)} placeholder='Enter class name'/>
+                <input type="text" name="roomNumber" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm transition-all duration-300 ease-in-out" value={roomNumber} onChange={(e) => setRoomNumber(e.target.value)} placeholder='Enter class name'/>
             </div>
 
           {/* STATUS */}
           <div className="mb-4">
                 <label htmlFor="status" className="font-medium block mb-2 text-[#333]">Select Status <span className="text-red-500">*</span></label>
-                <select name="status" id="status" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm transition-all duration-300 ease-in-out" value={status} onChange={() => setStatus(e.target.value)} required>
+                <select name="status" id="status" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm transition-all duration-300 ease-in-out" value={status} onChange={(e) => setStatus(e.target.value)} required>
                     <option value="">Select Status</option>
-                    <option value="active">Active</option>
-                    <option value="pending">Pending</option>
-                    <option value="completed">Completed</option>
+                    <option value="Active">Active</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Completed">Completed</option>
                 </select>
             </div>
 

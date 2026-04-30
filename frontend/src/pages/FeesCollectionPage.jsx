@@ -4,9 +4,13 @@ import { Link } from 'react-router-dom'
 import OverDueFeeComponent from '../components/feeCollectionComponents/OverDueFeeComponent'
 import PendingFeesComponent from '../components/feeCollectionComponents/PendingFeesComponent'
 import RecentPaymentComponent from '../components/feeCollectionComponents/RecentPaymentComponent'
+import RecordPaymentModal from '../boxModels/RecordPaymentModal'
 
 const FeesCollectionPage = () => {
     const [active, setActive] = useState('Recent');
+    const [recordPayment, setRecordPayment] = useState(false);
+    const [pending, setPending] = useState(false);
+    const [overDue, setOverDue] = useState(false);
   return (
     <section className='max-w-400 mx-auto p-8 bg-[#f5f7fa] h-screen overflow-y-auto custom-scrollbar'>
         <Link to='/' className="flex justify-center w-fit items-center cursor-default p-3 rounded-md bg-orange-500 mb-8 transition-all duration-300 hover:-translate-y-1">
@@ -40,13 +44,18 @@ const FeesCollectionPage = () => {
     
     
         <div className="flex gap-5 mb-8">
-            <button onClick={() => setActive('Recent')} className={`px-8 py-3 border border-[#e1e5e9]  rounded-md shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active == 'Recent' ? 'bg-orange-500 text-white' : 'bg-white'}`}>Recent Payments</button>
-            <button onClick={() => setActive('Pending')} className={`px-8 py-3 border border-[#e1e5e9] rounded-md shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active == 'Pending' ? 'bg-orange-500 text-white' : 'bg-white'}`}>Pending Fees</button>
-            <button onClick={() => setActive('Overdue')} className={`px-8 py-3 border border-[#e1e5e9]  rounded-md shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active == 'Overdue' ? 'bg-orange-500 text-white' : 'bg-white'}`}>Overdue Fees</button>
+            {
+                ['Recent', 'Pending', 'Overdue'].map((item, index) => (
+                    <button  key={index}
+                        onClick={() => setActive(item)} 
+                        className={`px-8 py-3 border border-[#e1e5e9] hover:shadow-md active:scale-95 transition-all duration-200 rounded-md shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active === item ? 'bg-orange-500 text-white' : 'bg-white'}`}
+                    > {item} </button>
+                ))
+            }
         </div>
     
         {/* Recent Payments */}
-        { active == 'Recent' && <RecentPaymentComponent />}
+        { active == 'Recent' && <RecentPaymentComponent setRecordPayment={setRecordPayment}/>}
     
         {/* Pending Fees */}
         { active == 'Pending' && <PendingFeesComponent />}
@@ -54,6 +63,8 @@ const FeesCollectionPage = () => {
         {/* Overdue Fees */}
         { active == 'Overdue' && <OverDueFeeComponent />}
 
+        {/* record payment modal */}
+        {recordPayment && <RecordPaymentModal setRecordPayment={setRecordPayment}/>}
     </section>
   )
 }

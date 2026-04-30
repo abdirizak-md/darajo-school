@@ -5,18 +5,34 @@ import { IoSearchOutline } from 'react-icons/io5'
 // import subjects from '../../Data/subjects'
 
 import { useGetSubjectsQuery } from '../../redux/features/subject'
+import { useState } from 'react';
 
 const SubjectComponent = ({ setAddSubject }) => {
-
   const { data, isLoading, isError } = useGetSubjectsQuery();
 
-  const subjects = data?.data || []; // ✅ safe fallback
+  const subjects = data?.data || []; // ✅ safe fallback\
+  
+  const [search, setSearch] = useState("");
+  const [selectedSections, setSelectedSections] = useState("");
 
   const statusStyles = {
     active: "bg-[#d1fae5] text-[#10b981]",
     pending: "bg-[#fef3c7] text-[#92400e]",
     completed: "bg-[#dbeafe] text-[#1e40af]",
   };
+
+  const filteredSubjects = data?.data?.filter((subject) => {
+        const matchesSearch = subject?.name
+            ?.toLowerCase()
+            .includes(search.toLowerCase());
+
+        const matchesSelect =
+            selectedSections && selectedSections !== "All Sections"
+                ? subject?.section === selectedSections
+                : true;
+
+        return matchesSearch && matchesSelect;
+    });
 
   return (
     <div className="bg-white p-6 mb-6 shadow rounded-md">
@@ -36,89 +52,57 @@ const SubjectComponent = ({ setAddSubject }) => {
       </div>
 
       {/* SEARCH */}
-      <form className="grid grid-cols-1 lg:grid-cols-[3fr_150px] md:grid-cols-[3fr_2fr_150px] gap-3">
-        <div>
-          <input
-            type="text"
-            placeholder="Search subjects..."
-            className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-lg placeholder:text-sm"
-          />
-        </div>
+      <form className="grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-5 mb-4">
+            <div className="mb-4">
+                <input type="text" name='section' placeholder='Search Sections...' className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-lg transition-all duration-300 ease-in-out placeholder:text-sm focus:outline-orange-500" value={search} onChange={(e) => setSearch(e.target.value)}/>
+            </div>
 
-        <button className="flex items-center gap-2 w-fit cursor-pointer px-5 py-2.5 border border-[#e1e5e9] rounded-md">
-          <IoSearchOutline size={24}/> Search
-        </button>
-      </form>
+            <div className="mb-4">
+                <select name="sections" id="sections" className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-lg focus:outline-orange-500 transition-all duration-300 ease-in-out" value={selectedSections} onChange={(e) => setSelectedSections(e.target.value)} required>
+                    <option value="">Select section</option>
+                    <option value="All Sections">All sections</option>
+                    <option value="A">Section A</option>
+                    <option value="B">Section B</option>
+                    <option value="C">Section C</option>
+                    <option value="D">Section D</option>
+                </select>
+            </div>
+        </form>
 
       {/* TABLE */}
       <div className="w-full overflow-x-auto">
-        <table className="min-w-200 w-full border-collapse mt-4">
-
-          <thead>
-            <tr className='bg-[#eff1f3] text-[#333] font-semibold border-b text-left'>
-              <th className="p-4">Subject name</th>
-              <th className="p-4">Code</th>
-              <th className="p-4">Status</th>
-              <th className="p-4">Action</th>
-            </tr>
-          </thead>
-
-          <tbody>
-
-            {/* LOADING */}
-            {isLoading && (
-              <tr>
-                <td colSpan="4" className="p-4 text-center">
-                  Loading...
-                </td>
-              </tr>
-            )}
-
-            {/* EMPTY */}
-            {!isLoading && subjects.length === 0 && (
-              <tr>
-                <td colSpan="4" className="p-4 text-center text-gray-500">
-                  No subjects found.
-                </td>
-              </tr>
-            )}
-
-            {/* DATA */}
-            {subjects.map((subject) => (
-              <tr
-                key={subject._id}
-                className="hover:bg-[#f8f9fa] border-b text-left"
-              >
-                <td className='p-4'>{subject.name}</td>
-                <td className='p-4'>{subject.code}</td>
-
-                <td className='p-4'>
-                  <span
-                    className={`py-1 px-2.5 rounded-2xl text-sm font-medium ${
-                      subject.status === "ACTIVE"
-                        ? statusStyles.active
-                        : "bg-gray-100 text-gray-500"
-                    }`}
-                  >
-                    {subject.status}
-                  </span>
-                </td>
-
-                <td className='p-4'>
-                  <div className="flex gap-2">
-                    <button className="bg-gray-50 text-gray-700 border px-4 py-1.5 rounded-md">
-                      Edit
-                    </button>
-                    <button className="bg-red-600 text-white px-4 py-1.5 rounded-md">
-                      Delete
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-
-          </tbody>
-        </table>
+         <table className='w-full border-collapse mt-4'>
+                <thead>
+                    <tr>
+                        <th className="p-4 bg-[#f8f9fa] text-[#333] font-semibold border-b border-[#e1e5e9] text-left">Subject Name</th>
+                        <th className="p-4 bg-[#f8f9fa] text-[#333] font-semibold border-b border-[#e1e5e9] text-left">Subject Code</th>
+                        <th className="p-4 bg-[#f8f9fa] text-[#333] font-semibold border-b border-[#e1e5e9] text-left">Description</th>
+                        <th className="p-4 bg-[#f8f9fa] text-[#333] font-semibold border-b border-[#e1e5e9] text-left">Status</th>
+                        <th className="p-4 bg-[#f8f9fa] text-[#333] font-semibold border-b border-[#e1e5e9] text-left">Actions</th>
+                    </tr>
+                </thead>
+                <tbody className='table-row-group border-inherit'>
+                    {subjects.length === 0 && (
+                        <tr>
+                            <td colSpan="6" className="p-4 text-center text-gray-500">
+                            No Subject found.
+                            </td>
+                        </tr>
+                    )}
+                    {   filteredSubjects?.map((section, index) => (
+                        <tr key={index} className="hover:bg-[#f8f9fa]">
+                        <td className='p-4 border-b border-[#e1e5e9] text-left'>Section {section.name}</td>
+                        <td className='p-4 border-b border-[#e1e5e9] text-left'> {section.code}</td>
+                        <td className='p-4 border-b border-[#e1e5e9] text-left'>{section.description}</td>
+                        <td className='p-4 border-b border-[#e1e5e9] text-left capitalize'><span className={`py-1 px-2.5 rounded-2xl text-sm font-medium  ${section.status === 'Active' ? 'bg-[#d1fae5] text-[#10b981]' : ''} ${section.status === 'Pending' ? ' bg-[#fef3c7] text-[#92400e]' : ''} ${section.status === 'Completed' ? ' bg-[#dbeafe] text-[#1e40af]' : ''}`}>{section.status}</span></td>
+                        <td className='p-4 border-b border-[#e1e5e9] text-left flex gap-2'>
+                            <button className='bg-[#f8f9fa] hover:bg-[#ffffff] text-[#333] border border-[#e1e5e9] px-4 py-1.5 rounded-md'>View</button>
+                            <button className='bg-[#fcd116] hover:bg-[#ffda33] text-[#333] border border-[#e1e5e9] px-4 py-1.5 rounded-md' onClick={() => startUpdatingIndex(id)}>Edit</button>
+                            <button className='bg-[#ce1126] hover:bg-[#dc001a] text-white border border-[#e1e5e9] px-4 py-1.5 rounded-md' onClick={() => deleteSection(id)}>Delete</button>
+                        </td>
+                    </tr> ))}
+                </tbody>
+            </table>
       </div>
 
     </div>

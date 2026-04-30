@@ -64,7 +64,7 @@ const AddAssignedTeacherModal = ({ setAssignedTeacher }) => {
           <IoClose
             size={28}
             className="cursor-pointer"
-            onClick={() => setAssignedTeacher(false)}
+            onClick={() => setAssignModal(false)}
           />
         </div>
 
@@ -156,7 +156,7 @@ const AddAssignedTeacherModal = ({ setAssignedTeacher }) => {
             <button
               type="button"
               className="px-4 py-2 border"
-              onClick={() => setAssignedTeacher(false)}
+              onClick={() => setAssignModal(false)}
             >
               Cancel
             </button>
