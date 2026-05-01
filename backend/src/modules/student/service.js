@@ -65,14 +65,18 @@ export const createStudentService = async (data) => {
 // 📄 GET ALL
 export const getStudentsService = async () => {
   return await Student.find()
-    .populate("classId sectionId parentId")
+    .populate("classId", "name")
+    .populate("sectionId")
+    .populate("parentId")
     .lean();
 };
 
 // 🔍 GET ONE
 export const getStudentByIdService = async (id) => {
-  return await Student.findById(id)
-    .populate("classId sectionId parentId")
+  return await Student.find()
+    .populate("classId", "name")
+    .populate("sectionId")
+    .populate("parentId")
     .lean();
 };
 

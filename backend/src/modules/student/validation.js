@@ -5,14 +5,15 @@ export const validateCreateStudent = (req, res, next) => {
     password,
     classId,
     sectionId,
+    birthDate,
   } = req.body;
 
   // ❌ required fields check
-  if (!fullName || !admissionNumber || !classId || !sectionId || !password) {
+  if (!fullName || !admissionNumber || !classId || !sectionId || !password || !birthDate) {
     return res.status(400).json({
       success: false,
       message:
-        "fullName, admissionNumber, classId and sectionId are required",
+        "fullName, admissionNumber, classId, sectionId, password, and birthDate are required",
     });
   }
 
@@ -31,5 +32,12 @@ export const validateCreateStudent = (req, res, next) => {
     });
   }
 
+  if (!birthDate) {
+    return res.status(400).json({
+      success: false,
+      message: "birthDate is required",
+    });
+  }
+  
   next();
 };
