@@ -5,7 +5,7 @@ import { useGetSectionsQuery } from "../../redux/features/sectionApi";
 import { useState } from "react";
 import { useGetStudentsQuery } from "../../redux/features/studentApi";
 
-const DailyAttendanceComponent = () => {
+const BySectionAttendanceComponent = () => {
   const { data: classData } = useGetClassesQuery();
   const { data: sectionData } = useGetSectionsQuery();
   const { data: studentData } = useGetStudentsQuery();
@@ -15,6 +15,7 @@ const DailyAttendanceComponent = () => {
   const students = studentData?.data || [];
   // console.log("Classes:", classes);
   // console.log("Sections:", sections);
+  // console.log("Students:", students);
 
   const statusStyles = {
     active: "bg-[#d1fae5] text-[#10b981]",
@@ -46,15 +47,15 @@ const DailyAttendanceComponent = () => {
     <div className="bg-white p-6 mb-6 shadow rounded-md">
       <div className="flex justify-between items-center mb-4">
         <span className="text-[#333] lg:text-2xl font-bold">
-          Daily Attendance Report
+          By Section Attendance
         </span>
       </div>
 
-      <form className="grid grid-cols-1 lg:grid-cols-[3fr_2fr_2fr] md:grid-cols-[1fr] gap-3 ">
+      <form className="grid grid-cols-1 lg:grid-cols-[2fr_2fr_150px] md:grid-cols-[1fr] gap-3 ">
         <div className="">
           <input
             type="text"
-            placeholder="Search daily attendances"
+            placeholder="Search section attendances"
             className="lg:w-full w-full p-2.5 border border-[#e1e5e9] rounded-md text-lg transition-all duration-300 ease-in-out placeholder:text-sm"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -68,7 +69,10 @@ const DailyAttendanceComponent = () => {
             id="classes"
             className="lg:w-full w-full p-2.5 border border-[#e1e5e9] rounded-md text-lg transition-all duration-300 ease-in-out placeholder:text-sm"
             value={classId}
-            onChange={(e) => setClassId(e.target.value)}
+            onChange={(e) => {
+              setClassId(e.target.value);
+              setSectionId(""); // reset section
+            }}
             required
           >
             <option value="">Select Class</option>
@@ -95,8 +99,7 @@ const DailyAttendanceComponent = () => {
             <option value="">All Sections</option>
             {sections?.map((sec) => (
               <option key={sec._id} value={sec._id}>
-                {" "}
-                {sec.name}{" "}
+                {sec.name}
               </option>
             ))}
           </select>
@@ -111,13 +114,11 @@ const DailyAttendanceComponent = () => {
                 Student Name
               </th>
               <th scope="col" className="p-4">
-                Class
-              </th>
-
-              <th scope="col" className="p-4">
                 Section
               </th>
-              <th>status</th>
+              <th scope="col" className="p-4">
+                Status
+              </th>
               <th scope="col" className="p-4">
                 Mark Attendance
               </th>
@@ -127,7 +128,7 @@ const DailyAttendanceComponent = () => {
             {filteredStudents.length === 0 && (
               <tr>
                 <td colSpan="6" className="p-4 text-center text-gray-500">
-                  No Student Attendance found.
+                  No Section Attendance found.
                 </td>
               </tr>
             )}
@@ -138,7 +139,6 @@ const DailyAttendanceComponent = () => {
                 className="hover:bg-[#f8f9fa] border-b border-[#e1e5e9] text-left"
               >
                 <td className="p-4">{student.fullName}</td>
-                <td className="p-4">{student.classId?.name}</td>
                 <td className="p-4">{student.sectionId?.name}</td>
                 <td className="p-4">
                   <span
@@ -183,7 +183,7 @@ const DailyAttendanceComponent = () => {
         <div className="flex justify-end mt-4">
           <button className="lg:px-5 px-3 py-2 cursor-pointer text-white bg-orange-500 rounded-md inline-flex items-center gap-2">
             <FaPlus />
-            Take Daily Attendance
+            Take Section Attendance
           </button>
         </div>
       </form>
@@ -191,4 +191,4 @@ const DailyAttendanceComponent = () => {
   );
 };
 
-export default DailyAttendanceComponent;
+export default BySectionAttendanceComponent;

@@ -28,6 +28,12 @@ const studentSchema = new mongoose.Schema(
 
     birthDate: {
       type: Date,
+      required: true,
+    },
+
+    birthDate: {
+      type: Date,
+      required: true,
     },
 
     classId: {
@@ -53,7 +59,7 @@ const studentSchema = new mongoose.Schema(
 
     status: {
       type: String,
-      enum: ["Active", "Inactive", "Graduated"],
+      enum: ["Active", "Pending", "Graduated"],
       default: "Active",
     },
   },

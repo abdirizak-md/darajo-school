@@ -15,7 +15,22 @@ export const parentApi = apiSlice.injectEndpoints({
         }),
         invalidatesTags: ["Parents"],
     }),
+    updateParent: builder.mutation({
+        query: ({ id, ...data }) => ({
+            url: `/parents/${id}`,
+            method: "PUT",
+            body: data,
+        }),
+        invalidatesTags: ["Parents"],
+    }),
+    deleteParent: builder.mutation({
+        query: (id) => ({
+            url: `/parents/${id}`,
+            method: "DELETE",
+        }),
+        invalidatesTags: ["Parents"],
+    }),
   }),
 });
 
-export const { useGetParentsQuery, useCreateParentMutation } = parentApi;
+export const { useGetParentsQuery, useCreateParentMutation, useUpdateParentMutation, useDeleteParentMutation } = parentApi;
