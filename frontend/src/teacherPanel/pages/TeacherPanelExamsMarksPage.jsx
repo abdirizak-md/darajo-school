@@ -2,16 +2,19 @@ import { useState } from 'react'
 import { MdArrowBackIos } from 'react-icons/md'
 import { Link } from 'react-router-dom'
 import TotalComponent from '../../components/dashboardComponents/TotalComponent'
-import FinalComponent from '../../components/examMarksComponents/FinalComponent'
 import AllClassesExamMarkComponent from '../../components/examMarksComponents/AllClassesExamMarkComponent'
 import SectionExamMarkComponent from '../../components/examMarksComponents/SectionExamMarkComponent'
-import SchedulesExamMarkComponent from '../../components/examMarksComponents/SchedulesExamMarkComponent'
+import { useGetAssignmentsQuery } from '../../redux/features/assignModule'
+import EntryExamMarkComponent from '../components/examMarksComponents/EntryExamMarkComponent'
 
 
 const TeacherPanelExamsMarksPage = () => {
   const [active, setActive] = useState('classes');
   const [addSection, setAddSection] = useState(false);
   const [allClasse, setAllClasse] = useState(false);
+
+  const { data: assignments } = useGetAssignmentsQuery();
+  console.log("assignments:", assignments)
   
   return (
     <section className='max-w-400 mx-auto p-8 bg-[#f5f7fa] h-screen overflow-y-auto custom-scrollbar'>
@@ -36,7 +39,7 @@ const TeacherPanelExamsMarksPage = () => {
 
          { active === 'classes' && <AllClassesExamMarkComponent /> }
          { active === 'sections' && <SectionExamMarkComponent /> }
-         { active === 'Exams' && <SchedulesExamMarkComponent /> }
+         { active === 'Exams' && <EntryExamMarkComponent   /> }
     </section>
   )
 }

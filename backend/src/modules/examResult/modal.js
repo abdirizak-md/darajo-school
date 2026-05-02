@@ -48,9 +48,9 @@ const examResultSchema = new mongoose.Schema(
     },
 
     gpa: {
-      type: Number,
-      required: true,
-    },
+  type: Number,
+  default: 0,
+},
 
     status: {
       type: String,

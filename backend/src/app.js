@@ -12,6 +12,9 @@ import examResults from "./routes/resultExam.js";
 import routeAssign from "./routes/assignTeacher.js";
 import routersEntryMark from "./routes/entryMark.js";
 import routersCommunication from "./routes/communication.js";
+import routeFeeTypes from "./routes/feeType.js";
+import feesRoutes from "./routes/fees.js";
+import routerStructures from "./routes/feeStructure.js";
 
 
 import cors from "cors";
@@ -43,6 +46,10 @@ app.use('/api', examResults)
 app.use('/api', routeAssign)
 app.use('/api', routersEntryMark)
 app.use('/api', routersCommunication)
+app.use("/api", routeFeeTypes)
+app.use("/api", feesRoutes)
+app.use("/api", routerStructures)
+
 
 
 app.get("/", (req, res) => {

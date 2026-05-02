@@ -1,9 +1,9 @@
-import {asyncHandler} from "../../common/utils/asyncHandler.js";
+import { asyncHandler } from "../../common/utils/asyncHandler.js";
 import apiResponse from "../../common/utils/responseApi.js";
 import * as marksService from "./service.js";
 import statusCodes from "../../common/constant/statusCode.js";
 
-// Load students
+// 📌 GET STUDENTS
 export const getStudentsForMarksEntry = asyncHandler(async (req, res) => {
   const { classId, sectionId } = req.query;
 
@@ -21,7 +21,7 @@ export const getStudentsForMarksEntry = asyncHandler(async (req, res) => {
   });
 });
 
-// Save marks
+// 📌 SAVE MARKS
 export const saveMarks = asyncHandler(async (req, res) => {
   const result = await marksService.saveMarks(req.body, req.user);
 

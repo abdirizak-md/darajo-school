@@ -6,7 +6,7 @@ export const entryMarkApi = apiSlice.injectEndpoints({
     // ✅ Load students
     getStudents: builder.query({
       query: ({ classId, sectionId }) => ({
-        url: "/marksEntry/students",
+        url: "/marks-entry",
         method: "GET",
         params: { classId, sectionId },
       }),
@@ -16,7 +16,7 @@ export const entryMarkApi = apiSlice.injectEndpoints({
     // ✅ Save marks (bulk)
     saveMarks: builder.mutation({
       query: (data) => ({
-        url: "/marksEntry/save",
+        url: "/marks-entry",
         method: "POST",
         body: data,
       }),
