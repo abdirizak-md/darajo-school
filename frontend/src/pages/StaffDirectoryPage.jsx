@@ -1,161 +1,192 @@
-import { useState } from 'react'
-import { MdArrowBackIos } from 'react-icons/md'
-import { Link } from 'react-router-dom'
-import staffs from '../Data/staffs'
-import AssignmentComponent from '../components/staffDirectoryComponents/AssignmentComponent'
-import PayrollComponent from '../components/staffDirectoryComponents/PayrollComponent'
-import StaffDirectoryComponent from '../components/staffDirectoryComponents/StaffDirectoryComponent'
-import AddTeacherModal from '../boxModels/addTeacherModal'
-import TeacherEnrollmentComponent from '../components/staffDirectoryComponents/TeacherEnrollmentComponent'
-import TeacherEnrollmentModal from '../boxModels/teacherEnrollmentModal'
+import { useState } from "react";
+import { MdArrowBackIos } from "react-icons/md";
+import { Link } from "react-router-dom";
+import staffs from "../Data/staffs";
+import AddTeacherModal from "../boxModels/addTeacherModal";
+import TeacherEnrollmentModal from "../boxModels/teacherEnrollmentModal";
+import AssignmentComponent from "../components/staffDirectoryComponents/AssignmentComponent";
+import PayrollComponent from "../components/staffDirectoryComponents/PayrollComponent";
+import StaffDirectoryComponent from "../components/staffDirectoryComponents/StaffDirectoryComponent";
+import TeacherEnrollmentComponent from "../components/staffDirectoryComponents/TeacherEnrollmentComponent";
 
 const StaffDirectoryPage = () => {
-    const [teacherModal, setTeacherModal] = useState(false);
-    const [enrolled, setEnrolled] = useState(false);
-    const [active, setActive] = useState('Staff');
-    const [sectionn, setSectionn] = useState(false);
-    const [allClasse, setAllClasse] = useState(false);
+  const [teacherModal, setTeacherModal] = useState(false);
+  const [enrolled, setEnrolled] = useState(false);
+  const [active, setActive] = useState("Staff");
+  const [sectionn, setSectionn] = useState(false);
+  const [allClasse, setAllClasse] = useState(false);
 
-    // add section functionality
-    const [sectionName, setSectionName] = useState('');
-    const [classs, setClasss] = useState('');
-    const [students, setStudents] = useState('');
-    const [teacher, setteacher] = useState('');
-    const [room, setroom] = useState('');
-    const [status, setstatus] = useState('');
+  // add section functionality
+  const [sectionName, setSectionName] = useState("");
+  const [classs, setClasss] = useState("");
+  const [students, setStudents] = useState("");
+  const [teacher, setteacher] = useState("");
+  const [room, setroom] = useState("");
+  const [status, setstatus] = useState("");
 
-    const [updatingIndex, setUpdatinIndex] = useState(null);
+  const [updatingIndex, setUpdatinIndex] = useState(null);
 
-    const [sections, setSections] = useState(staffs);
+  const [sections, setSections] = useState(staffs);
 
-    // console.log(sections)
+  // console.log(sections)
 
+  // add to section function handler
+  const addASection = () => {
+    if (
+      !sectionName.trim() ||
+      !classs.trim() ||
+      !students.trim() ||
+      !teacher.trim() ||
+      !room.trim() ||
+      !status.trim()
+    )
+      return alert("Please fill the fields!");
 
-    // add to section function handler
-    const addASection = () => {
-        if (!sectionName.trim() || !classs.trim() || !students.trim() || !teacher.trim() || !room.trim() || !status.trim()) return alert('Please fill the fields!');
-
-        if (updatingIndex !== null) {
-            setSections(sections.map((sectioned, i) => (
-                i === updatingIndex ? {...sectioned, sectionName, classs, students, teacher, room, status} : sectioned
-            )));
-            setSectionName('');
-            setClasss('');
-            setStudents('');
-            setteacher('');
-            setroom('');
-            setstatus('');
-        } else {
-
-            let newSection = {
+    if (updatingIndex !== null) {
+      setSections(
+        sections.map((sectioned, i) =>
+          i === updatingIndex
+            ? {
+                ...sectioned,
                 sectionName,
                 classs,
                 students,
                 teacher,
                 room,
-                status
-            }
+                status,
+              }
+            : sectioned,
+        ),
+      );
+      setSectionName("");
+      setClasss("");
+      setStudents("");
+      setteacher("");
+      setroom("");
+      setstatus("");
+    } else {
+      let newSection = {
+        sectionName,
+        classs,
+        students,
+        teacher,
+        room,
+        status,
+      };
 
-            setSections([...sections, newSection]);
-            setSectionName('');
-            setClasss('');
-            setStudents('');
-            setteacher('');
-            setroom('');
-            setstatus('');
-        }
-
-        setUpdatinIndex(null);
-
+      setSections([...sections, newSection]);
+      setSectionName("");
+      setClasss("");
+      setStudents("");
+      setteacher("");
+      setroom("");
+      setstatus("");
     }
 
-    const startUpdatingIndex = (index) => {
-        const selected = sections[index];
+    setUpdatinIndex(null);
+  };
 
-        setSectionName(selected.sectionName);
-        setClasss(selected.classs);
-        setStudents(selected.students);
-        setteacher(selected.teacher);
-        setroom(selected.room);
-        setstatus(selected.status);
+  const startUpdatingIndex = (index) => {
+    const selected = sections[index];
 
-        setUpdatinIndex(index);
-        setSectionn(true); // open modal
-    };
+    setSectionName(selected.sectionName);
+    setClasss(selected.classs);
+    setStudents(selected.students);
+    setteacher(selected.teacher);
+    setroom(selected.room);
+    setstatus(selected.status);
 
-    // delete section functionality
-    const deleteSection = (index) => {
-        alert('Are you sure to delete this section!',
-            setSections(sections.filter((_, i) => i != index))
-        )
-    }
+    setUpdatinIndex(index);
+    setSectionn(true); // open modal
+  };
 
+  // delete section functionality
+  const deleteSection = (index) => {
+    alert(
+      "Are you sure to delete this section!",
+      setSections(sections.filter((_, i) => i != index)),
+    );
+  };
 
-    // handle the form 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        addASection();
-        setSectionn(!sectionn);
-    }
+  // handle the form
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addASection();
+    setSectionn(!sectionn);
+  };
   return (
-    <section className='max-w-400 mx-auto p-8 bg-[#f5f7fa] h-screen overflow-y-auto custom-scrollbar'>
-        <Link to='/' className="flex justify-center w-fit items-center cursor-default p-3 rounded-md bg-orange-500 mb-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-md active:scale-95">
-            <MdArrowBackIos  className='text-white' size={24}/>
-            <span className='text-white font-medium'>Back to Dashboard</span>
-        </Link>
+    <section className="max-w-400 mx-auto p-8 bg-[#f5f7fa] h-screen overflow-y-auto custom-scrollbar">
+      <Link
+        to="/"
+        className="flex justify-center w-fit items-center cursor-default p-3 rounded-md bg-orange-500 mb-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-md active:scale-95"
+      >
+        <MdArrowBackIos className="text-white" size={24} />
+        <span className="text-white font-medium">Back to Dashboard</span>
+      </Link>
 
-        <div className="bg-white rounded-md p-8 shadow-[0_5px_20px_rgba(0,0,0,0.1)] mb-8">
-            <h1 className='text-orange-500 text-3xl font-bold mb-4'>🏠 Staff Management</h1>
-            <span className='text-[#666]'>Manage Teachers, Administrators and Support staff</span>
+      <div className="bg-white rounded-md p-8 shadow-[0_5px_20px_rgba(0,0,0,0.1)] mb-8">
+        <h1 className="text-orange-500 text-3xl font-bold mb-4">
+          🏠 Staff Management
+        </h1>
+        <span className="text-[#666]">
+          Manage Teachers, Administrators and Support staff
+        </span>
 
-            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-8">
-                <div className="bg-[#f8f9fa] flex flex-col items-center justify-center p-5 border border-orange-500 border-t-4 border-l-orange-500 borsder-b-4 border-b-orange-500 rounded-2xl">
-                    <h1 className='text-orange-500 text-4xl font-bold mb-1'>67</h1>
-                    <span className='text-[#666]'>Total Staff</span>
-                </div>
-                <div className="bg-[#f8f9fa] flex flex-col items-center justify-center p-5 border border-orange-500 border-t-4 border-l-orange-500 borsder-b-4 border-b-orange-500 rounded-2xl">
-                    <h1 className='text-orange-500 text-4xl font-bold mb-1'>56</h1>
-                    <span className='text-[#666]'>Total Teachers</span>
-                </div>
-                <div className="bg-[#f8f9fa] flex flex-col items-center justify-center p-5 border border-orange-500 border-t-4 border-l-orange-500 borsder-b-4 border-b-orange-500 rounded-2xl">
-                    <h1 className='text-orange-500 text-4xl font-bold mb-1'>7</h1>
-                    <span className='text-[#666]'>Administrators</span>
-                </div>
-                <div className="bg-[#f8f9fa] flex flex-col items-center justify-center p-5 border border-orange-500 border-t-4 border-l-orange-500 borsder-b-4 border-b-orange-500 rounded-2xl">
-                    <h1 className='text-orange-500 text-4xl font-bold mb-1'>12</h1>
-                    <span className='text-[#666]'>Support Staff</span>
-                </div>
-            </div>
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-8">
+          <div className="bg-[#f8f9fa] flex flex-col items-center justify-center p-5 border border-orange-500 border-t-4 border-l-orange-500 borsder-b-4 border-b-orange-500 rounded-2xl">
+            <h1 className="text-orange-500 text-4xl font-bold mb-1">67</h1>
+            <span className="text-[#666]">Total Staff</span>
+          </div>
+          <div className="bg-[#f8f9fa] flex flex-col items-center justify-center p-5 border border-orange-500 border-t-4 border-l-orange-500 borsder-b-4 border-b-orange-500 rounded-2xl">
+            <h1 className="text-orange-500 text-4xl font-bold mb-1">56</h1>
+            <span className="text-[#666]">Total Teachers</span>
+          </div>
+          <div className="bg-[#f8f9fa] flex flex-col items-center justify-center p-5 border border-orange-500 border-t-4 border-l-orange-500 borsder-b-4 border-b-orange-500 rounded-2xl">
+            <h1 className="text-orange-500 text-4xl font-bold mb-1">7</h1>
+            <span className="text-[#666]">Administrators</span>
+          </div>
+          <div className="bg-[#f8f9fa] flex flex-col items-center justify-center p-5 border border-orange-500 border-t-4 border-l-orange-500 borsder-b-4 border-b-orange-500 rounded-2xl">
+            <h1 className="text-orange-500 text-4xl font-bold mb-1">12</h1>
+            <span className="text-[#666]">Support Staff</span>
+          </div>
         </div>
+      </div>
 
+      <div className="flex gap-5 mb-8">
+        {["staff", "assignments", "payroll", "enroll"].map((Tab, index) => (
+          <button
+            key={index}
+            onClick={() => setActive(Tab)}
+            className={`px-8 py-3 border border-[#e1e5e9]  hover:shadow-md active:scale-95 transition-all duration-200 rounded-md shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active == Tab ? "bg-orange-500 text-white" : "bg-white"}`}
+          >
+            {Tab.toLocaleUpperCase()}
+          </button>
+        ))}
+      </div>
 
-        <div className="flex gap-5 mb-8">
-            <button onClick={() => setActive('Staff')} className={`px-8 py-3 border border-[#e1e5e9]  hover:shadow-md active:scale-95 transition-all duration-200 rounded-md shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active == 'Staff' ? 'bg-orange-500 text-white' : 'bg-white'}`}>Teacher Directory</button>
-            <button onClick={() => setActive('assignment')} className={`px-8 py-3 border border-[#e1e5e9] hover:shadow-md active:scale-95 transition-all duration-200 rounded-md shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active == 'assignment' ? 'bg-orange-500 text-white' : 'bg-white'}`}>Assignment</button>
-            <button onClick={() => setActive('payroll')} className={`px-8 py-3 border border-[#e1e5e9]  hover:shadow-md active:scale-95 transition-all duration-200 rounded-md shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active == 'payroll' ? 'bg-orange-500 text-white' : 'bg-white'}`}>Payroll</button>
-            <button onClick={() => setActive('enroll')} className={`px-8 py-3 border border-[#e1e5e9]  hover:shadow-md active:scale-95 transition-all duration-200 rounded-md shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active == 'enroll' ? 'bg-orange-500 text-white' : 'bg-white'}`}>Enroll</button>
-         </div>
+      {/* Staff Directory, assignment and payroll */}
+      {active === "Staff" && (
+        <StaffDirectoryComponent setTeacherModal={setTeacherModal} />
+      )}
 
-        {/* Staff Directory, assignment and payroll */}
-        { active === 'Staff' && <StaffDirectoryComponent setTeacherModal={setTeacherModal} />}
-       
-        {/* assignment */}
-        { active === 'assignment' && <AssignmentComponent />} 
-       
-        {/* payroll */}
-        { active === 'payroll' && <PayrollComponent />} 
+      {/* assignment */}
+      {active === "assignment" && <AssignmentComponent />}
 
-        {/* enroll */}
-        { active === 'enroll' && <TeacherEnrollmentComponent setEnrolled={setEnrolled}/>} 
+      {/* payroll */}
+      {active === "payroll" && <PayrollComponent />}
 
+      {/* enroll */}
+      {active === "enroll" && (
+        <TeacherEnrollmentComponent setEnrolled={setEnrolled} />
+      )}
 
-        {/* box modal to add new teachers*/}
-        {   teacherModal && <AddTeacherModal setTeacherModal={setTeacherModal}/>}
+      {/* box modal to add new teachers*/}
+      {teacherModal && <AddTeacherModal setTeacherModal={setTeacherModal} />}
 
-        {/* box modal to enroll teachers*/}
-        {   enrolled && <TeacherEnrollmentModal setEnrolled={setEnrolled}/>}
+      {/* box modal to enroll teachers*/}
+      {enrolled && <TeacherEnrollmentModal setEnrolled={setEnrolled} />}
     </section>
-  )
-}
+  );
+};
 
-export default StaffDirectoryPage
+export default StaffDirectoryPage;

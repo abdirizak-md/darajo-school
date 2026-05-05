@@ -34,8 +34,7 @@ const AttendanceReportPage = () => {
           Monitor student attendance, track absences, and analyze trends
         </span>
 
-        {/* Summary Cards */}
-        <TotalComponent />
+        {/* total component removed */}
       </div>
       {/* Tabs */}
       <div className="flex gap-5 mb-8">
@@ -47,9 +46,7 @@ const AttendanceReportPage = () => {
               active === tab ? "bg-orange-500 text-white" : "bg-white"
             }`}
           >
-            {tab === "daily" && "Daily Report"}
-            {tab === "section" && "By Section"}
-            {tab === "student" && "By Student"}
+            {tab.toLocaleUpperCase()}
           </button>
         ))}
       </div>

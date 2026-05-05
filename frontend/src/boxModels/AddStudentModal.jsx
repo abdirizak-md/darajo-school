@@ -6,7 +6,7 @@ import { useGetSectionsQuery } from "../redux/features/sectionApi";
 import { useGetParentsQuery } from "../redux/features/parentApi";
 import { useGetStudentsQuery } from "../redux/features/studentApi";
 
-const AddStudentModal = ({ setmodelStudent }) => {
+const AddStudentModal = ({ setModelStudent }) => {
   const [createStudent] = useCreateStudentMutation();
 
   // ✅ Classes (always load)
@@ -55,7 +55,7 @@ const AddStudentModal = ({ setmodelStudent }) => {
       await createStudent(formData).unwrap();
 
       alert("Student created successfully");
-      setmodelStudent(false);
+      setModelStudent(false);
     } catch (error) {
       console.log(error);
       alert("Failed to create student");
@@ -71,7 +71,7 @@ const AddStudentModal = ({ setmodelStudent }) => {
           <IoClose
             className="hover:text-orange-500"
             size={26}
-            onClick={() => setmodelStudent(false)}
+            onClick={() => setModelStudent(false)}
           />
         </div>
 
@@ -309,7 +309,7 @@ const AddStudentModal = ({ setmodelStudent }) => {
             <button
               type="button"
               className="bg-[#f8f9fa] hover:text-orange-500 hover:bg-[#e9ecef] text-[#333] border border-[#e1e5e9] px-6 py-3 rounded-md cursor-pointer font-medium inline-flex items-center gap-2 transition-all duration-300 ease-in-out"
-              onClick={() => setmodelStudent(false)}
+              onClick={() => setModelStudent(false)}
             >
               Cancel
             </button>

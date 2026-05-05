@@ -13,24 +13,40 @@ const SubjectComponent = ({ setAddSubject }) => {
   const subjects = data?.data || []; // ✅ safe fallback\
 
   const [search, setSearch] = useState("");
-  const [selectedSections, setSelectedSections] = useState("");
-  const [deleteTarget, setDeleteTarget] = useState(null);
-  const [startUpdatingIndex, setStartUpdatingIndex] = useState(null);
+  const [selectedSubject, setSelectedSubject] = useState("");
+  const [editingSubject, setEditingSubject] = useState(null);
 
-  const statusStyles = {
-    active: "bg-[#d1fae5] text-[#10b981]",
-    pending: "bg-[#fef3c7] text-[#92400e]",
-    completed: "bg-[#dbeafe] text-[#1e40af]",
-  };
+  const [formData, setFormData] = useState({
+    subjectName: "",
+    subjectDescription: "",
+    subjectCode: "",
+    status: "",
+  });
+
+  // ✅ new state for delete target
+  const [deleteTarget, setDeleteTarget] = useState(null);
+
+  const filteredSubjects = data?.data?.filter((subject) => {
+    const matchesSearch = subject?.name
+      ?.toLowerCase()
+      .includes(search.toLowerCase());
+
+    const matchesSelect =
+      selectedSubject && selectedSubject !== "All Subjects"
+        ? subject?.name === selectedSubject
+        : true;
+
+    return matchesSearch && matchesSelect;
+  });
 
   const confirmDelete = (id) => {
     setDeleteTarget(id);
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async () => {
     try {
-      await deleteSubject(id).unwrap();
-      setDeleteTarget(null); // ✅ close modal after success
+      await deleteSubject(deleteTarget).unwrap();
+      setDeleteTarget(null);
     } catch (err) {
       console.error("Delete failed:", err);
     }
@@ -40,9 +56,10 @@ const SubjectComponent = ({ setAddSubject }) => {
     setEditingSubject(subject._id);
 
     setFormData({
-      name: subject.name,
-      code: subject.code,
-      description: subject.description,
+      subjectName: subject.name,
+      subjectDescription: subject.description,
+      subjectCode: subject.code,
+      status: subject.status,
     });
   };
 
@@ -52,7 +69,10 @@ const SubjectComponent = ({ setAddSubject }) => {
     try {
       await updateSubject({
         id: editingSubject,
-        ...formData,
+        name: formData.subjectName,
+        description: formData.subjectDescription,
+        code: formData.subjectCode,
+        status: formData.status,
       }).unwrap();
 
       setEditingSubject(null);
@@ -61,18 +81,11 @@ const SubjectComponent = ({ setAddSubject }) => {
     }
   };
 
-  const filteredSubjects = subjects.filter((subject) => {
-    const matchesSearch = subject?.name
-      ?.toLowerCase()
-      .includes(search.toLowerCase());
-
-    const matchesSelect =
-      selectedSections && selectedSections !== "All Sections"
-        ? subject?.section === selectedSections
-        : true;
-
-    return matchesSearch && matchesSelect;
-  });
+  const statusStyles = {
+    active: "bg-[#d1fae5] text-[#10b981]",
+    pending: "bg-[#fef3c7] text-[#92400e]",
+    completed: "bg-[#dbeafe] text-[#1e40af]",
+  };
 
   return (
     <div className="bg-white p-6 mb-6 shadow rounded-md">
@@ -96,8 +109,8 @@ const SubjectComponent = ({ setAddSubject }) => {
         <div className="mb-4">
           <input
             type="text"
-            name="section"
-            placeholder="Search Sections..."
+            name="subject"
+            placeholder="Search Subjects..."
             className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-lg transition-all duration-300 ease-in-out placeholder:text-sm focus:outline-orange-500"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -106,25 +119,94 @@ const SubjectComponent = ({ setAddSubject }) => {
 
         <div className="mb-4">
           <select
-            name="sections"
-            id="sections"
+            name="subjects"
+            id="subjects"
             className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-lg focus:outline-orange-500 transition-all duration-300 ease-in-out"
-            value={selectedSections}
-            onChange={(e) => setSelectedSections(e.target.value)}
+            value={selectedSubject}
+            onChange={(e) => setSelectedSubject(e.target.value)}
             required
           >
-            <option value="">Select section</option>
-            <option value="All Sections">All sections</option>
-            <option value="A">Section A</option>
-            <option value="B">Section B</option>
-            <option value="C">Section C</option>
-            <option value="D">Section D</option>
+            <option value="">Select subject</option>
+            <option value="All Subjects">All Subjects</option>
+
+            {subjects.map((sub) => (
+              <option key={sub._id} value={sub.name}>
+                {sub.name}
+              </option>
+            ))}
           </select>
         </div>
       </form>
 
       {/* TABLE */}
       <div className="w-full overflow-x-auto">
+        {editingSubject !== null && (
+          <div
+            className="flex-1 bg-black/50 z-100 fixed inset-0 flex items-center justify-center"
+            onClick={() => setEditingSubject(null)}
+          >
+            <form
+              className="flex flex-col gap-5 mb-4 bg-white p-6 rounded-md"
+              onClick={(e) => e.stopPropagation()}
+              onSubmit={(e) => e.preventDefault()}
+            >
+              <div className="mb-4">
+                <input
+                  type="text"
+                  placeholder="Update Subject Name"
+                  className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-lg transition-all duration-300 ease-in-out placeholder:text-sm focus:outline-orange-500"
+                  value={formData.subjectName}
+                  onChange={(e) =>
+                    setFormData({ ...formData, subjectName: e.target.value })
+                  }
+                />
+              </div>
+
+              <div className="mb-4">
+                <input
+                  type="text"
+                  placeholder="Update Subject code"
+                  className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-lg transition-all duration-300 ease-in-out placeholder:text-sm focus:outline-orange-500"
+                  value={formData.subjectCode}
+                  onChange={(e) =>
+                    setFormData({ ...formData, subjectCode: e.target.value })
+                  }
+                />
+              </div>
+              <div className="mb-4">
+                <input
+                  type="text"
+                  placeholder="Update Subject description"
+                  className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-lg transition-all duration-300 ease-in-out placeholder:text-sm focus:outline-orange-500"
+                  value={formData.subjectDescription}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      subjectDescription: e.target.value,
+                    })
+                  }
+                />
+              </div>
+
+              <div className="mb-4 flex items-center gap-2">
+                <button
+                  type="button"
+                  className="px-5 py-2 text-white bg-orange-500 hover:bg-orange-600 rounded-md"
+                  onClick={handleUpdate}
+                >
+                  Update Subject
+                </button>
+                <button
+                  type="button"
+                  className="px-5 py-2 text-white bg-gray-500 hover:bg-gray-600 rounded-md"
+                  onClick={() => setEditingSubject(null)}
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
         <table className="w-full border-collapse mt-4">
           <thead>
             <tr>
@@ -156,7 +238,7 @@ const SubjectComponent = ({ setAddSubject }) => {
             {filteredSubjects?.map((subject) => (
               <tr key={subject._id} className="hover:bg-[#f8f9fa]">
                 <td className="p-4 border-b border-[#e1e5e9] text-left">
-                  subject {subject.name}
+                  {subject.name}
                 </td>
                 <td className="p-4 border-b border-[#e1e5e9] text-left">
                   {" "}
@@ -166,8 +248,15 @@ const SubjectComponent = ({ setAddSubject }) => {
                   {subject.description}
                 </td>
                 <td className="p-4 border-b border-[#e1e5e9] text-left capitalize">
-                  <span
+                  {/* <span
                     className={`py-1 px-2.5 rounded-2xl text-sm font-medium  ${subject.status === "Active" ? "bg-[#d1fae5] text-[#10b981]" : ""} ${subject.status === "Pending" ? " bg-[#fef3c7] text-[#92400e]" : ""} ${subject.status === "Completed" ? " bg-[#dbeafe] text-[#1e40af]" : ""}`}
+                  >
+                    {subject.status}
+                  </span> */}
+                  <span
+                    className={`py-1 px-2.5 rounded-2xl text-sm font-medium ${
+                      statusStyles[subject.status?.toLowerCase()] || ""
+                    }`}
                   >
                     {subject.status}
                   </span>
@@ -184,7 +273,7 @@ const SubjectComponent = ({ setAddSubject }) => {
                   </button>
                   <button
                     className="bg-[#ce1126] hover:bg-[#dc001a] text-white border border-[#e1e5e9] px-4 py-1.5 rounded-md"
-                    onClick={() => handleDelete(deleteTarget)}
+                    onClick={() => confirmDelete(subject._id)}
                   >
                     Delete
                   </button>
@@ -193,7 +282,6 @@ const SubjectComponent = ({ setAddSubject }) => {
             ))}
           </tbody>
         </table>
-
         {deleteTarget && (
           <div
             className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"

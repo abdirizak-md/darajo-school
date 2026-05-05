@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { MdArrowBackIos } from "react-icons/md";
 import { Link } from "react-router-dom";
-import BySectionAttendanceComponent from "../../components/attendanceComponents/BySectionAttendanceComponent";
-import ByStudentAttendanceComponent from "../../components/attendanceComponents/ByStudentAttendanceComponent";
-import DailyAttendanceComponent from "../../components/attendanceComponents/DailyAttendanceComponent";
-import TotalComponent from "../../components/dashboardComponents/TotalComponent";
+import BySectionAttendanceComponent from "../studentComponents/attendanceComponents/BySectionAttendanceComponent";
+import ByStudentAttendanceComponent from "../studentComponents/attendanceComponents/ByStudentAttendanceComponent";
+import DailyAttendanceComponent from "../studentComponents/attendanceComponents/DailyAttendanceComponent";
 
 const StudentPanelAttendanceReportPage = () => {
   const [active, setActive] = useState("daily");
@@ -31,38 +30,20 @@ const StudentPanelAttendanceReportPage = () => {
           Monitor student attendance, track absences, and analyze trends
         </span>
 
-        {/* Summary Cards */}
-        <TotalComponent />
+        {/* total component removed */}
       </div>
 
       {/* Tabs */}
       <div className="flex gap-5 mb-8">
-        <button
-          onClick={() => setActive("daily")}
-          className={`px-8 py-3 border border-[#e1e5e9] hover:shadow-md active:scale-95 transition-all duration-200 rounded-md shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${
-            active === "daily" ? "bg-orange-500 text-white" : "bg-white"
-          }`}
-        >
-          Daily Report
-        </button>
-
-        <button
-          onClick={() => setActive("class")}
-          className={`px-8 py-3 border border-[#e1e5e9] hover:shadow-md active:scale-95 transition-all duration-200 rounded-md shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${
-            active === "class" ? "bg-orange-500 text-white" : "bg-white"
-          }`}
-        >
-          By Class
-        </button>
-
-        <button
-          onClick={() => setActive("student")}
-          className={`px-8 py-3 border border-[#e1e5e9] hover:shadow-md active:scale-95 transition-all duration-200 rounded-md shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${
-            active === "student" ? "bg-orange-500 text-white" : "bg-white"
-          }`}
-        >
-          By Student
-        </button>
+        {["daily", "class", "student"].map((Tab, index) => (
+          <button
+            key={index}
+            onClick={() => setActive(Tab)}
+            className={`px-8 py-3 border border-[#e1e5e9]  hover:shadow-md active:scale-95 transition-all duration-200 rounded-md shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active == Tab ? "bg-orange-500 text-white" : "bg-white"}`}
+          >
+            {Tab.toLocaleUpperCase()}
+          </button>
+        ))}
       </div>
 
       {/* Dynamic Content */}

@@ -16,8 +16,6 @@ const addTeacherModal = ({ setTeacherModal }) => {
     status: "Active",
   });
 
-  
-
   // 🔄 handle change
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -38,14 +36,15 @@ const addTeacherModal = ({ setTeacherModal }) => {
       setTeacherModal(false);
     } catch (error) {
       console.log(error);
-      alert("Failed to create teacher: " + (error?.data?.message || error.message));
+      alert(
+        "Failed to create teacher: " + (error?.data?.message || error.message),
+      );
     }
   };
 
   return (
     <div className="fixed z-50 left-0 top-0 w-full h-full bg-black/50 flex items-center justify-center">
       <div className="bg-white w-[50%] max-h-[90vh] overflow-y-auto rounded-lg">
-
         {/* HEADER */}
         <div className="flex justify-between p-4 border-b">
           <h2 className="text-xl font-bold">Add Teacher</h2>
@@ -54,7 +53,6 @@ const addTeacherModal = ({ setTeacherModal }) => {
 
         {/* FORM */}
         <form onSubmit={handleSubmit} className="p-4 space-y-3">
-
           {/* NAME */}
           <input
             name="fullName"
@@ -66,26 +64,28 @@ const addTeacherModal = ({ setTeacherModal }) => {
           />
 
           {/* employeeId */}
-          <input type="text" placeholder="Employee ID"
-       name="employeeId"
-       value={formData.employeeId}
-       onChange={handleChange}
-       className="w-full border p-2"
-       required />
+          <input
+            type="text"
+            placeholder="Employee ID"
+            name="employeeId"
+            value={formData.employeeId}
+            onChange={handleChange}
+            className="w-full border p-2"
+            required
+          />
 
           {/* Gender */}
-         <select
-          name="gender"
-          value={formData.gender}
-          onChange={handleChange}
-          className="w-full border p-2"
-          required
-        >
-        <option value="">Select Gender</option>
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
-      </select>
-
+          <select
+            name="gender"
+            value={formData.gender}
+            onChange={handleChange}
+            className="w-full border p-2"
+            required
+          >
+            <option value="">Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
 
           {/* phone */}
           <input
@@ -95,7 +95,6 @@ const addTeacherModal = ({ setTeacherModal }) => {
             onChange={handleChange}
             className="w-full border p-2"
           />
-          
 
           {/* EMAIL */}
           <input
@@ -133,7 +132,6 @@ const addTeacherModal = ({ setTeacherModal }) => {
           >
             {isLoading ? "Saving..." : "Create Teacher"}
           </button>
-
         </form>
       </div>
     </div>

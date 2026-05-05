@@ -56,7 +56,7 @@ const StudentInfoPage = () => {
             onClick={() => setActive(tab)}
             className={`px-8 py-3 border border-[#e1e5e9]  rounded-md hover:shadow-md active:scale-95 transition-all duration-200 shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active == tab ? "bg-orange-500 text-white" : "bg-white"}`}
           >
-            {tab}
+            {tab.toLocaleUpperCase()}
           </button>
         ))}
       </div>

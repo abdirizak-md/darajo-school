@@ -9,8 +9,72 @@ const StudentComponent = ({ setmodelStudent }) => {
   const { data, isLoading, isError } = useGetStudentsQuery();
   const [deleteStudent] = useDeleteStudentMutation();
   const [updateStudent] = useUpdateStudentMutation();
+
   const students = data?.data || []; // ✅ safe fallback
-  console.log(students);
+
+  const [search, setSearch] = useState("");
+  const [selectedStudent, setSelectedStudent] = useState("");
+  const [editingStudent, setEditingStudent] = useState(null);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    roomNumber: "",
+    status: "",
+  });
+
+  // ✅ new state for delete target
+  const [deleteTarget, setDeleteTarget] = useState(null);
+
+  const filteredStudents = data?.data?.filter((student) => {
+    const matchesSearch = student?.name
+      ?.toLowerCase()
+      .includes(search.toLowerCase());
+
+    const matchesSelect =
+      selectedStudent && selectedStudent !== "All Sections"
+        ? student?.name === selectedStudent
+        : true;
+
+    return matchesSearch && matchesSelect;
+  });
+
+  const confirmDelete = (id) => {
+    setDeleteTarget(id);
+  };
+
+  const handleDelete = async () => {
+    try {
+      await deleteStudent(deleteTarget).unwrap();
+      setDeleteTarget(null);
+    } catch (err) {
+      console.error("Delete failed:", err);
+    }
+  };
+
+  const startEditing = (student) => {
+    setEditingStudent(student._id);
+
+    setFormData({
+      name: section.name,
+      roomNumber: section.roomNumber,
+      status: section.status,
+    });
+  };
+
+  const handleUpdate = async () => {
+    if (!editingSection) return; // ✅ safety check
+
+    try {
+      await updateStudent({
+        id: editingStudent,
+        ...formData,
+      }).unwrap();
+
+      setEditingStudent(null);
+    } catch (err) {
+      console.error("Update failed:", err);
+    }
+  };
 
   const calculateAge = (birthDate) => {
     if (!birthDate) return "";
