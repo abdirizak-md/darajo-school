@@ -10,6 +10,7 @@ import { generateToken } from "../../common/utils/generateToken.js";
 import roles from "../../common/constant/roles.js";
 import messages from "../../common/constant/message.js";
 
+// ✅ CREATE USER WITH PROFILE (UNIFIED)
 export const createUserWithProfile = async (data) => {
   const session = await mongoose.startSession();
   session.startTransaction();
@@ -17,19 +18,27 @@ export const createUserWithProfile = async (data) => {
   try {
     const { name, email, password, role } = data;
 
-    let identifier;
+    // ✅ identifier logic
+    const identifier =
+      role === roles.STUDENT
+        ? data.admissionNumber
+        : data.employeeId || email;
 
-    if (role === roles.STUDENT) {
-      identifier = data.admissionNumber;
-    } else {
-      identifier = email;
+    if (!identifier) {
+      throw new Error("Identifier is required");
     }
 
-    const exists = await User.findOne({ identifier }).session(session);
+    // ✅ check existing
+    const exists = await User.findOne({
+      $or: [{ identifier }, { email }],
+    }).session(session);
+
     if (exists) throw new Error(messages.AUTH.USER_EXISTS);
 
+    // ✅ hash password
     const hashed = await hashPassword(password);
 
+    // ✅ create user FIRST
     const user = await User.create(
       [
         {
@@ -43,14 +52,16 @@ export const createUserWithProfile = async (data) => {
       { session }
     );
 
-    let profile;
+    let profile = null;
+
+    // ================= CREATE PROFILE =================
 
     if (role === roles.STUDENT) {
       profile = await Student.create(
         [
           {
             user: user[0]._id,
-            fullName: data.name,
+            fullName: name,
             admissionNumber: data.admissionNumber,
             classId: data.classId,
             sectionId: data.sectionId,
@@ -65,14 +76,18 @@ export const createUserWithProfile = async (data) => {
       profile = await Teacher.create(
         [
           {
-            user: user[0]._id,
-            subjects: data.subjects || [],
+            user: user[0]._id, // 🔥 CRITICAL LINK
+            fullName: name,
+            employeeId: data.employeeId,
+            email,
+            gender: data.gender,
           },
         ],
         { session }
       );
     }
 
+    // ================= LINK PROFILE =================
     if (profile) {
       user[0].profile = profile[0]._id;
       await user[0].save({ session });
@@ -89,46 +104,28 @@ export const createUserWithProfile = async (data) => {
   }
 };
 
-// 🔥 unified login
+// 🔥 LOGIN (CLEAN)
 export const loginUnified = async (identifier, password) => {
-  try {
-    console.log("LOGIN INPUT:", identifier);
+  const user = await User.findOne({
+    $or: [{ email: identifier }, { identifier }],
+  })
+    .select("+password")
+    .populate("profile"); // 🔥 IMPORTANT ADD
 
-    const user = await User.findOne({
-      $or: [
-        { email: identifier },
-        { identifier: identifier },
-      ],
-    }).select("+password");
+  if (!user) throw new Error("User not found");
 
-    console.log("USER FOUND:", user);
+  const isMatch = await comparePassword(password, user.password);
+  if (!isMatch) throw new Error("Wrong password");
 
-    if (!user) {
-      throw new Error("User not found");
-    }
+  const token = generateToken({
+    userId: user._id,        // 🔥 FIXED (clear naming)
+    role: user.role,
+    profileId: user.profile?._id, // 🔥 IMPORTANT FOR TEACHER LINK
+  });
 
-    const isMatch = await comparePassword(password, user.password);
-
-    console.log("PASSWORD MATCH:", isMatch);
-
-    if (!isMatch) { 
-      throw new Error("Wrong password");
-    }
-
-    const token = generateToken({
-      id: user._id,
-      role: user.role,
-      identifier: user.identifier,
-    });
-
-    return {
-      user,
-      token,
-      profile: user.profile,
-    };
-
-  } catch (error) {
-    console.error("🔥 REAL LOGIN ERROR:", error);
-    throw error;
-  }
+  return {
+    user,
+    token,
+    profile: user.profile,
+  };
 };

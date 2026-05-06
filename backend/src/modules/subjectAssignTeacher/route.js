@@ -1,12 +1,22 @@
 import express from "express";
-import * as controller from "./controller.js";
-import { validateAssignSubject } from "./validation.js";
+import {
+  assignSubject,
+  getAssignedSubjects,
+  getAssignedSubject,
+  deleteAssignedSubject,
+  getAssignedStudents,
+} from "./controller.js";
+import authMiddleware from "../../common/middlewares/middlewares.js";
 
 const router = express.Router();
 
-router.post("/", validateAssignSubject, controller.assignSubject);
-router.get("/", controller.getAssignedSubjects);
-router.get("/:id", controller.getAssignedSubject);
-router.delete("/:id", controller.deleteAssignedSubject);
+router.post("/", 
+  // authMiddleware,
+   assignSubject); 
+   // ✅ MUST be function
+router.get("/", getAssignedSubjects);
+router.get("/:id", getAssignedSubject);
+router.delete("/:id", deleteAssignedSubject);
+router.get("/students/assigned", getAssignedStudents);
 
 export default router;

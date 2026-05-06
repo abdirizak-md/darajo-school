@@ -1,68 +1,57 @@
 import Teacher from "./modal.js";
 import User from "../user/modal.js";
+
+import roles from "../../common/constant/roles.js";
 import { hashPassword } from "../../common/utils/hashPassword.js";
 import AppError from "../../common/utils/appError.js";
-import roles from "../../common/constant/roles.js";
 
-// ➕ CREATE TEACHER + USER
+
 export const createTeacherService = async (data) => {
-  const { fullName, employeeId, email, password, gender } = data;
+  const { fullName, email, password, employeeId, gender, phone, address } = data;
 
-  // 1. validation
-  if (!fullName || !employeeId || !email || !password) {
-    throw new AppError("Missing required fields", 400);
-  }
-
-  // 2. check existing user
-  const existingUser = await User.findOne({
-    $or: [{ identifier: employeeId }, { email }],
-  });
+  const existingUser = await User.findOne({ email });
 
   if (existingUser) {
-    throw new AppError("Teacher already exists", 409);
+    throw new AppError("Teacher already exists", 400);
   }
 
-  // 3. hash password
   const hashedPassword = await hashPassword(password);
 
-  // 4. create teacher first
+  const user = await User.create({
+    name: fullName,
+    email,
+    password: hashedPassword,
+    role: roles.TEACHER,
+    roleModel: "Teacher",
+    identifier: employeeId || email, // ✅ FIXED
+  });
+
   const teacher = await Teacher.create({
     fullName,
     employeeId,
-    email,
     gender,
+    phone,
+    address,
+    user: user._id,
   });
 
-  try {
-    // 5. create user account
-  const user = await User.create({
-  name: fullName,
-  identifier: employeeId,
-  email,
-  password: hashedPassword,
-  role: roles.TEACHER,
- profileModel: "Teacher", // ✅ FIXED
-});
+  user.profile = teacher._id;
+  await user.save();
 
-    return { teacher, user };
-  } catch (error) {
-    // rollback teacher if user creation fails
-    await Teacher.findByIdAndDelete(teacher._id);
-
-    console.error("🔥 USER CREATE ERROR:", error); // IMPORTANT DEBUG
-
-    throw new AppError(error.message || "Failed to create user account", 500);
-  }
+  return { user, teacher };
 };
 
-// ➕ GET ALL TEACHERS
 export const getAllTeachersService = async () => {
-  return await Teacher.find();
+  return await Teacher.find()
+    .populate("user", "name email role")
+    .lean();
 };
 
-// ➕ GET TEACHER BY ID
 export const getTeacherByIdService = async (id) => {
-  const teacher = await Teacher.findById(id);
+  const teacher = await Teacher.findById(id).populate(
+    "user",
+    "name email role"
+  );
 
   if (!teacher) {
     throw new AppError("Teacher not found", 404);
@@ -71,7 +60,6 @@ export const getTeacherByIdService = async (id) => {
   return teacher;
 };
 
-// ➕ UPDATE TEACHER
 export const updateTeacherService = async (id, data) => {
   const teacher = await Teacher.findByIdAndUpdate(id, data, {
     new: true,
@@ -85,20 +73,17 @@ export const updateTeacherService = async (id, data) => {
   return teacher;
 };
 
-// ➕ DELETE TEACHER
 export const deleteTeacherService = async (id) => {
-  const teacher = await User.findOneAndDelete({
-  profile: teacher._id, // ✅ FIXED
-});
+  const teacher = await Teacher.findById(id);
+
 
   if (!teacher) {
     throw new AppError("Teacher not found", 404);
-  } 
+  }
 
-
-  // Optionally, also delete associated user account
-  await User.findOneAndDelete({ profileModel: teacher._id });
-
-  return;
+  // delete linked user first
+  await User.findByIdAndDelete(teacher.user);
+  // delete teacher  await Teacher.findByIdAndDelete(id);
+  await Teacher.findByIdAndDelete(id);
 };
 

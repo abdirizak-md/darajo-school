@@ -23,7 +23,6 @@ export const createResult = async (data) => {
   }
 
   const { grade, gpa } = getGradeAndGpa(obtainedMarks, totalMarks);
-
   const status = obtainedMarks >= totalMarks * 0.5 ? "Pass" : "Fail";
 
   return await ExamResult.create({
@@ -34,19 +33,9 @@ export const createResult = async (data) => {
   });
 };
 
-// GET ALL (ROLE FILTERED)
-export const getResults = async (user) => {
-  let filter = {};
-
-  if (user.role === "teacher") {
-    filter.classId = { $in: user.classIds || [] };
-  }
-
-  if (user.role === "student") {
-    filter.studentId = user.id;
-  }
-
-  return await ExamResult.find(filter)
+// ✅ GET ALL (NO AUTH)
+export const getResults = async () => {
+  return await ExamResult.find()
     .populate("studentId")
     .populate("examId")
     .populate("subjectId");
@@ -96,7 +85,7 @@ export const deleteResult = async (id) => {
   return true;
 };
 
-// CGPA (SAFE VERSION)
+// CGPA
 export const calculateStudentCGPA = async (studentId) => {
   const results = await ExamResult.find({ studentId });
 

@@ -16,9 +16,10 @@ export const communicationApiSlice = apiSlice.injectEndpoints({
             providesTags: ["Communication"],
         }),
         sendMessage: builder.mutation({
-            query: (id) => ({
-                url: `/communication/${id}/send`,
+            query: (data) => ({
+                url: `/communication`,
                 method: "POST",
+                body: data,
             }),
             invalidatesTags: ["Communication"],
         }),

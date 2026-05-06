@@ -29,7 +29,7 @@ const AddAssignedTeacherModal = ({ setAssignedTeacher }) => {
 
     try {
       await createAssignment({
-        teacherId,
+        teacherId, // ✅ MUST BE User._id
         classId,
         sectionId,
         subjectId,
@@ -61,7 +61,7 @@ const AddAssignedTeacherModal = ({ setAssignedTeacher }) => {
           <IoClose
             size={28}
             className="cursor-pointer"
-            onClick={() => setAssignModal(false)}
+            onClick={() => setAssignedTeacher(false)}   // ✅ FIXED
           />
         </div>
 
@@ -79,9 +79,10 @@ const AddAssignedTeacherModal = ({ setAssignedTeacher }) => {
               onChange={(e) => setTeacherId(e.target.value)}
             >
               <option value="">Select teacher</option>
+
               {teachers?.data?.map((t) => (
                 <option key={t._id} value={t._id}>
-                  {t.fullName}
+                  {t.name || t.fullName} {/* ✅ SAFE DISPLAY */}
                 </option>
               ))}
             </select>
@@ -99,6 +100,7 @@ const AddAssignedTeacherModal = ({ setAssignedTeacher }) => {
               onChange={(e) => setClassId(e.target.value)}
             >
               <option value="">Select class</option>
+
               {classes?.data?.map((c) => (
                 <option key={c._id} value={c._id}>
                   {c.name}
@@ -119,6 +121,7 @@ const AddAssignedTeacherModal = ({ setAssignedTeacher }) => {
               onChange={(e) => setSectionId(e.target.value)}
             >
               <option value="">Select section</option>
+
               {sections?.data?.map((s) => (
                 <option key={s._id} value={s._id}>
                   {s.name}
@@ -139,6 +142,7 @@ const AddAssignedTeacherModal = ({ setAssignedTeacher }) => {
               onChange={(e) => setSubjectId(e.target.value)}
             >
               <option value="">Select subject</option>
+
               {subjects?.data?.map((s) => (
                 <option key={s._id} value={s._id}>
                   {s.name}
@@ -152,7 +156,7 @@ const AddAssignedTeacherModal = ({ setAssignedTeacher }) => {
             <button
               type="button"
               className="px-4 py-2 border"
-              onClick={() => setAssignModal(false)}
+              onClick={() => setAssignedTeacher(false)}
             >
               Cancel
             </button>

@@ -1,5 +1,6 @@
-  import mongoose from "mongoose";
-  import roles from "../../common/constant/roles.js";
+import mongoose from "mongoose";
+import roles from "../../common/constant/roles.js";
+
 const userSchema = new mongoose.Schema(
   {
     name: String,
@@ -10,12 +11,13 @@ const userSchema = new mongoose.Schema(
       unique: true,
     },
 
-  email: {
-  type: String,
-  unique: true,
-  sparse: true, // ✅ THIS FIXES YOUR PROBLEM
-  trim: true,
-},
+    email: {
+      type: String,
+      unique: true,
+      sparse: true,
+      trim: true,
+    },
+
     password: {
       type: String,
       required: true,
@@ -24,19 +26,24 @@ const userSchema = new mongoose.Schema(
 
     role: {
       type: String,
-      enum: Object.values(roles), // ADMIN, TEACHER, STUDENT
+      enum: Object.values(roles),
       required: true,
     },
 
-    // ✅ NEW FIELD (IMPORTANT)
-profile: {
-  type: mongoose.Schema.Types.ObjectId,
-  ref: function () {
-    return this.role;
+    // ✅ FIXED RELATION SYSTEM
+    profile: {
+      type: mongoose.Schema.Types.ObjectId,
+      refPath: "roleModel",
+    },
+
+   roleModel: {
+  type: String,
+  enum: ["Teacher", "Student"],
+  required: function () {
+    return this.role !== "ADMIN";
   },
 },
 
- 
     isActive: {
       type: Boolean,
       default: true,

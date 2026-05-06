@@ -17,15 +17,14 @@ const subjectAssignSchema = new mongoose.Schema(
       ref: "Section",
       required: true,
     },
+
+    // 🔥 FIX HERE
     teacherId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Teacher",
-      required: true,
-    },
+  type: mongoose.Schema.Types.ObjectId,
+  ref: "Teacher" // ⚠️ MUST BE Teacher (NOT User)
+},
   },
   { timestamps: true }
 );
-
-
 
 export default mongoose.model("SubjectAssign", subjectAssignSchema);

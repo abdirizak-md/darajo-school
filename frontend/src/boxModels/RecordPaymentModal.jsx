@@ -91,6 +91,19 @@ const RecordPaymentModal = ({ setRecordPayment }) => {
   // CLASS CHANGE
   const handleSubmit = async (e) => {
     e.preventDefault();
+const payload = {
+  studentId: formData.studentId,
+  classId: formData.classId,
+  sectionId: formData.sectionId,
+  feeTypeId: formData.feeTypeId,
+  method:
+    formData.paymentMethod === "mobile"
+      ? "mobile_money"
+      : formData.paymentMethod,
+  amount: formData.amount,
+  paymentDate: formData.date,
+  status: formData.status,
+};
 
     const payload = {
       studentId: formData.studentId,
@@ -104,7 +117,7 @@ const RecordPaymentModal = ({ setRecordPayment }) => {
     };
 
     try {
-      await createFee(payload).unwrap();
+      await createPayment(payload).unwrap();
 
       alert("Payment recorded successfully ✅");
       setRecordPayment(false);
@@ -210,7 +223,7 @@ const RecordPaymentModal = ({ setRecordPayment }) => {
             </select>
           </div>
 
-          {/* FEE TYPE (FROM DB) */}
+          {/* FEE TYPE */}
           <div className="mb-4">
             <label className="font-medium block mb-2 text-[#333]">
               Fee Type <span className="text-red-500">*</span>
@@ -254,22 +267,6 @@ const RecordPaymentModal = ({ setRecordPayment }) => {
             </select>
           </div>
 
-          {/* AMOUNT */}
-          <div className="mb-4">
-            <label className="font-medium block mb-2 text-[#333]">
-              Amount <span className="text-red-500">*</span>
-            </label>
-
-            <input
-              type="number"
-              name="amount"
-              className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm"
-              value={formData.amount}
-              onChange={handleChange}
-              placeholder="Enter amount"
-            />
-          </div>
-
           {/* PAYMENT METHOD */}
           <div className="mb-4">
             <label className="font-medium block mb-2 text-[#333]">
@@ -290,6 +287,21 @@ const RecordPaymentModal = ({ setRecordPayment }) => {
             </select>
           </div>
 
+          { /* AMOUNT */ }
+          <div className="mb-4">
+            <label className="font-medium block mb-2 text-[#333]">
+              Amount <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="number"
+              name="amount"
+              className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm"
+              value={formData.amount}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
           {/* DATE */}
           <div className="mb-4">
             <label className="font-medium block mb-2 text-[#333]">
@@ -302,6 +314,7 @@ const RecordPaymentModal = ({ setRecordPayment }) => {
               className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm"
               value={formData.date}
               onChange={handleChange}
+              required
             />
           </div>
 

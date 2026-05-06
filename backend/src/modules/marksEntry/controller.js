@@ -10,7 +10,6 @@ export const getStudentsForMarksEntry = asyncHandler(async (req, res) => {
   const students = await marksService.getStudentsForMarksEntry({
     classId,
     sectionId,
-    teacherId: req.user.id,
   });
 
   return apiResponse(res, {
@@ -23,7 +22,7 @@ export const getStudentsForMarksEntry = asyncHandler(async (req, res) => {
 
 // 📌 SAVE MARKS
 export const saveMarks = asyncHandler(async (req, res) => {
-  const result = await marksService.saveMarks(req.body, req.user);
+  const result = await marksService.saveMarks(req.body);
 
   return apiResponse(res, {
     success: true,

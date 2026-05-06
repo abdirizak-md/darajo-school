@@ -52,11 +52,18 @@ export const createStudentService = async (data) => {
 
   // 5. create user (AUTO LOGIN ACCOUNT)
   const user = await User.create({
+    // name: fullName,
+    // identifier: admissionNumber,
+    // password: hashedPassword,
+    // role: roles.STUDENT,
+    // profile: student._id,
+
     name: fullName,
-    identifier: admissionNumber,
-    password: hashedPassword,
-    role: roles.STUDENT,
-    profile: student._id,
+  identifier: admissionNumber,
+  password,
+  role: "STUDENT",
+  roleModel: "Student",
+  profile: student._id,
   });
 
   return { student, user };

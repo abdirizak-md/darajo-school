@@ -4,6 +4,7 @@ import * as resultService from "./service.js";
 import statusCodes from "../../common/constant/statusCode.js";
 import resultMessages from "../../common/constant/examResult.js";
 
+// CREATE
 export const createResult = asyncHandler(async (req, res) => {
   const result = await resultService.createResult(req.body);
 
@@ -15,8 +16,9 @@ export const createResult = asyncHandler(async (req, res) => {
   });
 });
 
+// ✅ GET ALL (NO AUTH)
 export const getResults = asyncHandler(async (req, res) => {
-  const results = await resultService.getResults(req.user);
+  const results = await resultService.getResults();
 
   return apiResponse(res, {
     success: true,
@@ -26,6 +28,7 @@ export const getResults = asyncHandler(async (req, res) => {
   });
 });
 
+// GET ONE STUDENT
 export const getStudentResults = asyncHandler(async (req, res) => {
   const results = await resultService.getStudentResults(req.params.studentId);
 
@@ -37,6 +40,7 @@ export const getStudentResults = asyncHandler(async (req, res) => {
   });
 });
 
+// UPDATE
 export const updateResult = asyncHandler(async (req, res) => {
   const result = await resultService.updateResult(req.params.id, req.body);
 
@@ -48,6 +52,7 @@ export const updateResult = asyncHandler(async (req, res) => {
   });
 });
 
+// DELETE
 export const deleteResult = asyncHandler(async (req, res) => {
   await resultService.deleteResult(req.params.id);
 
@@ -58,6 +63,7 @@ export const deleteResult = asyncHandler(async (req, res) => {
   });
 });
 
+// CGPA
 export const calculateStudentCGPA = asyncHandler(async (req, res) => {
   const cgpa = await resultService.calculateStudentCGPA(req.params.studentId);
 

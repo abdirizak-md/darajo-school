@@ -3,17 +3,17 @@ import { apiSlice } from "../api/apiSlice";
 export const assignModuleApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
 
-    // ✅ Get assignments (with filters)
+    // ✅ GET ASSIGNMENTS (FIXED: safe params handling)
     getAssignments: builder.query({
-      query: (params) => ({
+      query: (params = {}) => ({
         url: "/assign-teacher",
         method: "GET",
-        params, // { teacherId, classId, sectionId }
+        params, // { teacherId, classId, sectionId, subjectId }
       }),
       providesTags: ["SubjectAssign"],
     }),
 
-    // ✅ Assign teacher to subject/class
+    // ✅ CREATE ASSIGNMENT
     createAssignment: builder.mutation({
       query: (data) => ({
         url: "/assign-teacher",
@@ -23,7 +23,7 @@ export const assignModuleApi = apiSlice.injectEndpoints({
       invalidatesTags: ["SubjectAssign"],
     }),
 
-    // ✅ Delete assignment (optional but important)
+    // ✅ DELETE ASSIGNMENT
     deleteAssignment: builder.mutation({
       query: (id) => ({
         url: `/assign-teacher/${id}`,

@@ -25,52 +25,56 @@ export default function LoginUI() {
   };
 
   // ✅ handle submit
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError("");
 
-    // validation
-    if (!form.identifier || !form.password) {
-      setError("All fields are required");
+  if (!form.identifier || !form.password) {
+    setError("All fields are required");
+    return;
+  }
+
+  try {
+    const res = await login(form).unwrap();
+
+    console.log("FULL RESPONSE:", res);
+
+    // ✅ SAFE EXTRACTION
+    const token = res?.data?.token || res?.token;
+    const user = res?.data?.user || res?.user;
+
+    if (!token || !user) {
+      setError("Invalid login response");
       return;
     }
 
-    try {
-    const res = await login(form).unwrap();
+    // ✅ STORE
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify(user));
 
-console.log("FULL RESPONSE:", res);
-
-// ✅ correct access
-const token = res.data.token;
-const user = res.data.user;
-
-// store
-localStorage.setItem("token", token);
-localStorage.setItem("user", JSON.stringify(user));
-
-// redirect
-switch (user.role) {
-  case "ADMIN":
-    navigate("/");
-    break;
-  case "TEACHER":
-    navigate("/teacher");
-    break;
-  case "STUDENT":
-    navigate("/student");
-    break;
-    case "PARENT":
-    navigate("/parent");
-    break;
-  default:
-    navigate("/login");
-}
-
-    } catch (err) {
-      setError(err?.data?.message || "Login failed");
+    // ✅ REDIRECT
+    switch (user.role) {
+      case "ADMIN":
+        navigate("/");
+        break;
+      case "TEACHER":
+        navigate("/teacher");
+        break;
+      case "STUDENT":
+        navigate("/student");
+        break;
+      case "PARENT":
+        navigate("/parent");
+        break;
+      default:
+        navigate("/login");
     }
-  };
 
+  } catch (err) {
+    console.log("LOGIN ERROR:", err);
+    setError(err?.data?.message || "Login failed");
+  }
+};
   return (
     <div className="h-screen w-full bg-black flex items-center justify-center">
       

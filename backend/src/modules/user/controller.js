@@ -1,19 +1,12 @@
-import {asyncHandler} from "../../common/utils/asyncHandler.js";
+import { asyncHandler } from "../../common/utils/asyncHandler.js";
 import apiResponse from "../../common/utils/responseApi.js";
 import * as authService from "./service.js";
 import messages from "../../common/constant/message.js";
 import statusCodes from "../../common/constant/statusCode.js";
 
+// ✅ CREATE USER
 export const createUser = asyncHandler(async (req, res) => {
-  const { name, email, password, role, ...rest } = req.body;
-
-  const user = await authService.createUserWithProfile({
-    name,
-    email,
-    password,
-    role,
-    ...rest,
-  });
+  const user = await authService.createUserWithProfile(req.body);
 
   return apiResponse(res, {
     success: true,
@@ -23,6 +16,7 @@ export const createUser = asyncHandler(async (req, res) => {
   });
 });
 
+// ✅ LOGIN
 export const login = asyncHandler(async (req, res) => {
   const { identifier, password } = req.body;
 
