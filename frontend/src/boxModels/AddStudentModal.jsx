@@ -19,9 +19,8 @@ const AddStudentModal = ({ setmodelStudent }) => {
     fullName: "",
     admissionNumber: "",
     password: "",
-    dateOfBirth: "",
+    birthDate: "", // ✅ FIXED
     gender: "",
-    admissionDate: "",
     classId: "",
     sectionId: "",
     parentId: "",
@@ -214,10 +213,9 @@ const AddStudentModal = ({ setmodelStudent }) => {
               </label>
               <input
                 type="date"
-                name="dateOfBirth"
-                id="dateOfBirth"
-                className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm transition-all duration-300 ease-in-out"
-                value={formData.dateOfBirth}
+                name="birthDate"
+                className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm"
+                value={formData.birthDate}
                 onChange={handleChange}
                 required
               />

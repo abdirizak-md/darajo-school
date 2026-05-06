@@ -14,6 +14,7 @@ const SectionsComponent = ({ setAddSection }) => {
   const [deleteSection] = useDeleteSectionMutation();
 
   const sectionss = data?.data || []; // ✅ safe fallback
+  // console.log(sectionss);
 
   const [search, setSearch] = useState("");
   const [selectedSections, setSelectedSections] = useState("");
@@ -193,15 +194,13 @@ const SectionsComponent = ({ setAddSection }) => {
         </thead>
         <tbody className="table-row-group border-inherit">
           {isLoading ? (
-            <div className="col-span-full text-center">
-              <span className="text-[#666] text-lg">Loading Sections...</span>
-            </div>
+            <tr className="col-span-full text-center">
+              <td className="text-[#666] text-lg">Loading Sections...</td>
+            </tr>
           ) : isError ? (
-            <div className="col-span-full text-center">
-              <span className="text-[#666] text-lg">
-                Error loading Sections
-              </span>
-            </div>
+            <tr className="col-span-full text-center">
+              <td className="text-[#666] text-lg">Error loading Sections</td>
+            </tr>
           ) : (
             filteredSections?.map((section) => (
               <tr key={section._id} className="hover:bg-[#f8f9fa]">

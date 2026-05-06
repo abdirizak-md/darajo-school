@@ -1,6 +1,6 @@
-const apiResponse = (res, { success, message, data, statusCode = 200 }) => {
+const apiResponse = (res, statusCode, message, data = null) => {
   return res.status(statusCode).json({
-    success,
+    success: true,
     message,
     data,
   });

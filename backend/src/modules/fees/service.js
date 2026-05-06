@@ -1,56 +1,23 @@
-import Fee from "./modal.js";
+// import Fee from "./model.js";
 
-export const createFee = async (data, userId) => {
-  const fee = await Fee.create({
-    ...data,
-    createdBy: userId,
-  });
+// export const createFee = async (data) => {
+//   return await Fee.create(data);
+// };
 
-  return fee;
-};
+// export const getFees = async () => {
+//   return await Fee.find()
+//     .populate("classId")
+//     .populate("studentId");
+// };
 
-export const getFees = async (filters) => {
-  const query = { deletedAt: null };
+// export const getFeeById = async (id) => {
+//   return await Fee.findById(id);
+// };
 
-  if (filters.student) query.student = filters.student;
-  if (filters.classId) query.classId = filters.classId;
+// export const updateFee = async (id, data) => {
+//   return await Fee.findByIdAndUpdate(id, data, { new: true });
+// };
 
-  const fees = await Fee.find(query)
-    .populate("student classId section feeType")
-    .sort({ createdAt: -1 });
-
-  return fees;
-};
-
-export const getFeeById = async (id) => {
-  return Fee.findById(id).populate(
-    "student classId section feeType"
-  );
-};
-
-export const updateFee = async (id, data) => {
-  return Fee.findByIdAndUpdate(id, data, { new: true });
-};
-
-export const deleteFee = async (id) => {
-  return Fee.findByIdAndUpdate(id, {
-    deletedAt: new Date(),
-  });
-};
-
-
-// 🔥 Advanced: Student Fee Summary
-export const getStudentFeeSummary = async (studentId) => {
-  const result = await Fee.aggregate([
-    { $match: { student: studentId, deletedAt: null } },
-    {
-      $group: {
-        _id: "$student",
-        totalPaid: { $sum: "$amount" },
-        count: { $sum: 1 },
-      },
-    },
-  ]);
-
-  return result[0] || { totalPaid: 0, count: 0 };
-};
+// export const deleteFee = async (id) => {
+//   return await Fee.findByIdAndDelete(id);
+// };

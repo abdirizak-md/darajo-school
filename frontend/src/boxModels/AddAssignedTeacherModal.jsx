@@ -7,7 +7,6 @@ import { useGetSubjectsQuery } from "../redux/features/subject";
 import { useCreateAssignmentMutation } from "../redux/features/assignModule";
 
 const AddAssignedTeacherModal = ({ setAssignedTeacher }) => {
-
   const [createAssignment, { isLoading }] = useCreateAssignmentMutation();
 
   const { data: teachers } = useGetTeachersQuery();
@@ -44,7 +43,6 @@ const AddAssignedTeacherModal = ({ setAssignedTeacher }) => {
       setSubjectId("");
 
       setAssignedTeacher(false);
-
     } catch (error) {
       console.error(error);
       alert(error?.data?.message || "Something went wrong");
@@ -54,10 +52,9 @@ const AddAssignedTeacherModal = ({ setAssignedTeacher }) => {
   return (
     <div className="fixed z-50 left-0 top-0 w-full h-full bg-black/50 flex items-center justify-center">
       <div className="bg-white rounded-lg w-[50%] max-h-[90vh] overflow-y-auto">
-
         {/* HEADER */}
         <div className="flex justify-between p-6 border-b">
-          <h1 className="text-2xl font-bold text-[#006b3f]">
+          <h1 className="text-2xl font-bold text-orange-500">
             Assign Teacher to Class
           </h1>
 
@@ -70,7 +67,6 @@ const AddAssignedTeacherModal = ({ setAssignedTeacher }) => {
 
         {/* FORM */}
         <form className="p-6" onSubmit={handleSubmit}>
-
           {/* TEACHER */}
           <div className="mb-4">
             <label className="block mb-2 font-medium">
@@ -169,7 +165,6 @@ const AddAssignedTeacherModal = ({ setAssignedTeacher }) => {
               {isLoading ? "Assigning..." : "Assign"}
             </button>
           </div>
-
         </form>
       </div>
     </div>

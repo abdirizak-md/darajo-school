@@ -32,7 +32,7 @@ export const teacherApi = apiSlice.injectEndpoints({
         method: "PUT",
         body: data,
       }),
-      invalidatesTags: ["Teacher"],
+      invalidatesTags: ["Teachers"],
     }),
 
     // ❌ DELETE TEACHER
