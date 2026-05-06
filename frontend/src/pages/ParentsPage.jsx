@@ -29,29 +29,10 @@ const ParentsInfoPage = () => {
         <span className="text-[#666]">
           Manage Parent Information, Student Links, and Communication Records
         </span>
-
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-8">
-          <div className="bg-[#f8f9fa] flex flex-col items-center justify-center p-5 border border-orange-500 border-t-4 border-l-orange-500 border-b-4 border-b-orange-500 rounded-2xl">
-            <h1 className="text-orange-500 text-4xl font-bold mb-1">842</h1>
-            <span className="text-[#666]">Total Parents</span>
-          </div>
-          <div className="bg-[#f8f9fa] flex flex-col items-center justify-center p-5 border border-orange-500 border-t-4 border-l-orange-500 border-b-4 border-b-orange-500 rounded-2xl">
-            <h1 className="text-orange-500 text-4xl font-bold mb-1">312</h1>
-            <span className="text-[#666]">Active Contacts</span>
-          </div>
-          <div className="bg-[#f8f9fa] flex flex-col items-center justify-center p-5 border border-orange-500 border-t-4 border-l-orange-500 border-b-4 border-b-orange-500 rounded-2xl">
-            <h1 className="text-orange-500 text-4xl font-bold mb-1">128</h1>
-            <span className="text-[#666]">New Parents</span>
-          </div>
-          <div className="bg-[#f8f9fa] flex flex-col items-center justify-center p-5 border border-orange-500 border-t-4 border-l-orange-500 border-b-4 border-b-orange-500 rounded-2xl">
-            <h1 className="text-orange-500 text-4xl font-bold mb-1">24</h1>
-            <span className="text-[#666]">Pending Verification</span>
-          </div>
-        </div>
       </div>
 
       <div className="flex gap-5 mb-8">
-        {["parents", "student"].map((item, index) => (
+        {["parents"].map((item, index) => (
           <button
             key={index}
             onClick={() => setActive(item)}

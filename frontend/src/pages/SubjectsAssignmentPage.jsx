@@ -8,7 +8,7 @@ import GradeComponent from "../components/subjectAssignmentComponents/GradeCompo
 import SubjectComponent from "../components/subjectAssignmentComponents/SubjectComponent";
 
 const SubjectsAssignmentPage = () => {
-  const [active, setActive] = useState("subjects");
+  const [active, setActive] = useState("SUBJECTS");
   const [addSubject, setAddSubject] = useState(false);
   const [addAssignment, setAddAssignment] = useState(false);
   const [assignedTeacher, setAssignedTeacher] = useState(false);
@@ -36,33 +36,14 @@ const SubjectsAssignmentPage = () => {
         <span className="text-[#666] text-sm">
           Manage Academic Classes, Sections and Track Student Progress
         </span>
-
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-8">
-          <div className="bg-[#f8f9fa] flex flex-col items-center justify-center p-5 border border-orange-500 border-t-4 border-l-orange-500 borsder-b-4 border-b-orange-500 rounded-2xl">
-            <h1 className="text-orange-500 text-4xl font-bold mb-1">12</h1>
-            <span className="text-[#666]">Total Subjects</span>
-          </div>
-          <div className="bg-[#f8f9fa] flex flex-col items-center justify-center p-5 border border-orange-500 border-t-4 border-l-orange-500 borsder-b-4 border-b-orange-500 rounded-2xl">
-            <h1 className="text-orange-500 text-4xl font-bold mb-1">32</h1>
-            <span className="text-[#666]">Active Assignments</span>
-          </div>
-          <div className="bg-[#f8f9fa] flex flex-col items-center justify-center p-5 border border-orange-500 border-t-4 border-l-orange-500 borsder-b-4 border-b-orange-500 rounded-2xl">
-            <h1 className="text-orange-500 text-4xl font-bold mb-1">89%</h1>
-            <span className="text-[#666]">Submission Rate</span>
-          </div>
-          <div className="bg-[#f8f9fa] flex flex-col items-center justify-center p-5 border border-orange-500 border-t-4 border-l-orange-500 borsder-b-4 border-b-orange-500 rounded-2xl">
-            <h1 className="text-orange-500 text-4xl font-bold mb-1">135</h1>
-            <span className="text-[#666]">Pending Reviews</span>
-          </div>
-        </div>
       </div>
 
       <div className="flex gap-5 mb-8">
         {["subjects", "assignments", "grades"].map((tab, index) => (
           <button
             key={index}
-            onClick={() => setActive(tab)}
-            className={`px-8 py-3 border border-[#e1e5e9]  rounded-md hover:shadow-md active:scale-95 transition-all duration-200 shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active == tab ? "bg-orange-500 text-white" : "bg-white"}`}
+            onClick={() => setActive(tab.toLocaleUpperCase())}
+            className={`px-8 py-3 border border-[#e1e5e9]  rounded-md hover:shadow-md active:scale-95 transition-all duration-200 shadow-[0_5px_20px_rgba(0,0,0,0.1)] ${active == tab.toLocaleUpperCase() ? "bg-orange-500 text-white" : "bg-white"}`}
           >
             {tab.toLocaleUpperCase()}
           </button>
@@ -75,7 +56,7 @@ const SubjectsAssignmentPage = () => {
       )}
 
       {/* Assignments */}
-      {active === "ASSIGNEMTS" && (
+      {active === "ASSIGNMENTS" && (
         <AssignmentComponent setAddAssignment={setAddAssignment} />
       )}
 

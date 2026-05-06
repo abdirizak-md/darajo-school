@@ -1,23 +1,22 @@
 import express from "express";
-import router from "./routes/index.js";
-import StudentRouter from "./routes/studentRoute.js";
-import SectionRouter from "./routes/section.js";
-import TeacherRouter from "./routes/teacher.js";
-import ParentRouter from "./routes/parent.js";
-import SubjectRouter from "./routes/subject.js";
-import routeAtten from "./routes/attendance.js";
-import routerUsers from "./routes/users.js";
-import examRoute from "./routes/exam.js";
-import examResults from "./routes/resultExam.js";
 import routeAssign from "./routes/assignTeacher.js";
-import routersEntryMark from "./routes/entryMark.js";
+import routeAtten from "./routes/attendance.js";
 import routersCommunication from "./routes/communication.js";
-import routeFeeTypes from "./routes/feeType.js";
-import feesRoutes from "./routes/fees.js";
-import routerStructures from "./routes/feeStructure.js";
+import routersEntryMark from "./routes/entryMark.js";
+import examRoute from "./routes/exam.js";
+import router from "./routes/index.js";
+import ParentRouter from "./routes/parent.js";
+import examResults from "./routes/resultExam.js";
+import routerSchedule from "./routes/schedule.js";
+import SectionRouter from "./routes/section.js";
+import StudentRouter from "./routes/studentRoute.js";
+import SubjectRouter from "./routes/subject.js";
+import TeacherRouter from "./routes/teacher.js";
+import routerUsers from "./routes/users.js";
 
 
 import cors from "cors";
+import routerFees from "./routes/fees.js";
 
 const app = express();
 
@@ -46,9 +45,8 @@ app.use('/api', examResults)
 app.use('/api', routeAssign)
 app.use('/api', routersEntryMark)
 app.use('/api', routersCommunication)
-app.use("/api", routeFeeTypes)
-app.use("/api", feesRoutes)
-app.use("/api", routerStructures)
+app.use('/api', routerSchedule)
+app.use('/api', routerFees)
 
 
 

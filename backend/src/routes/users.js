@@ -1,5 +1,5 @@
 import  express from "express";
-import userRoutes from "../modules/user/route.js";
+import userRoutes from '../modules/user/route.js';
 
 
 

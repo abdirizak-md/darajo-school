@@ -12,7 +12,7 @@ import TeacherEnrollmentComponent from "../components/staffDirectoryComponents/T
 const StaffDirectoryPage = () => {
   const [teacherModal, setTeacherModal] = useState(false);
   const [enrolled, setEnrolled] = useState(false);
-  const [active, setActive] = useState("Staff");
+  const [active, setActive] = useState("staff");
   const [sectionn, setSectionn] = useState(false);
   const [allClasse, setAllClasse] = useState(false);
 
@@ -131,29 +131,10 @@ const StaffDirectoryPage = () => {
         <span className="text-[#666]">
           Manage Teachers, Administrators and Support staff
         </span>
-
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-8">
-          <div className="bg-[#f8f9fa] flex flex-col items-center justify-center p-5 border border-orange-500 border-t-4 border-l-orange-500 borsder-b-4 border-b-orange-500 rounded-2xl">
-            <h1 className="text-orange-500 text-4xl font-bold mb-1">67</h1>
-            <span className="text-[#666]">Total Staff</span>
-          </div>
-          <div className="bg-[#f8f9fa] flex flex-col items-center justify-center p-5 border border-orange-500 border-t-4 border-l-orange-500 borsder-b-4 border-b-orange-500 rounded-2xl">
-            <h1 className="text-orange-500 text-4xl font-bold mb-1">56</h1>
-            <span className="text-[#666]">Total Teachers</span>
-          </div>
-          <div className="bg-[#f8f9fa] flex flex-col items-center justify-center p-5 border border-orange-500 border-t-4 border-l-orange-500 borsder-b-4 border-b-orange-500 rounded-2xl">
-            <h1 className="text-orange-500 text-4xl font-bold mb-1">7</h1>
-            <span className="text-[#666]">Administrators</span>
-          </div>
-          <div className="bg-[#f8f9fa] flex flex-col items-center justify-center p-5 border border-orange-500 border-t-4 border-l-orange-500 borsder-b-4 border-b-orange-500 rounded-2xl">
-            <h1 className="text-orange-500 text-4xl font-bold mb-1">12</h1>
-            <span className="text-[#666]">Support Staff</span>
-          </div>
-        </div>
       </div>
 
       <div className="flex gap-5 mb-8">
-        {["staff", "assignments", "payroll", "enroll"].map((Tab, index) => (
+        {["staff", "assignments", "enroll"].map((Tab, index) => (
           <button
             key={index}
             onClick={() => setActive(Tab)}
@@ -165,15 +146,12 @@ const StaffDirectoryPage = () => {
       </div>
 
       {/* Staff Directory, assignment and payroll */}
-      {active === "Staff" && (
+      {active === "staff" && (
         <StaffDirectoryComponent setTeacherModal={setTeacherModal} />
       )}
 
       {/* assignment */}
-      {active === "assignment" && <AssignmentComponent />}
-
-      {/* payroll */}
-      {active === "payroll" && <PayrollComponent />}
+      {active === "assignments" && <AssignmentComponent />}
 
       {/* enroll */}
       {active === "enroll" && (

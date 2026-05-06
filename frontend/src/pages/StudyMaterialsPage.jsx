@@ -24,25 +24,6 @@ const StudyMaterialsPage = () => {
         <span className="text-[#666] text-sm">
           Manage Educational Resources, Documents and Study Materials
         </span>
-
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-8">
-          <div className="bg-[#f8f9fa] flex flex-col items-center justify-center p-5 border border-orange-500 border-t-4 border-l-orange-500 borsder-b-4 border-b-orange-500 rounded-2xl">
-            <h1 className="text-orange-500 text-4xl font-bold mb-1">156</h1>
-            <span className="text-[#666]">Total Materials</span>
-          </div>
-          <div className="bg-[#f8f9fa] flex flex-col items-center justify-center p-5 border border-orange-500 border-t-4 border-l-orange-500 borsder-b-4 border-b-orange-500 rounded-2xl">
-            <h1 className="text-orange-500 text-4xl font-bold mb-1">3.5GB</h1>
-            <span className="text-[#666]">Storage Used</span>
-          </div>
-          <div className="bg-[#f8f9fa] flex flex-col items-center justify-center p-5 border border-orange-500 border-t-4 border-l-orange-500 borsder-b-4 border-b-orange-500 rounded-2xl">
-            <h1 className="text-orange-500 text-4xl font-bold mb-1">12</h1>
-            <span className="text-[#666]">Subjects</span>
-          </div>
-          <div className="bg-[#f8f9fa] flex flex-col items-center justify-center p-5 border border-orange-500 border-t-4 border-l-orange-500 borsder-b-4 border-b-orange-500 rounded-2xl">
-            <h1 className="text-orange-500 text-4xl font-bold mb-1">24</h1>
-            <span className="text-[#666]">Recent Uploads</span>
-          </div>
-        </div>
       </div>
 
       <div className="lg:flex md:flex grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] gap-4 mb-4">

@@ -14,6 +14,7 @@ const SectionsComponent = ({ setAddSection }) => {
   const [deleteSection] = useDeleteSectionMutation();
 
   const sectionss = data?.data || []; // ✅ safe fallback
+  // console.log(sectionss);
 
   const [search, setSearch] = useState("");
   const [selectedSections, setSelectedSections] = useState("");

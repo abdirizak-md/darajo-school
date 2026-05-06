@@ -1,24 +1,15 @@
 import mongoose from "mongoose";
 
-
 const feeTypeSchema = new mongoose.Schema(
   {
     name: {
       type: String,
       required: true,
-      unique: true, // prevent duplicate like "Tuition"
+      unique: true, // 🔥 prevents duplicates like "Tuition"
       trim: true,
     },
-
     description: {
       type: String,
-      default: "",
-    },
-
-     status: {
-      type: String,
-      enum: ["active", "inactive"],
-      default: "active",
     },
   },
   { timestamps: true }

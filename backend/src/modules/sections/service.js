@@ -16,7 +16,7 @@ export const getSectionsService = async () => {
 export const getSectionByIdService = async (id) => {
   return await Section.findById(id)
     .populate("classId", "name")
-    .populate("students", "name email")
+    .populate("students", "name")
     .lean();
 };
 

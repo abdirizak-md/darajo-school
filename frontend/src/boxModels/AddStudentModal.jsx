@@ -6,7 +6,7 @@ import { useGetSectionsQuery } from "../redux/features/sectionApi";
 import { useGetParentsQuery } from "../redux/features/parentApi";
 import { useGetStudentsQuery } from "../redux/features/studentApi";
 
-const AddStudentModal = ({ setModelStudent }) => {
+const AddStudentModal = ({ setmodelStudent }) => {
   const [createStudent] = useCreateStudentMutation();
 
   // ✅ Classes (always load)
@@ -19,9 +19,8 @@ const AddStudentModal = ({ setModelStudent }) => {
     fullName: "",
     admissionNumber: "",
     password: "",
-    dateOfBirth: "",
+    birthDate: "", // ✅ FIXED
     gender: "",
-    admissionDate: "",
     classId: "",
     sectionId: "",
     parentId: "",
@@ -55,7 +54,7 @@ const AddStudentModal = ({ setModelStudent }) => {
       await createStudent(formData).unwrap();
 
       alert("Student created successfully");
-      setModelStudent(false);
+      setmodelStudent(false);
     } catch (error) {
       console.log(error);
       alert("Failed to create student");
@@ -71,7 +70,7 @@ const AddStudentModal = ({ setModelStudent }) => {
           <IoClose
             className="hover:text-orange-500"
             size={26}
-            onClick={() => setModelStudent(false)}
+            onClick={() => setmodelStudent(false)}
           />
         </div>
 
@@ -214,10 +213,9 @@ const AddStudentModal = ({ setModelStudent }) => {
               </label>
               <input
                 type="date"
-                name="dateOfBirth"
-                id="dateOfBirth"
-                className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm transition-all duration-300 ease-in-out"
-                value={formData.dateOfBirth}
+                name="birthDate"
+                className="w-full p-2.5 border border-[#e1e5e9] rounded-md text-sm"
+                value={formData.birthDate}
                 onChange={handleChange}
                 required
               />
@@ -309,7 +307,7 @@ const AddStudentModal = ({ setModelStudent }) => {
             <button
               type="button"
               className="bg-[#f8f9fa] hover:text-orange-500 hover:bg-[#e9ecef] text-[#333] border border-[#e1e5e9] px-6 py-3 rounded-md cursor-pointer font-medium inline-flex items-center gap-2 transition-all duration-300 ease-in-out"
-              onClick={() => setModelStudent(false)}
+              onClick={() => setmodelStudent(false)}
             >
               Cancel
             </button>

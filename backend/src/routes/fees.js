@@ -1,13 +1,15 @@
-import express from "express";
+import express from 'express'
 
-import feesRoute from '../modules/fees/route.js'
+import router from '../modules/fees/payment/router.js';
+import routerf from '../modules/fees/feeType/router.js';
+import routers from '../modules/fees/feeStructure/router.js';
+import routerb from '../modules/fees/balance/router.js';
 
-const feesRoutes = express.Router();
+const routerFees = express.Router();
 
+routerFees.use('/payment', router);
+routerFees.use('/fee-type', routerf);
+routerFees.use('/fee-structure', routers);
+routerFees.use('/balance', routerb);
 
-feesRoutes.use("/fees", feesRoute);
-
-
-
-export default feesRoutes;
-
+export default routerFees
